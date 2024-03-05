@@ -1,18 +1,22 @@
 body {
   background-color: #fffbf2;
 }
-
+.card-img-top{
+  width:auto;
+  height:125px;
+}
 .menu-price {
   position: absolute;
   margin: 0;
-  top: -5px;
-  right: 10px;
-  width: 45px;
-  height: 45px;
+  top: -10px;
+  right: -10px;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 45px;
+  border:solid black 1px;
   color: #33211d;
   background: #da9f5b;
 }
