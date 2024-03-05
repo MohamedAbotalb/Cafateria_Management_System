@@ -1,5 +1,5 @@
 <?php
-include "templates/adminNav.php"
+require_once "templates/adminNav.php"
 ?>
 
 <!-- Orders start -->
