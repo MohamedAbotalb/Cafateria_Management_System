@@ -1,0 +1,24 @@
+body {
+  background-color: #fffbf2;
+}
+
+.menu-price {
+  position: absolute;
+  margin: 0;
+  top: -5px;
+  right: 10px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 45px;
+  color: #33211d;
+  background: #da9f5b;
+}
+.col-4 {
+  position: relative;
+}
+.button {
+  background-color: #da9f5b;
+}
