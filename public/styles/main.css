@@ -1,5 +1,6 @@
 body {
   background-color: #fffbf2;
+  font-family: 'Roboto', sans-serif;
 }
 
 .menu-price {
@@ -19,6 +20,7 @@ body {
 .col-4 {
   position: relative;
 }
+.product-price,
 .button {
   background-color: #da9f5b;
 }
