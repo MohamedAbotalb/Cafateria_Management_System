@@ -106,5 +106,3 @@ include "templates/adminNav.php"
   </div>
 </div>
 <!-- Orders end -->
-
-</html>
