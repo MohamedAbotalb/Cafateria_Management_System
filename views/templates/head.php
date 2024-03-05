@@ -13,40 +13,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <!-- <link rel="stylesheet" type="text/css" href="../../public/styles/main.css" > -->
 
+  
   <style>
     body {
       font-family: "Roboto", sans-serif;
     }
-    body {
-  background-color: #fffbf2;
-}
-.card-img-top{
-  width:auto;
-  height:125px;
-}
-.menu-price {
-  position: absolute;
-  margin: 0;
-  top: -10px;
-  right: -10px;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 45px;
-  border:solid black 1px;
-  color: #33211d;
-  background: #da9f5b;
-}
-.col-4 {
-  position: relative;
-}
-.button {
-  background-color: #da9f5b;
-}
+  
    
   </style>
 

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <?php 
-  require_once("templates/head.php");
   require_once("templates/userNav.php");
   ?>
 
@@ -37,7 +36,7 @@
                     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                     <label for="floatingTextarea">Notes</label>
                   </div>
-                  <select class="form-select" aria-label="Default select example" >
+                  <select class="form-select " aria-label="Default select example" >
                     <option selected>Select Room</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
@@ -54,7 +53,7 @@
           <!-- start of menu -->
           <div class="col-8 ">
             <p>Add to user</p>
-            <select class="form-select" aria-label="Default select example" >
+            <select class="form-select w-50" aria-label="Default select example" >
                     <option value="1">Ali</option>
                     <option value="2">Ahmed</option>
                     <option value="3">Samy</option>
@@ -134,10 +133,6 @@
       </div>
     </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
+ 
   </body>
 </html>
