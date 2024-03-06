@@ -13,8 +13,8 @@ require_once "head.php";
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
       <div class="navbar-nav px-5">
-        <a href="/user-home" class="nav-item nav-link mx-3 ">Home</a>
-        <a href="/user-orders" class="nav-item nav-link mx-3">My Orders</a>
+        <a href="./userHome.php" class="nav-item nav-link mx-3 ">Home</a>
+        <a href="./myOrders.php" class="nav-item nav-link mx-3">My Orders</a>
       </div>
       <ul class="navbar-nav mx-5">
         <li class="nav-item ">
