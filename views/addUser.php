@@ -10,7 +10,7 @@ require_once "templates/adminNav.php";
           <h4 class="mb-0">Add User</h4>
         </div>
         <div class="card-body"> 
-          <form action="#" method="post" enctype="multipart/form-data">
+          <form action="" method="" enctype="multipart/form-data">
             <div class="mb-3 row">
               <label for="name" class="col-sm-3 col-form-label">Name</label>
               <div class="col-sm-9">
