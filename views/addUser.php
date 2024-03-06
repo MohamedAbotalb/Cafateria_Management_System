@@ -2,10 +2,6 @@
 require_once "templates/adminNav.php";
 ?>
 
-<?php
-require_once "templates/adminNav.php";
-?>
-
 <head>
   <title>Add User Form</title>
   <style>
