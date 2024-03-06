@@ -23,7 +23,7 @@ require_once "templates/adminNav.php"
           <td>2026</td>
           <td>2345</td>
           <td>
-            <a class="btn btn-primary text-decoration-none" href="">deliver</a>
+            <a class="btn button text-decoration-none" href="">deliver</a>
           </td>
         </tr>
         <tr>

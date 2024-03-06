@@ -34,6 +34,49 @@ body {
   background-color: #da9f5b;
 }
 
+.product:hover,
+.increment:hover,
+.decrement:hover,
+.close:hover {
+  cursor: pointer;
+}
+
+.editborder,
+.delborder {
+  width: 45px;
+  height: 45px;
+  color: #362517;
+}
+
+.editborder {
+  border: #dfad58 solid 3px;
+}
+
+.editborder:hover {
+  background-color: #dfad58;
+  color: #fff;
+}
+
+.delborder {
+  border: #dc3545 solid 3px;
+}
+
+.delborder:hover {
+  background-color: #dc3545;
+  color: #fff;
+  box-shadow: none;
+}
+
+.add-btn {
+  background-color: #dfad58;
+  color: #362517;
+  border: none;
+  opacity: 0.75;
+}
+
+.add-btn:hover {
+  opacity: 1;
+}
 .input-group-append {
   cursor: pointer !important;
 }
@@ -45,6 +88,7 @@ body {
   border: none;
   cursor: pointer;
 }
+
 .day:hover{
   background-color: rgb(155, 155, 238);
 }
