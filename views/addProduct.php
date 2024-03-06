@@ -34,5 +34,3 @@ require_once "templates/adminNav.php";
     </div>
   </form>
 </div>
-
-
