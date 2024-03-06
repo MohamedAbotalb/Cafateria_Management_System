@@ -28,3 +28,6 @@ body {
 .button {
   background-color: #da9f5b;
 }
+.product:hover{
+  cursor: pointer;
+}
