@@ -58,7 +58,7 @@ require_once "templates/adminNav.php";
             </div>
             <div class="mb-3 row">
               <div class="col-sm-9 offset-sm-3">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn button">Save</button>
                 <button type="reset" class="btn btn-secondary">Reset</button>
               </div>
             </div>
