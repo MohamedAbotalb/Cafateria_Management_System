@@ -2,6 +2,9 @@
 require_once "templates/adminNav.php";
 ?>
 
+<head>
+  <title>Add Product Form</title>
+</head>
  <div class="container">
     <h1>Add Product</h1>
     <form>
