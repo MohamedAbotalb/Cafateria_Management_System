@@ -4,7 +4,7 @@ require_once "templates/adminNav.php";
 
 <div class="container my-5">
   <h1>Add Product</h1>
-  <form class="my-5" action="#" method="post" enctype="multipart/form-data">
+  <form class="my-5" action="" method="" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="productName" class="form-label">Product</label>
       <input type="text" class="form-control" id="productName" placeholder="Enter product name">
