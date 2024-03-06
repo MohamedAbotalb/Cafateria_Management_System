@@ -34,6 +34,13 @@ body {
   background-color: #da9f5b;
 }
 
+.product:hover,
+.increment:hover,
+.decrement:hover,
+.close:hover {
+  cursor: pointer;
+}
+
 .editborder,
 .delborder {
   width: 45px;
