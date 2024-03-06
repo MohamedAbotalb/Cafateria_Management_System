@@ -4,7 +4,7 @@ require_once "head.php";
 
 <!-- Navbar start -->
 <div class="container-fluid p-0 nav-bar" style="background-color: #362517; ">
-  <nav class="navbar navbar-expand-lg navbar-dark py-3 fs-4 d-flex justify-content-sm-evenly">
+  <nav class="navbar navbar-expand-lg navbar-dark py-1 fs-5 d-flex justify-content-sm-evenly">
     <a class="navbar-brand px-lg-4 me-5">
       <h1 class="m-0 display-4 fs-1 text-white">ITI Cafeteria</h1>
     </a>
