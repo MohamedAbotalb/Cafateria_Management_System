@@ -14,7 +14,7 @@ require_once "templates/adminNav.php";
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     .card-header {
-      background-color: #362517; /* Updated background color */
+      background-color: #362517; 
       color: #fff;
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
