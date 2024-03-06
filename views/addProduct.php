@@ -22,7 +22,7 @@ require_once "templates/adminNav.php";
         <option value="home">Home</option>
         <option value="beauty">Beauty</option>
       </select>
-      <button type="button" class="btn btn-primary mt-2">Add Category</button>
+      <button type="button" class="btn button mt-2">Add Category</button>
     </div>
     <div class="mb-3">
       <label for="productImage" class="form-label">Product Image</label>
