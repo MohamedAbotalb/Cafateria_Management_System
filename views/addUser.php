@@ -2,79 +2,6 @@
 require_once "templates/adminNav.php";
 ?>
 
-<head>
-  <title>Add User Form</title>
-  <style>
-    body {
-      background-color: #f8f9fa;
-    }
-    .card {
-      border: none;
-      border-radius: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .card-header {
-      background-color: #362517; 
-      color: #fff;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      padding: 20px;
-      text-align: center;
-    }
-    .card-body {
-      padding: 20px;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-label {
-      font-weight: bold;
-      color: #555;
-      margin-bottom: 0;
-    }
-    .form-control {
-      border-radius: 10px;
-      border: 2px solid #ddd;
-    }
-    .form-control:focus {
-      border-color: #007bff;
-      box-shadow: none;
-    }
-    .btn-primary {
-      background-color: #007bff;
-      border-color: #007bff;
-      border-radius: 10px;
-      padding: 10px 20px;
-      font-weight: bold;
-    }
-    .btn-primary:hover {
-      background-color: #0056b3;
-      border-color: #0056b3;
-    }
-    .btn-secondary {
-      background-color: #6c757d;
-      border-color: #6c757d;
-      border-radius: 10px;
-      padding: 10px 20px;
-      font-weight: bold;
-    }
-    .btn-secondary:hover {
-      background-color: #5a6268;
-      border-color: #5a6268;
-    }
-    .custom-file-label {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      border-radius: 10px;
-      border: 2px solid #ddd;
-    }
-    .custom-file-label::after {
-      border-radius: 10px;
-    }
-  </style>
-</head>
-
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -83,7 +10,7 @@ require_once "templates/adminNav.php";
           <h4 class="mb-0">Add User</h4>
         </div>
         <div class="card-body">
-          <form action="#" method="POST" enctype="multipart/form-data">
+          <form action="#" method="post" enctype="multipart/form-data">
             <div class="form-group row">
               <label for="name" class="col-sm-3 col-form-label">Name</label>
               <div class="col-sm-9">
