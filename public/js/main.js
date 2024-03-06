@@ -5,7 +5,7 @@ window.onload = function () {
     products.forEach(product => {
         product.addEventListener("click", function () {
             const name= product.querySelector('.card-text');
-            const price= product.querySelector('.product-price');
+            const price= product.querySelector('.productPrice');
 
             if (!isProductInList(name.textContent)) {
                 let div = document.createElement('div');
@@ -24,8 +24,8 @@ window.onload = function () {
 
                 parent.appendChild(div);
 
-                let quantity = div.querySelector('.quantity');
-                let priceProduct = div.querySelector('.price-product');
+                const quantity = div.querySelector('.quantity');
+                const priceProduct = div.querySelector('.price-product');
                 let totalPrice = parseInt(priceProduct.textContent);
                 let newPrice=totalPrice;
                 let quantityValue = parseInt(quantity.textContent);
@@ -33,7 +33,7 @@ window.onload = function () {
                 div.querySelector('.increment').addEventListener('click', function () {
                     quantityValue++;
                     quantity.textContent = quantityValue;
-                    newPrice = totalPrice+newPrice;
+                    newPrice += totalPrice;
                     priceProduct.textContent = newPrice;
                 });
 
@@ -41,8 +41,8 @@ window.onload = function () {
                     if (quantityValue > 1) {
                         quantityValue--;
                         quantity.textContent = quantityValue;
-                        newPrice = totalPrice-newPrice;
-                        priceProduct.textContent = totalPrice;
+                        newPrice -= totalPrice;
+                        priceProduct.textContent = newPrice;
                     }
                 });
 
