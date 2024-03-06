@@ -23,7 +23,7 @@ require_once "templates/adminNav.php"
           <td>2026</td>
           <td>2345</td>
           <td>
-            <a class="btn btn-primary text-decoration-none" href="">deliver</a>
+            <a class="btn button text-decoration-none" href="">deliver</a>
           </td>
         </tr>
         <tr>
@@ -33,7 +33,7 @@ require_once "templates/adminNav.php"
               <div class="col mt-4">
                 <div class="w-75 mx-sm-auto position-relative text-center">
                   <img src="../public/images/item1.jpg" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
-                  <div class="product-price rounded-circle position-absolute" style="width: 60px; height: 60px; top: 0; left: 70%;">
+                  <div class="product-price">
                     <span class="d-flex justify-content-center align-items-center h-100">4 LE</span>
                   </div>
                   <div class="my-4">
@@ -46,7 +46,7 @@ require_once "templates/adminNav.php"
               <div class="col mt-4">
                 <div class="w-75 mx-sm-auto position-relative text-center">
                   <img src="../public/images/item2.jpg" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
-                  <div class="product-price rounded-circle position-absolute" style="width: 60px; height: 60px; top: 0; left: 70%;">
+                  <div class="product-price">
                     <span class="d-flex justify-content-center align-items-center h-100">3 LE</span>
                   </div>
                   <div class="my-4">
@@ -59,7 +59,7 @@ require_once "templates/adminNav.php"
               <div class="col mt-4">
                 <div class="w-75 mx-sm-auto position-relative text-center">
                   <img src="../public/images/item3.jpg" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
-                  <div class="product-price rounded-circle position-absolute" style="width: 60px; height: 60px; top: 0; left: 70%;">
+                  <div class="product-price">
                     <span class="d-flex justify-content-center align-items-center h-100">6 LE</span>
                   </div>
                   <div class="my-4">
@@ -72,7 +72,7 @@ require_once "templates/adminNav.php"
               <div class="col mt-4">
                 <div class="w-75 mx-sm-auto position-relative text-center">
                   <img src="../public/images/item4.jpg" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
-                  <div class="product-price rounded-circle position-absolute" style="width: 60px; height: 60px; top: 0; left: 70%;">
+                  <div class="product-price">
                     <span class="d-flex justify-content-center align-items-center h-100">8 LE</span>
                   </div>
                   <div class="my-4">
@@ -85,7 +85,7 @@ require_once "templates/adminNav.php"
               <div class="col mt-4">
                 <div class="w-75 mx-sm-auto position-relative text-center">
                   <img src="../public/images/item5.jpg" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
-                  <div class="product-price rounded-circle position-absolute" style="width: 60px; height: 60px; top: 0; left: 70%;">
+                  <div class="product-price">
                     <span class="d-flex justify-content-center align-items-center h-100">9 LE</span>
                   </div>
                   <div class="my-4">

@@ -2,10 +2,11 @@ body {
   background-color: #fffbf2;
   font-family: 'Roboto', sans-serif;
 }
-.card-img-top{
-  width:auto;
-  height:125px;
+.card-img-top {
+  width: auto;
+  height: 125px;
 }
+.product-price,
 .menu-price {
   position: absolute;
   margin: 0;
@@ -17,20 +18,62 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 45px;
-  border:solid black 1px;
+  border: solid black 1px;
   color: #33211d;
-  background: #da9f5b;
+  width: 60px;
+  height: 60px;
+  top: 0;
+  left: 70%;
 }
 .col-4 {
   position: relative;
 }
+.menu-price,
 .product-price,
 .button {
   background-color: #da9f5b;
 }
+
 .product:hover,
 .increment:hover,
 .decrement:hover,
 .close:hover {
   cursor: pointer;
+}
+
+.editborder,
+.delborder {
+  width: 45px;
+  height: 45px;
+  color: #362517;
+}
+
+.editborder {
+  border: #dfad58 solid 3px;
+}
+
+.editborder:hover {
+  background-color: #dfad58;
+  color: #fff;
+}
+
+.delborder {
+  border: #dc3545 solid 3px;
+}
+
+.delborder:hover {
+  background-color: #dc3545;
+  color: #fff;
+  box-shadow: none;
+}
+
+.add-btn {
+  background-color: #dfad58;
+  color: #362517;
+  border: none;
+  opacity: 0.75;
+}
+
+.add-btn:hover {
+  opacity: 1;
 }
