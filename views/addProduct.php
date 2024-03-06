@@ -29,7 +29,7 @@ require_once "templates/adminNav.php";
       <input type="file" class="form-control" id="productImage">
     </div>
     <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="btn button">Save</button>
       <button type="reset" class="btn btn-secondary">Reset</button>
     </div>
   </form>
