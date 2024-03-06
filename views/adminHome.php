@@ -25,9 +25,12 @@ require_once "templates/adminNav.php";
   <div class="container">
     <div class="row">
       <!-- start of order -->
-      <div class="col-4">
+      <div class="col-5">
         <div class="card">
           <div class="card-body">
+            <!-- start of product order -->
+            <div class="list mx-3"></div>
+          <!-- end of product order -->
             <form>
               <div class="form-floating my-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
@@ -48,13 +51,27 @@ require_once "templates/adminNav.php";
       </div>
       <!-- end of order -->
       <!-- start of menu -->
-      <div class="col-8 ">
-        <p>Add to user</p>
-        <select class="form-select w-50" aria-label="Default select example">
-          <option value="1">Ali</option>
-          <option value="2">Ahmed</option>
-          <option value="3">Samy</option>
-        </select>
+      <div class="col-7 ">
+        <h5 class="text-muted "> latest order</h5>
+        <div class="d-flex flex-wrap">
+          <div class="card m-3 " style="width: 9rem">
+            <img src="../public/images/item1.jpg" class="card-img-top" alt="..." />
+           
+            <div class="card-body">
+              <p class="card-text">
+                tea
+              </p>
+            </div>
+          </div>
+          <div class="card m-3 " style="width: 9rem">
+            <img src="../public/images/item2.jpg" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <p class="card-text">
+                cola
+              </p>
+            </div>
+          </div>
+        </div>
         <hr class="my-4" />
         <div class="section-title">
           <p class="display-5">Menu</p>
@@ -62,7 +79,7 @@ require_once "templates/adminNav.php";
         <div class="d-flex flex-wrap">
           <div class="card m-3 product" style="width: 9rem">
             <img src="../public/images/item3.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$10</h5>
+            <h5 class="menu-price">$<span  class="product-price">15</span></h5>
             <div class="card-body">
               <p class="card-text">
                 tea
@@ -71,25 +88,25 @@ require_once "templates/adminNav.php";
           </div>
           <div class="card m-3 product" style="width: 9rem">
             <img src="../public/images/item4.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$15</h5>
+            <h5 class="menu-price">$<span  class="product-price">15</span></h5>
             <div class="card-body">
               <p class="card-text">
-                caffee
+                coffee
               </p>
             </div>
           </div>
           <div class="card m-3 product" style="width: 9rem">
             <img src="../public/images/item5.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$20</h5>
+            <h5 class="menu-price">$<span  class="product-price">20</span></h5>
             <div class="card-body">
               <p class="card-text">
-                hot chocolete
+                spreso
               </p>
             </div>
           </div>
           <div class="card m-3 product" style="width: 9rem">
             <img src="../public/images/item6.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$7</h5>
+            <h5 class="menu-price">$<span  class="product-price">7</span></h5>
             <div class="card-body">
               <p class="card-text">
                 cola
@@ -98,7 +115,7 @@ require_once "templates/adminNav.php";
           </div>
           <div class="card m-3 product" style="width: 9rem">
             <img src="../public/images/item7.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$7</h5>
+            <h5 class="menu-price">$<span  class="product-price">7</span></h5>
             <div class="card-body">
               <p class="card-text">
                 nescofe
@@ -107,7 +124,7 @@ require_once "templates/adminNav.php";
           </div>
           <div class="card m-3 product" style="width: 9rem">
             <img src="../public/images/item8.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$7</h5>
+            <h5 class="menu-price">$<span class="product-price">30</span></h5>
             <div class="card-body">
               <p class="card-text">
                 spreso
@@ -116,7 +133,7 @@ require_once "templates/adminNav.php";
           </div>
           <div class="card m-3 product" style="width: 9rem">
             <img src="../public/images/item1.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$20</h5>
+            <h5 class="menu-price">$<span class="product-price">20</span></h5>
             <div class="card-body">
               <p class="card-text">
                 tea
