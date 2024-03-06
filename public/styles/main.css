@@ -77,3 +77,29 @@ body {
 .add-btn:hover {
   opacity: 1;
 }
+.input-group-append {
+  cursor: pointer !important;
+}
+.day {
+  text-align: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.day:hover{
+  background-color: rgb(155, 155, 238);
+}
+.accordion-button:not(.collapsed){
+  background-color: white !important;
+}
+.accordion-button,
+.collapsed,
+.collapsed:focus,
+.accordion-button:focus{
+  outline: none !important;
+  box-shadow: none !important;
+  padding-top: 2px !important;
+}
