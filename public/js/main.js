@@ -63,4 +63,20 @@ window.onload = function () {
         }
         return false;
     }
+    
+      document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('saveCategory').addEventListener('click', function() {
+
+        var categoryName = document.getElementById('newCategoryName').value;
+        var selectElement = document.getElementById('productCategory');
+        var newOption = document.createElement('option');
+        newOption.textContent = categoryName;
+        newOption.value = categoryName.toLowerCase(); 
+        selectElement.appendChild(newOption);
+        var modal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
+        modal.hide();
+        document.getElementById('newCategoryName').value = '';
+
+      });
+    });
 };
