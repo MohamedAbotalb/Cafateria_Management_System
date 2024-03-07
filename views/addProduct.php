@@ -2,7 +2,6 @@
   require_once "templates/adminNav.php";
   ?>
 
-
   <div class="container my-5">
     <h1>Add Product</h1>
     <form class="my-5" action="process_form.php" method="POST" enctype="multipart/form-data">
