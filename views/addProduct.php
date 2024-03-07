@@ -58,29 +58,20 @@
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('saveCategory').addEventListener('click', function() {
-        // Get the value of the new category name
+
         var categoryName = document.getElementById('newCategoryName').value;
-
-        // Perform any validation if needed
-
-        // Add the new category to the select dropdown
         var selectElement = document.getElementById('productCategory');
         var newOption = document.createElement('option');
         newOption.textContent = categoryName;
-        newOption.value = categoryName.toLowerCase(); // You may want to convert the category name to lowercase for consistency
+        newOption.value = categoryName.toLowerCase(); 
         selectElement.appendChild(newOption);
-
-        // Close the modal
         var modal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
         modal.hide();
-
-        // Clear the input field
         document.getElementById('newCategoryName').value = '';
+
       });
     });
   </script>
