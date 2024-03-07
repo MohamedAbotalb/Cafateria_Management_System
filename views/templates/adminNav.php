@@ -1,10 +1,13 @@
 <?php
 require_once "head.php";
 ?>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 <!-- Navbar start -->
 <div class="container-fluid p-0 nav-bar" style="background-color: #362517; ">
-  <nav class="navbar navbar-expand-lg navbar-dark py-3 fs-4 d-flex justify-content-sm-evenly">
+  <nav class="navbar navbar-expand-lg navbar-dark py-1 fs-4 d-flex justify-content-sm-evenly">
     <a class="navbar-brand px-lg-4 me-5">
       <h1 class="m-0 display-4 fs-1 text-white">ITI Cafeteria</h1>
     </a>
@@ -22,7 +25,7 @@ require_once "head.php";
       <ul class="navbar-nav mx-5">
         <li class="nav-item ">
           <a class="nav-link" href="/admin" id="navbarDropdown" aria-expanded="false">
-            <img class="nav-img" src="" width="60px" />
+            <img class="nav-img rounded-circle" src="https://www.kindpng.com/picc/m/475-4750705_school-administrator-icon-png-transparent-png.png" width="50px" height="50px" />
             <span class="nav-user">Admin</span>
           </a>
         </li>
