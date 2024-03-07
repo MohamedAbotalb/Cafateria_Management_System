@@ -10,41 +10,47 @@ require_once "templates/adminNav.php";
           <h4 class="mb-0">Add User</h4>
         </div>
         <div class="card-body"> 
-          <form action="" method="" enctype="multipart/form-data">
+          <form action="" method="" enctype="multipart/form-data" class="needs-validation" novalidate>
             <div class="mb-3 row">
               <label for="name" class="col-sm-3 col-form-label">Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="name" name="name" required>
+                <input type="text" class="form-control" id="name" name="name" required pattern="[A-Za-z]+" title="Name must contain only letters">
+                <div class="invalid-feedback">Name must contain only letters.</div>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="email" class="col-sm-3 col-form-label">Email</label>
               <div class="col-sm-9">
                 <input type="email" class="form-control" id="email" name="email" required>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="password" class="col-sm-3 col-form-label">Password</label>
               <div class="col-sm-9">
                 <input type="password" class="form-control" id="password" name="password" required>
+                <div class="invalid-feedback">Please enter a password.</div>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
               <div class="col-sm-9">
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                <div class="invalid-feedback">Please confirm your password.</div>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="roomNum" class="col-sm-3 col-form-label">Room Number</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="roomNum" name="roomNum">
+                <input type="number" class="form-control" id="roomNum" name="roomNum">
+                <div class="invalid-feedback">Room number must be a number.</div>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="ext" class="col-sm-3 col-form-label">Extension</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" id="ext" name="ext">
+                <input type="number" class="form-control" id="ext" name="ext">
+                <div class="invalid-feedback">Extension must be a number.</div>
               </div>
             </div>
             <div class="mb-3 row">
