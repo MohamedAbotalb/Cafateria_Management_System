@@ -36,20 +36,20 @@ require_once "templates/adminNav.php";
               <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
               <div class="col-sm-9">
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                <div class="invalid-feedback">Please confirm your password.</div>
+                <div class="invalid-feedback">Passwords do not match.</div>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="roomNum" class="col-sm-3 col-form-label">Room Number</label>
               <div class="col-sm-9">
-                <input type="number" class="form-control" id="roomNum" name="roomNum">
+                <input type="number" class="form-control" id="roomNum" name="roomNum" required>
                 <div class="invalid-feedback">Room number must be a number.</div>
               </div>
             </div>
             <div class="mb-3 row">
               <label for="ext" class="col-sm-3 col-form-label">Extension</label>
               <div class="col-sm-9">
-                <input type="number" class="form-control" id="ext" name="ext">
+                <input type="number" class="form-control" id="ext" name="ext" required>
                 <div class="invalid-feedback">Extension must be a number.</div>
               </div>
             </div>
@@ -57,7 +57,7 @@ require_once "templates/adminNav.php";
               <label for="profilePicture" class="col-sm-3 col-form-label">Profile Picture</label>
               <div class="col-sm-9">
                 <div class="input-group">
-                  <input type="file" class="form-control" id="profilePicture" name="profilePicture">
+                  <input type="file" class="form-control" id="profilePicture" name="profilePicture" required>
                   <label class="input-group-text" for="profilePicture">Upload</label>
                 </div>
               </div>
@@ -74,3 +74,26 @@ require_once "templates/adminNav.php";
     </div>
   </div>
 </div>
+
+<script>
+  // Custom JavaScript validation
+  (function () {
+    'use strict';
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation');
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add('was-validated');
+        }, false);
+      });
+  })();
+</script>
