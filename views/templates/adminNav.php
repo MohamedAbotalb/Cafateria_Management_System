@@ -1,6 +1,9 @@
 <?php
 require_once "head.php";
 ?>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 <!-- Navbar start -->
 <div class="container-fluid p-0 nav-bar" style="background-color: #362517; ">
