@@ -67,13 +67,13 @@ window.onload = function () {
       document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('saveCategory').addEventListener('click', function() {
 
-        var categoryName = document.getElementById('newCategoryName').value;
-        var selectElement = document.getElementById('productCategory');
-        var newOption = document.createElement('option');
+        const categoryName = document.getElementById('newCategoryName').value;
+        const selectElement = document.getElementById('productCategory');
+        const newOption = document.createElement('option');
         newOption.textContent = categoryName;
         newOption.value = categoryName.toLowerCase(); 
         selectElement.appendChild(newOption);
-        var modal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
+        const modal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
         modal.hide();
         document.getElementById('newCategoryName').value = '';
 
@@ -81,7 +81,7 @@ window.onload = function () {
     });
 
     (function () {
-    var forms = document.querySelectorAll('.needs-validation');
+    const forms = document.querySelectorAll('.needs-validation');
 
     Array.prototype.slice.call(forms)
       .forEach(function (form) {
