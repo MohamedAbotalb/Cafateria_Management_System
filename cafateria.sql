@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: sql.freedb.tech
--- Generation Time: Mar 08, 2024 at 04:33 PM
+-- Generation Time: Mar 08, 2024 at 07:30 PM
 -- Server version: 8.0.36-0ubuntu0.22.04.1
 -- PHP Version: 8.2.7
 
@@ -45,7 +45,7 @@ CREATE TABLE `orders` (
   `order_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `room_id` int NOT NULL,
   `user_id` int NOT NULL,
-  `total_price` decimal(10,0) NOT NULL
+  `total_price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -55,11 +55,10 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `order_product` (
-  `id` int NOT NULL,
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `quantity` int NOT NULL,
-  `amount` decimal(10,0) NOT NULL
+  `amount` double(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -71,7 +70,7 @@ CREATE TABLE `order_product` (
 CREATE TABLE `product` (
   `id` int NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `price` decimal(10,0) NOT NULL,
+  `price` double(10,2) NOT NULL,
   `category_id` int NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `available` enum('available','unavailable') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'available'
@@ -112,7 +111,8 @@ CREATE TABLE `user` (
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `orders`
@@ -126,7 +126,7 @@ ALTER TABLE `orders`
 -- Indexes for table `order_product`
 --
 ALTER TABLE `order_product`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`order_id`,`product_id`),
   ADD KEY `order_product_ibfk_1` (`order_id`),
   ADD KEY `order_product_ibfk_2` (`product_id`);
 
@@ -148,6 +148,7 @@ ALTER TABLE `room`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `room_num` (`room_id`);
 
 --
@@ -158,31 +159,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `order_product`
---
-ALTER TABLE `order_product`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
