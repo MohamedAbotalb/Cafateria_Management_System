@@ -14,7 +14,7 @@ require_once "head.php";
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <div class="navbar-nav px-5">
                 <a href="/admin-home" class="nav-item nav-link mx-3 ">Home</a>
-                <a href="./admin-products" class="nav-item nav-link mx-3">Products</a>
+                <a href="./admin-products.php" class="nav-item nav-link mx-3">Products</a>
                 <a href="./admin-users.php" class="nav-item nav-link mx-3">Users</a>
                 <a href="/admin-manual" class="nav-item nav-link mx-3">Manual Orders</a>
                 <a href="/admin-checks" class="nav-item nav-link mx-3 ">Checks</a>
