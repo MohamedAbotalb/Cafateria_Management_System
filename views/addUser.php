@@ -7,7 +7,7 @@ require_once "templates/adminNav.php";
   <form class="my-5 needs-validation" action="#" method="" enctype="multipart/form-data" novalidate>
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" pattern="[^\s].+" title="Name must not start with a space" required>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" pattern="[A-Za-z][A-Za-z\s]*" title="Name must start with a letter and can contain only letters and spaces" required>
       <div class="invalid-feedback">
         Please enter a valid name.
       </div>
@@ -66,41 +66,60 @@ require_once "templates/adminNav.php";
 </div>
 
 <script>
-  // Function to validate password and confirm password fields
-  function validatePassword() {
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    if (password != confirmPassword) {
-      document.getElementById("confirmPassword").setCustomValidity("Passwords do not match");
-    } else {
-      document.getElementById("confirmPassword").setCustomValidity('');
-    }
-  }
+  document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('.needs-validation');
 
-  // Add event listener to confirm password field to trigger validation
-  document.getElementById("confirmPassword").addEventListener("input", validatePassword);
+    forms.forEach(function(form) {
+      form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
 
+        form.classList.add('was-validated');
+      }, false);
 
-  // Function to toggle password visibility
-  function togglePasswordVisibility(inputId, iconId) {
-    const passwordInput = document.getElementById(inputId);
-    const passwordIcon = document.getElementById(iconId);
+      const resetBtn = form.querySelector('[type="reset"]');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function() {
+          form.classList.remove('was-validated');
+          const invalidFeedbacks = form.querySelectorAll('.invalid-feedback');
+          invalidFeedbacks.forEach(function(feedback) {
+            feedback.style.display = 'none';
+          });
+        });
+      }
+    });
 
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
-      passwordIcon.innerHTML = '<i class="far fa-eye-slash"></i>';
-    } else {
-      passwordInput.type = "password";
-      passwordIcon.innerHTML = '<i class="far fa-eye"></i>';
-    }
-  }
+    // Password confirmation validation
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const confirmPasswordFeedback = document.querySelector("#confirmPassword ~ .invalid-feedback");
 
-  // Add event listeners to toggle password visibility when the eye icon is clicked
-  document.getElementById("togglePassword").addEventListener("click", function() {
-    togglePasswordVisibility("password", "togglePassword");
-  });
+    confirmPassword.addEventListener("input", function () {
+      if (password.value !== confirmPassword.value) {
+        confirmPassword.setCustomValidity("Passwords do not match");
+        confirmPasswordFeedback.style.display = "block";
+      } else {
+        confirmPassword.setCustomValidity("");
+        confirmPasswordFeedback.style.display = "none";
+      }
+    });
 
-  document.getElementById("toggleConfirmPassword").addEventListener("click", function() {
-    togglePasswordVisibility("confirmPassword", "toggleConfirmPassword");
+    // Toggle password visibility
+    const togglePassword = document.getElementById("togglePassword");
+    const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
+
+    togglePassword.addEventListener("click", function () {
+      const type = password.getAttribute("type") === "password" ? "text" : "password";
+      password.setAttribute("type", type);
+      this.querySelector("i").classList.toggle("fa-eye-slash");
+    });
+
+    toggleConfirmPassword.addEventListener("click", function () {
+      const type = confirmPassword.getAttribute("type") === "password" ? "text" : "password";
+      confirmPassword.setAttribute("type", type);
+      this.querySelector("i").classList.toggle("fa-eye-slash");
+    });
   });
 </script>
