@@ -29,9 +29,7 @@
         </select>
         <button type="button" class="btn button" id="addCategoryBtn" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add New Category</button>
       </div>
-      <div class="invalid-feedback">
-        Please select a category.
-      </div>
+      <div class="invalid-feedback">Please select a category.</div>
     </div>
     <div class="mb-3">
       <label for="productImage" class="form-label">Product Image</label>
@@ -60,40 +58,77 @@
           <label for="newCategoryName" class="form-label">Category Name</label>
           <input type="text" class="form-control" id="newCategoryName" placeholder="Enter category name" required>
           <div class="invalid-feedback">
-            Please enter a category name.
+            Enter a valid category name.
           </div>
         </div>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn button" id="saveCategory">Save</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveCategory">Save</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-
   const forms = document.querySelectorAll('.needs-validation');
 
   Array.prototype.slice.call(forms)
     .forEach(function(form) {
       form.addEventListener('submit', function(event) {
-        if (!form.checkValidity()) {
+        const productCategory = document.getElementById('productCategory');
+        const productPrice = document.getElementById('productPrice');
+
+        if (!form.checkValidity() || productCategory.value === '' || productPrice.value.startsWith('0')) {
           event.preventDefault();
           event.stopPropagation();
+
+          if (productCategory.value === '') {
+            productCategory.classList.add('is-invalid');
+            document.querySelector("#productCategory + .invalid-feedback").style.display = "block"; // Displaying the invalid feedback message
+          } else {
+            productCategory.classList.remove('is-invalid');
+            document.querySelector("#productCategory + .invalid-feedback").style.display = "none"; // Hiding the invalid feedback message
+          }
+
+          if (productPrice.value.startsWith('0')) {
+            productPrice.classList.add('is-invalid');
+          } else {
+            productPrice.classList.remove('is-invalid');
+          }
+        } else {
+          productCategory.classList.remove('is-invalid');
+          productPrice.classList.remove('is-invalid');
         }
 
         form.classList.add('was-validated');
       }, false);
-      
+
       const resetBtn = form.querySelector('[type="reset"]');
       if (resetBtn) {
         resetBtn.addEventListener('click', function() {
           form.classList.remove('was-validated');
+          const productCategory = document.getElementById('productCategory');
+          const newCategoryName = document.getElementById('newCategoryName');
+          const productPrice = document.getElementById('productPrice');
+
+          productCategory.classList.remove('is-invalid');
+          newCategoryName.classList.remove('is-invalid');
+          productPrice.classList.remove('is-invalid');
+
+          document.querySelector("#productCategory + .invalid-feedback").style.display = "none"; // Hiding the invalid feedback message
         });
       }
     });
-    
-</script>
 
+  document.getElementById('saveCategory').addEventListener('click', function() {
+    const categoryNameInput = document.getElementById('newCategoryName');
+    const categoryName = categoryNameInput.value.trim();
+
+    if (!/^[A-Za-z][A-Za-z\s]*$/.test(categoryName)) {
+      categoryNameInput.classList.add('is-invalid');
+    } else {
+      categoryNameInput.classList.remove('is-invalid');
+    }
+  });
+</script>

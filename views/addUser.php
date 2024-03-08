@@ -71,9 +71,27 @@ require_once "templates/adminNav.php";
 
     forms.forEach(function(form) {
       form.addEventListener('submit', function(event) {
-        if (!form.checkValidity()) {
+        const roomNum = document.getElementById('roomNum');
+        const ext = document.getElementById('ext');
+
+        if (!form.checkValidity() || roomNum.value.startsWith('0') || ext.value.startsWith('0')) {
           event.preventDefault();
           event.stopPropagation();
+
+          if (roomNum.value.startsWith('0')) {
+            roomNum.classList.add('is-invalid');
+          } else {
+            roomNum.classList.remove('is-invalid');
+          }
+
+          if (ext.value.startsWith('0')) {
+            ext.classList.add('is-invalid');
+          } else {
+            ext.classList.remove('is-invalid');
+          }
+        } else {
+          roomNum.classList.remove('is-invalid');
+          ext.classList.remove('is-invalid');
         }
 
         form.classList.add('was-validated');
@@ -87,6 +105,13 @@ require_once "templates/adminNav.php";
           invalidFeedbacks.forEach(function(feedback) {
             feedback.style.display = 'none';
           });
+
+          // Reset input fields
+          const inputs = form.querySelectorAll('.form-control');
+          inputs.forEach(function(input) {
+            input.classList.remove('is-invalid');
+            input.value = ''; // Clear input values
+          });
         });
       }
     });
@@ -96,7 +121,7 @@ require_once "templates/adminNav.php";
     const confirmPassword = document.getElementById("confirmPassword");
     const confirmPasswordFeedback = document.querySelector("#confirmPassword ~ .invalid-feedback");
 
-    confirmPassword.addEventListener("input", function () {
+    confirmPassword.addEventListener("input", function() {
       if (password.value !== confirmPassword.value) {
         confirmPassword.setCustomValidity("Passwords do not match");
         confirmPasswordFeedback.style.display = "block";
@@ -110,13 +135,13 @@ require_once "templates/adminNav.php";
     const togglePassword = document.getElementById("togglePassword");
     const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
 
-    togglePassword.addEventListener("click", function () {
+    togglePassword.addEventListener("click", function() {
       const type = password.getAttribute("type") === "password" ? "text" : "password";
       password.setAttribute("type", type);
       this.querySelector("i").classList.toggle("fa-eye-slash");
     });
 
-    toggleConfirmPassword.addEventListener("click", function () {
+    toggleConfirmPassword.addEventListener("click", function() {
       const type = confirmPassword.getAttribute("type") === "password" ? "text" : "password";
       confirmPassword.setAttribute("type", type);
       this.querySelector("i").classList.toggle("fa-eye-slash");
