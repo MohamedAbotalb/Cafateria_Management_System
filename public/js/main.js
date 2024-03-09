@@ -1,4 +1,5 @@
 window.onload = function () {
+   
     const products = document.querySelectorAll(".product");
     const parent = document.querySelector(".list");
 
@@ -95,4 +96,51 @@ window.onload = function () {
         }, false);
       });
   })();
+
+
+
+  const startDate = document.getElementById("dateFrom");
+  const endDate = document.getElementById("dateTo");
+  const divStartDate = document.getElementById("errorDateFrom");
+  const divEndDate = document.getElementById("errorDateTo");
+  var messageTag = document.createElement('div');
+
+
+  
+
+
+  startDate.onchange=function(e){
+    if(startDate.value || startDate.value<endDate.value )
+    {
+        messageTag.remove();
+  }
+  if(endDate.value=='')
+  {
+    messageTag.textContent = 'Please enter End Date';
+    messageTag.style.cssText='color:red';
+    divEndDate.appendChild(messageTag);
+  }
+ 
 };
+
+
+endDate.onchange= function (e) {
+  if(endDate.value)
+  {
+      messageTag.remove();
+}
+    if(startDate.value=='')
+    {
+      messageTag.textContent = 'Please enter Start Date';
+      messageTag.style.cssText='color:red';
+      divStartDate.appendChild(messageTag);
+    }
+    if(startDate.value>=endDate.value){
+      messageTag.textContent = 'Start Date Must Be Smaller Than End Date';
+      messageTag.style.cssText='color:red';
+      divEndDate.appendChild(messageTag);
+
+    }
+    
+};
+}
