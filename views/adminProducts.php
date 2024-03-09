@@ -15,7 +15,7 @@ require_once "templates/adminNav.php"
               <h2>All Products</h2>
             </th>
             <th class="border-0 text-end">
-              <button class="add-btn fs-5 rounded p-2">Add Product</button>
+              <a href="./addProduct.php" class=" use-btn btn fs-5 rounded p-1">Add Product</a>
             </th>
           </tr>
           <tr class='text-center text-white fs-5' style="background-color: #362517;">
@@ -38,53 +38,86 @@ require_once "templates/adminNav.php"
             </td>
             <td class='text-center'>
               <!-- Button trigger modal***edit*** -->
-              <a class=" btn justify-content-center  d-inline-flex align-items-center rounded-circle fs-5  editborder " data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <a class=" btn justify-content-center  d-inline-flex align-items-center rounded-circle fs-5  editborder " data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
                 <i class="fa-regular fa-pen-to-square"></i>
               </a>
-
-              <!--end edit btn -->
-
-              <!-- Modal -->
-              <div class=" modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+              <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" data-bs-backdrop="static">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                      <h5 class="modal-title" id="exampleModalToggleLabel"> Edit Product</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <!-- ...add product -->
-                      <form class="my-5" action="" method="" enctype="multipart/form-data">
+                      <form class="needs-validation Form mb-0" action="#" method="" enctype="multipart/form-data" novalidate>
                         <div class="mb-3">
                           <label for="productName" class="form-label">Product</label>
-                          <input type="text" class="form-control" id="productName" placeholder="Enter product name">
+                          <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="[A-Za-z][A-Za-z\s]*" title="Product name must start with a letter and not contain numbers" required>
+                          <div class="invalid-feedback">
+                            Please enter a valid product name.
+                          </div>
                         </div>
                         <div class="mb-3">
                           <label for="productPrice" class="form-label">Price</label>
-                          <input type="text" class="form-control" id="productPrice" placeholder="Enter product price">
+                          <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Enter product price" min="1" max="100" required>
+                          <div class="invalid-feedback">
+                            Please enter a valid price.
+                          </div>
                         </div>
                         <div class="mb-3">
                           <label for="productCategory" class="form-label">Category</label>
-                          <select class="form-select" id="productCategory">
-                            <option selected>Select category</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="clothing">Clothing</option>
-                            <option value="home">Home</option>
-                            <option value="beauty">Beauty</option>
-                          </select>
-                          <button type="button" class="btn btn-primary mt-2">Add Category</button>
+                          <div class="input-group">
+                            <select class="form-select" id="productCategory" name="productCategory" required>
+                              <option value="" selected disabled>Select category</option>
+                              <option value="Tea">Tea</option>
+                              <option value="Soda">Soda</option>
+                              <option value="Coffee">Coffee</option>
+                              <option value="Fruit Juices">Fruit Juices</option>
+                            </select>
+                            <button type="button" class="btn use-btn" id="addCategoryBtn" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Add New Category</button>
+
+                            <!-- -->
+                            <!--  -->
+                          </div>
+                          <div class="invalid-feedback">Please select a category.</div>
                         </div>
                         <div class="mb-3">
                           <label for="productImage" class="form-label">Product Image</label>
-                          <input type="file" class="form-control" id="productImage">
+                          <input type="file" class="form-control" id="productImage" name="productImage" required>
+                          <div class="invalid-feedback">
+                            Please upload a product image.
+                          </div>
                         </div>
-
+                        <div>
+                          <div class=" modal-footer">
+                            <button type="submit" class="btn use-btn">Save</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                          </div>
+                        </div>
                       </form>
-                      <!--  -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalToggleLabel2">Add New Category</h5>
+                      <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="newCategoryName" class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="newCategoryName" placeholder="Enter category name" required>
+                        <div class="invalid-feedback">
+                          Enter a valid category name.
+                        </div>
+                      </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+                      <button type="submit" class="btn use-btn" id="saveCategory">Save</button>
+                      <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">Cancel</button>
                     </div>
                   </div>
                 </div>
@@ -97,23 +130,19 @@ require_once "templates/adminNav.php"
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">confirm delete</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                       <p>Are you sure you want to delete?</p>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal">No</button>
                       <button type="button" class="btn btn-danger">Yes</button>
+                      <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal">No</button>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <!-- <button class=' mx-1 fs-5 rounded btn btn-success'>
-                                Available
-                            </button> -->
             </td>
           </tr>
         </tbody>
@@ -121,3 +150,15 @@ require_once "templates/adminNav.php"
     </div>
   </div>
 </div>
+<script>
+  document.getElementById('saveCategory').addEventListener('click', function() {
+    const categoryNameInput = document.getElementById('newCategoryName');
+    const categoryName = categoryNameInput.value.trim();
+
+    if (!/^[A-Za-z][A-Za-z\s]*$/.test(categoryName)) {
+      categoryNameInput.classList.add('is-invalid');
+    } else {
+      categoryNameInput.classList.remove('is-invalid');
+    }
+  });
+</script>
