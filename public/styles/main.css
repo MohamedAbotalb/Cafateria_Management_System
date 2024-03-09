@@ -70,10 +70,16 @@ body {
 .use-btn {
   background-color: #dfad58;
   color: #362517;
-  /* border: none; */
   opacity: 0.9;
 }
-
+.btn-check:focus{
+   outline: none !important; 
+    box-shadow: none !important; 
+}
+.btn:focus {
+    outline: none !important; 
+    box-shadow: none !important; 
+}
 .use-btn:hover {
   opacity: 1;
 }
