@@ -67,15 +67,18 @@ body {
   box-shadow: none;
 }
 
-.add-btn {
+.use-btn {
   background-color: #dfad58;
   color: #362517;
-  border: none;
-  opacity: 0.75;
+  /* border: none; */
+  opacity: 0.9;
 }
 
-.add-btn:hover {
+.use-btn:hover {
   opacity: 1;
+}
+.Form{
+  text-align: left;
 }
 .input-group-append {
   cursor: pointer !important;

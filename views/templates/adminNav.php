@@ -16,11 +16,11 @@ require_once "head.php";
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
       <div class="navbar-nav px-5">
-        <a href="/admin-home" class="nav-item nav-link mx-3 small">Home</a>
-        <a href="/admin-products" class="nav-item nav-link mx-3 small" >Products</a>
-        <a href="/admin-users" class="nav-item nav-link mx-3 small">Users</a>
-        <a href="/admin-manual" class="nav-item nav-link mx-3 small">Manual Orders</a>
-        <a href="/admin-checks" class="nav-item nav-link mx-3 small">Checks</a>
+        <a href="/admin-home.php" class="nav-item nav-link mx-3 small">Home</a>
+        <a href="./adminProducts.php" class="nav-item nav-link mx-3 small">Products</a>
+        <a href="./adminUsers.php" class="nav-item nav-link mx-3 small">Users</a>
+        <a href="/admin-manual.php" class="nav-item nav-link mx-3 small">Manual Orders</a>
+        <a href="/admin-checks.php" class="nav-item nav-link mx-3 small">Checks</a>
       </div>
       <ul class="navbar-nav mx-5">
         <li class="nav-item ">
