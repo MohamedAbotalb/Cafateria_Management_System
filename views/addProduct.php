@@ -47,7 +47,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true" data-bs-backdrop="static">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
@@ -68,7 +68,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>  
 
 <script>
   const forms = document.querySelectorAll('.needs-validation');
