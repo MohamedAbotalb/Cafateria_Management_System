@@ -1,150 +1,167 @@
-<?php
-require_once "templates/adminNav.php";
-?>
+  <?php
+  require_once "templates/adminNav.php";
+  ?>
 
-<div class="container my-5">
-  <h1>Add User</h1>
-  <form class="my-5 needs-validation" action="#" method="" enctype="multipart/form-data" novalidate>
-    <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" pattern="[A-Za-z][A-Za-z\s]*" title="Name must start with a letter and can contain only letters and spaces" required>
-      <div class="invalid-feedback">
-        Please enter a valid name.
+  <div class="container my-5">
+    <h1 class="mb-4">Add User</h1>
+    <form class="needs-validation" action="#" method="" enctype="multipart/form-data" novalidate>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" pattern="[A-Za-z][A-Za-z\s]*" title="Enter a valid name" required>
+        <div class="invalid-feedback">
+          Please provide a valid name.
+        </div>
       </div>
-    </div>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
-      <div class="invalid-feedback">
-        Please enter a valid email address.
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
+        <div class="invalid-feedback">
+          Please provide a valid email address.
+        </div>
       </div>
-    </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <div class="input-group">
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
-        <span class="input-group-text" id="togglePassword">
-          <i class="far fa-eye"></i>
-        </span>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" pattern=".{6,}" required>
+          <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+            <i class="fa fa-eye"></i>
+          </button>
+        </div>
+        <div class="invalid-feedback">
+          Please provide a valid password.
+        </div>
       </div>
-    </div>
-    <div class="mb-3">
-      <label for="confirmPassword" class="form-label">Confirm Password</label>
-      <div class="input-group">
-        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
-        <span class="input-group-text" id="toggleConfirmPassword">
-          <i class="far fa-eye"></i>
-        </span>
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <div class="input-group">
+          <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+          <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+            <i class="fa fa-eye"></i>
+          </button>
+          <div class="invalid-feedback">
+            Passwords do not match.
+          </div>
+        </div>
       </div>
-      <div class="invalid-feedback">
-        Passwords do not match.
+      <div class="mb-3">
+        <label for="roomNum" class="form-label">Room Number</label>
+        <input type="number" class="form-control" id="roomNum" name="roomNum" placeholder="Enter room number" min="1" required>
+        <div class="invalid-feedback">
+          Please provide a valid room number.
+        </div>
       </div>
-    </div>
-    <div class="mb-3">
-      <label for="roomNum" class="form-label">Room Number</label>
-      <input type="number" class="form-control" id="roomNum" name="roomNum" placeholder="Enter room number" min="1" required>
-      <div class="invalid-feedback">
-        Please enter a valid room number.
+      <div class="mb-3">
+        <label for="ext" class="form-label">Extension</label>
+        <input type="number" class="form-control" id="ext" name="ext" placeholder="Enter Ext number" min="1" required>
+        <div class="invalid-feedback">
+          Please provide a valid extension number.
+        </div>
       </div>
-    </div>
-    <div class="mb-3">
-      <label for="ext" class="form-label">Extension</label>
-      <input type="number" class="form-control" id="ext" name="ext" placeholder="Enter Ext number" min="1" required>
-      <div class="invalid-feedback">
-        Please enter a valid extension number.
+      <div class="mb-3">
+        <label for="profilePicture" class="form-label">Profile Picture</label>
+        <input type="file" class="form-control" id="profilePicture" name="profilePicture">
       </div>
-    </div>
-    <div class="mb-3">
-      <label for="profilePicture" class="form-label">Profile Picture</label>
-      <input type="file" class="form-control" id="profilePicture" name="profilePicture">
-    </div>
-    <div class="mb-3">
-      <button type="submit" class="btn button">Save</button>
-      <button type="reset" class="btn btn-secondary">Reset</button>
-    </div>
-  </form>
-</div>
+      <div class="mb-3">
+        <button type="submit" class="btn button">Save</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+      </div>
+    </form>
+  </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const forms = document.querySelectorAll('.needs-validation');
+  <script>
+    (function() {
+      
+      const forms = document.querySelectorAll('.needs-validation');
 
-    forms.forEach(function(form) {
-      form.addEventListener('submit', function(event) {
-        const roomNum = document.getElementById('roomNum');
-        const ext = document.getElementById('ext');
+      // Function to check if a number starts with 0
+      function startsWithZero(value) {
+        return /^0/.test(value);
+      }
 
-        if (!form.checkValidity() || roomNum.value.startsWith('0') || ext.value.startsWith('0')) {
-          event.preventDefault();
-          event.stopPropagation();
+      // Function to check the validity of room number and extension number
+      function validateRoomAndExtension() {
+        const roomNumInput = document.getElementById('roomNum');
+        const extInput = document.getElementById('ext');
 
-          if (roomNum.value.startsWith('0')) {
-            roomNum.classList.add('is-invalid');
-          } else {
-            roomNum.classList.remove('is-invalid');
-          }
-
-          if (ext.value.startsWith('0')) {
-            ext.classList.add('is-invalid');
-          } else {
-            ext.classList.remove('is-invalid');
-          }
+        if (startsWithZero(roomNumInput.value)) {
+          roomNumInput.setCustomValidity('Room number must not start with 0.');
         } else {
-          roomNum.classList.remove('is-invalid');
-          ext.classList.remove('is-invalid');
+          roomNumInput.setCustomValidity('');
         }
 
-        form.classList.add('was-validated');
-      }, false);
+        if (startsWithZero(extInput.value)) {
+          extInput.setCustomValidity('Extension number must not start with 0.');
+        } else {
+          extInput.setCustomValidity('');
+        }
+      }
 
-      const resetBtn = form.querySelector('[type="reset"]');
-      if (resetBtn) {
-        resetBtn.addEventListener('click', function() {
-          form.classList.remove('was-validated');
-          const invalidFeedbacks = form.querySelectorAll('.invalid-feedback');
-          invalidFeedbacks.forEach(function(feedback) {
-            feedback.style.display = 'none';
+      // Function to check if password and confirm password match
+      function validatePasswordConfirmation() {
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        if (passwordInput.value !== confirmPasswordInput.value) {
+          confirmPasswordInput.setCustomValidity('Passwords do not match.');
+        } else {
+          confirmPasswordInput.setCustomValidity('');
+        }
+      }
+
+      // Function to check if password is at least 6 characters
+      function validatePasswordLength() {
+        var passwordInput = document.getElementById('password');
+
+        if (passwordInput.value.length < 6) {
+          passwordInput.setCustomValidity('Password must be at least 6 characters long.');
+        } else {
+          passwordInput.setCustomValidity('');
+        }
+      }
+
+      // Toggle password visibility
+      function togglePasswordVisibility(inputId, buttonId) {
+        const passwordInput = document.getElementById(inputId);
+        const button = document.getElementById(buttonId);
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        if (type === 'password') {
+          button.innerHTML = '<i class="fa fa-eye-slash"></i>'; 
+        } else {
+          button.innerHTML = '<i class="fa fa-eye"></i>'; 
+        }
+      }
+
+      Array.prototype.slice.call(forms)
+        .forEach(function(form) {
+          form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
+            form.classList.add('was-validated');
+          }, false);
+
+          form.querySelector('button[type="reset"]').addEventListener('click', function() {
+            form.classList.remove('was-validated');
           });
 
-          // Reset input fields
-          const inputs = form.querySelectorAll('.form-control');
-          inputs.forEach(function(input) {
-            input.classList.remove('is-invalid');
-            input.value = ''; // Clear input values
+          form.querySelector('#roomNum').addEventListener('input', validateRoomAndExtension);
+          form.querySelector('#ext').addEventListener('input', validateRoomAndExtension);
+
+          form.querySelector('#confirmPassword').addEventListener('input', validatePasswordConfirmation);
+
+          form.querySelector('#password').addEventListener('input', validatePasswordLength);
+
+          form.querySelector('#togglePassword').addEventListener('click', function() {
+            togglePasswordVisibility('password', 'togglePassword');
+          });
+
+          form.querySelector('#toggleConfirmPassword').addEventListener('click', function() {
+            togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword');
           });
         });
-      }
-    });
-
-    // Password confirmation validation
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirmPassword");
-    const confirmPasswordFeedback = document.querySelector("#confirmPassword ~ .invalid-feedback");
-
-    confirmPassword.addEventListener("input", function() {
-      if (password.value !== confirmPassword.value) {
-        confirmPassword.setCustomValidity("Passwords do not match");
-        confirmPasswordFeedback.style.display = "block";
-      } else {
-        confirmPassword.setCustomValidity("");
-        confirmPasswordFeedback.style.display = "none";
-      }
-    });
-
-    // Toggle password visibility
-    const togglePassword = document.getElementById("togglePassword");
-    const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
-
-    togglePassword.addEventListener("click", function() {
-      const type = password.getAttribute("type") === "password" ? "text" : "password";
-      password.setAttribute("type", type);
-      this.querySelector("i").classList.toggle("fa-eye-slash");
-    });
-
-    toggleConfirmPassword.addEventListener("click", function() {
-      const type = confirmPassword.getAttribute("type") === "password" ? "text" : "password";
-      confirmPassword.setAttribute("type", type);
-      this.querySelector("i").classList.toggle("fa-eye-slash");
-    });
-  });
-</script>
+    })();
+  </script>
