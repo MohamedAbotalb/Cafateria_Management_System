@@ -12,7 +12,10 @@
     </div>
     <div class="mb-3">
       <label for="productPrice" class="form-label">Price</label>
+      <div class="input-group">
       <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Enter product price" min="1" max="100" required>
+      <span class="m-2 fs-5">EGP</span>
+      </div>
       <div class="invalid-feedback">
         Please enter a valid price.
       </div>
@@ -71,7 +74,7 @@
 </div>
 
 <script>
-  
+
   document.querySelector('button[type="reset"]').addEventListener('click', function() {
     // Remove the 'is-invalid' class from all input fields and select elements
     document.querySelectorAll('.is-invalid').forEach(function(element) {

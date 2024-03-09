@@ -24,11 +24,9 @@
         <div class="input-group">
           <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" pattern=".{6,}" required>
           <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-            <i class="fa fa-eye"></i>
+            <i class="fa fa-eye-slash"></i>
           </button>
-        </div>
-        <div class="invalid-feedback">
-          Please provide a valid password.
+          <div class="invalid-feedback">Please provide a valid password.</div>
         </div>
       </div>
       <div class="mb-3">
@@ -36,7 +34,7 @@
         <div class="input-group">
           <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
           <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
-            <i class="fa fa-eye"></i>
+            <i class="fa fa-eye-slash"></i>
           </button>
           <div class="invalid-feedback">
             Passwords do not match.
@@ -69,6 +67,7 @@
   </div>
 
   <script>
+
     (function() {
       
       const forms = document.querySelectorAll('.needs-validation');
@@ -127,11 +126,18 @@
         passwordInput.setAttribute('type', type);
 
         if (type === 'password') {
-          button.innerHTML = '<i class="fa fa-eye-slash"></i>'; 
+          button.innerHTML = '<i class="fa fa-eye-slash"></i>';
         } else {
-          button.innerHTML = '<i class="fa fa-eye"></i>'; 
+          button.innerHTML = '<i class="fa fa-eye"></i>';
         }
       }
+
+      // Add event listener to toggle password visibility button
+      const togglePasswordButton = document.getElementById('togglePassword');
+      togglePasswordButton.addEventListener('click', function() {
+        togglePasswordVisibility('inputPassword', 'togglePassword');
+      });
+
 
       Array.prototype.slice.call(forms)
         .forEach(function(form) {
