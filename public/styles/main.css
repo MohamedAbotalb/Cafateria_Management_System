@@ -72,18 +72,18 @@ body {
   color: #362517;
   opacity: 0.9;
 }
-.btn-check:focus{
-   outline: none !important; 
-    box-shadow: none !important; 
+.btn-check:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 .btn:focus {
-    outline: none !important; 
-    box-shadow: none !important; 
+  outline: none !important;
+  box-shadow: none !important;
 }
 .use-btn:hover {
   opacity: 1;
 }
-.Form{
+.Form {
   text-align: left;
 }
 .input-group-append {
@@ -98,16 +98,16 @@ body {
   cursor: pointer;
 }
 
-.day:hover{
+.day:hover {
   background-color: rgb(155, 155, 238);
 }
-.accordion-button:not(.collapsed){
+.accordion-button:not(.collapsed) {
   background-color: white !important;
 }
 .accordion-button,
 .collapsed,
 .collapsed:focus,
-.accordion-button:focus{
+.accordion-button:focus {
   outline: none !important;
   box-shadow: none !important;
   padding-top: 2px !important;
