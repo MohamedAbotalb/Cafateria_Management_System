@@ -1,12 +1,13 @@
 window.onload = function () {
     const products = document.querySelectorAll(".product");
     const parent = document.querySelector(".list");
-
+    let invoiceDiv =document.querySelector(".invoice-price");
+    let invoice=0;
     products.forEach(product => {
         product.addEventListener("click", function () {
             const name= product.querySelector('.card-text');
-            const price= product.querySelector('.productPrice');
-
+            const priceDiv= product.querySelector('.productPrice');
+            const price=parseInt(priceDiv.textContent);
             if (!isProductInList(name.textContent)) {
                 let div = document.createElement('div');
 
@@ -18,12 +19,12 @@ window.onload = function () {
                             <div class="increment fs-5">+</div>
                             <div class="decrement fs-5">-</div>
                         </div>
-                        <div class="col-3 price-product">${price.textContent}</div>
+                        <div class="col-3 price-product">${priceDiv.textContent}</div>
                         <div class="col-2 close"> &times;</div>
                     </div>`;
 
                 parent.appendChild(div);
-
+                invoice+=parseInt(priceDiv.textContent);
                 const quantity = div.querySelector('.quantity');
                 const priceProduct = div.querySelector('.price-product');
                 let totalPrice = parseInt(priceProduct.textContent);
@@ -35,6 +36,9 @@ window.onload = function () {
                     quantity.textContent = quantityValue;
                     newPrice += totalPrice;
                     priceProduct.textContent = newPrice;
+                    invoice+=price;
+                    invoiceDiv.textContent=invoice;
+
                 });
 
                 div.querySelector('.decrement').addEventListener('click', function () {
@@ -43,12 +47,20 @@ window.onload = function () {
                         quantity.textContent = quantityValue;
                         newPrice -= totalPrice;
                         priceProduct.textContent = newPrice;
+                        invoice-=price;
+                        invoiceDiv.textContent=invoice;
                     }
                 });
 
                 div.querySelector('.close').addEventListener('click', function () {
+                    decrementPrice=parseInt(div.querySelector(".price-product").textContent);
+                    invoice-=decrementPrice;
+                    invoiceDiv.textContent=invoice;
                     div.remove();
+
                 });
+                invoiceDiv.textContent=invoice;
+
             } 
         });
     });
