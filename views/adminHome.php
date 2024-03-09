@@ -43,7 +43,7 @@ require_once "templates/adminNav.php";
                 <option value="3">Three</option>
               </select>
               <hr class="my-4" />
-              <p class="fw-bold">55 EGP</p>
+              <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
               <input type="submit" class="btn button" value="confirm" />
             </form>
           </div>
@@ -52,27 +52,14 @@ require_once "templates/adminNav.php";
       <!-- end of order -->
       <!-- start of menu -->
       <div class="col-7 ">
-        <h5 class="text-muted "> latest order</h5>
-        <div class="d-flex flex-wrap">
-          <div class="card m-3 " style="width: 9rem">
-            <img src="../public/images/item1.jpg" class="card-img-top" alt="..." />
-           
-            <div class="card-body">
-              <p class="card-text">
-                tea
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 " style="width: 9rem">
-            <img src="../public/images/item2.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <p class="card-text">
-                cola
-              </p>
-            </div>
-          </div>
-        </div>
-        <hr class="my-4" />
+        <h5 class="text-muted "> Add to user</h5>
+        <select class="form-select w-50 my-5" aria-label="Default select example">
+                <option value="1">Ahmed</option>
+                <option value="2">Ali</option>
+                <option value="3">Karim</option>
+        </select>
+        <hr class="my-5" />
+
         <div class="section-title">
           <p class="display-5">Menu</p>
         </div>

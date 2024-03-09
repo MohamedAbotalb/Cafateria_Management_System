@@ -1,12 +1,14 @@
 window.onload = function () {
+   
     const products = document.querySelectorAll(".product");
     const parent = document.querySelector(".list");
-
+    let invoiceDiv =document.querySelector(".invoice-price");
+    let invoice=0;
     products.forEach(product => {
         product.addEventListener("click", function () {
             const name= product.querySelector('.card-text');
-            const price= product.querySelector('.productPrice');
-
+            const priceDiv= product.querySelector('.productPrice');
+            const price=parseInt(priceDiv.textContent);
             if (!isProductInList(name.textContent)) {
                 let div = document.createElement('div');
 
@@ -18,12 +20,12 @@ window.onload = function () {
                             <div class="increment fs-5">+</div>
                             <div class="decrement fs-5">-</div>
                         </div>
-                        <div class="col-3 price-product">${price.textContent}</div>
+                        <div class="col-3 price-product">${priceDiv.textContent}</div>
                         <div class="col-2 close"> &times;</div>
                     </div>`;
 
                 parent.appendChild(div);
-
+                invoice+=parseInt(priceDiv.textContent);
                 const quantity = div.querySelector('.quantity');
                 const priceProduct = div.querySelector('.price-product');
                 let totalPrice = parseInt(priceProduct.textContent);
@@ -35,6 +37,9 @@ window.onload = function () {
                     quantity.textContent = quantityValue;
                     newPrice += totalPrice;
                     priceProduct.textContent = newPrice;
+                    invoice+=price;
+                    invoiceDiv.textContent=invoice;
+
                 });
 
                 div.querySelector('.decrement').addEventListener('click', function () {
@@ -43,12 +48,20 @@ window.onload = function () {
                         quantity.textContent = quantityValue;
                         newPrice -= totalPrice;
                         priceProduct.textContent = newPrice;
+                        invoice-=price;
+                        invoiceDiv.textContent=invoice;
                     }
                 });
 
                 div.querySelector('.close').addEventListener('click', function () {
+                    decrementPrice=parseInt(div.querySelector(".price-product").textContent);
+                    invoice-=decrementPrice;
+                    invoiceDiv.textContent=invoice;
                     div.remove();
+
                 });
+                invoiceDiv.textContent=invoice;
+
             } 
         });
     });
@@ -95,4 +108,51 @@ window.onload = function () {
         }, false);
       });
   })();
+
+
+
+  const startDate = document.getElementById("dateFrom");
+  const endDate = document.getElementById("dateTo");
+  const divStartDate = document.getElementById("errorDateFrom");
+  const divEndDate = document.getElementById("errorDateTo");
+  var messageTag = document.createElement('div');
+
+
+  
+
+
+  startDate.onchange=function(e){
+    if(startDate.value || startDate.value<endDate.value )
+    {
+        messageTag.remove();
+  }
+  if(endDate.value=='')
+  {
+    messageTag.textContent = 'Please enter End Date';
+    messageTag.style.cssText='color:red';
+    divEndDate.appendChild(messageTag);
+  }
+ 
 };
+
+
+endDate.onchange= function (e) {
+  if(endDate.value)
+  {
+      messageTag.remove();
+}
+    if(startDate.value=='')
+    {
+      messageTag.textContent = 'Please enter Start Date';
+      messageTag.style.cssText='color:red';
+      divStartDate.appendChild(messageTag);
+    }
+    if(startDate.value>=endDate.value){
+      messageTag.textContent = 'Start Date Must Be Smaller Than End Date';
+      messageTag.style.cssText='color:red';
+      divEndDate.appendChild(messageTag);
+
+    }
+    
+};
+}

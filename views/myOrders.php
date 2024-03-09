@@ -6,8 +6,8 @@ require_once "templates/userNav.php";
     <h2>My Orders</h2>
    <!-- Search date -->
    <div class="row">
-        <div class="col-md-6">
-          <div class="input-group date" id="datepickerOne">
+        <div class="col-md-6" id="errorDateFrom">
+          <div class="input-group date " id="datepickerOne">
             <input type="text" class="form-control" id="dateFrom" />
             <span class="input-group-append">
               <span class="input-group-text h-100 bg-light d-block">
@@ -16,7 +16,7 @@ require_once "templates/userNav.php";
             </span>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" id="errorDateTo">
           <div class="input-group date" id="datepickerTwo">
             <input type="text" class="form-control" id="dateTo" />
             <span class="input-group-append">
@@ -497,14 +497,16 @@ require_once "templates/userNav.php";
   <script>
       $(function () {
         $("#datepickerOne").datepicker();
+        
       });
       $(function () {
         $("#datepickerTwo").datepicker();
       });
-      function handleSearch() {
-        var startDate = $("#startDate").val();
-        var endDate = $("#endDate").val();
-        console.log("Searching from", startDate, "to", endDate);
-        // You can perform your search logic here
-      }
+
+      
+      
+   
+
+
     </script>
+    
