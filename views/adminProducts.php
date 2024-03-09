@@ -2,9 +2,7 @@
 require_once "templates/adminNav.php"
 ?>
 
-
 <div class="container">
-
   <div class="row">
     <div class="table-responsive">
       <table class="table table-striped w-75 m-auto table-hover table-bordered my-5 border-secondary">

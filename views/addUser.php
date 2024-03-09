@@ -67,9 +67,8 @@
   </div>
 
   <script>
-
     (function() {
-      
+
       const forms = document.querySelectorAll('.needs-validation');
 
       // Function to check if a number starts with 0

@@ -8,7 +8,6 @@ require_once "templates/adminNav.php"
       <table class="table table-striped w-75 m-auto my-5 table-hover table-bordered border-secondary">
         <thead>
           <tr class="border-0">
-
             <th class="border-0" colspan=" 4">
               <h2>All Users</h2>
             </th>
@@ -22,7 +21,6 @@ require_once "templates/adminNav.php"
             <th>Image</th>
             <th>Ext</th>
             <th>Action</th>
-
           </tr>
         </thead>
         <tbody class='text-center align-middle'>
@@ -36,7 +34,6 @@ require_once "templates/adminNav.php"
               <a class=" btn justify-content-center align-items-center d-inline-flex rounded-circle fs-5 editborder  " data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <i class='fa-solid fa-user-pen'></i>
               </a>
-
               <!--end edit btn -->
 
               <!-- Modal -->
@@ -108,7 +105,6 @@ require_once "templates/adminNav.php"
                           <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Reset</button> -->
                         </div>
                         <!-- </form> -->
-                        <!--  -->
                     </div>
                     <div class="modal-footer">
                       <button type="submit" class="btn use-btn">Save</button>

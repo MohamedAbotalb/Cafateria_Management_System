@@ -19,7 +19,7 @@ require_once "head.php";
       <ul class="navbar-nav mx-5">
         <li class="nav-item ">
           <a class="nav-link" href="/user" id="navbarDropdown" aria-expanded="false">
-            <img class="nav-img rounded-circle" src="" width="60px" />
+            <img class="nav-img rounded-circle" src="../public/images/user1.png" width="60px" />
             <span class="nav-user small">Username</span>
           </a>
         </li>
