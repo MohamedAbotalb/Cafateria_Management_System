@@ -24,8 +24,11 @@ require_once "templates/adminNav.php";
             </div>
         </div>
         <div class="row m-auto text-center">
-            <button type="submit" class="btn btn-primary mb-3 w-50 m-auto">Update Password</button><br>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
         </div>
+
     </form>
 </div>
 
