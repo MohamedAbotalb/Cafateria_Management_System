@@ -28,8 +28,8 @@
           <option value="Fruit Juices">Fruit Juices</option>
         </select>
         <button type="button" class="btn button" id="addCategoryBtn" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add New Category</button>
+        <div class="invalid-feedback">Please select a category.</div>
       </div>
-      <div class="invalid-feedback">Please select a category.</div>
     </div>
     <div class="mb-3">
       <label for="productImage" class="form-label">Product Image</label>
@@ -68,58 +68,23 @@
       </div>
     </div>
   </div>
-</div>  
+</div>
 
 <script>
-  const forms = document.querySelectorAll('.needs-validation');
-
-  Array.prototype.slice.call(forms)
-    .forEach(function(form) {
-      form.addEventListener('submit', function(event) {
-        const productCategory = document.getElementById('productCategory');
-        const productPrice = document.getElementById('productPrice');
-
-        if (!form.checkValidity() || productCategory.value === '' || productPrice.value.startsWith('0')) {
-          event.preventDefault();
-          event.stopPropagation();
-
-          if (productCategory.value === '') {
-            productCategory.classList.add('is-invalid');
-            document.querySelector("#productCategory + .invalid-feedback").style.display = "block"; // Displaying the invalid feedback message
-          } else {
-            productCategory.classList.remove('is-invalid');
-            document.querySelector("#productCategory + .invalid-feedback").style.display = "none"; // Hiding the invalid feedback message
-          }
-
-          if (productPrice.value.startsWith('0')) {
-            productPrice.classList.add('is-invalid');
-          } else {
-            productPrice.classList.remove('is-invalid');
-          }
-        } else {
-          productCategory.classList.remove('is-invalid');
-          productPrice.classList.remove('is-invalid');
-        }
-
-        form.classList.add('was-validated');
-      }, false);
-
-      const resetBtn = form.querySelector('[type="reset"]');
-      if (resetBtn) {
-        resetBtn.addEventListener('click', function() {
-          form.classList.remove('was-validated');
-          const productCategory = document.getElementById('productCategory');
-          const newCategoryName = document.getElementById('newCategoryName');
-          const productPrice = document.getElementById('productPrice');
-
-          productCategory.classList.remove('is-invalid');
-          newCategoryName.classList.remove('is-invalid');
-          productPrice.classList.remove('is-invalid');
-
-          document.querySelector("#productCategory + .invalid-feedback").style.display = "none"; // Hiding the invalid feedback message
-        });
-      }
+  
+  document.querySelector('button[type="reset"]').addEventListener('click', function() {
+    // Remove the 'is-invalid' class from all input fields and select elements
+    document.querySelectorAll('.is-invalid').forEach(function(element) {
+      element.classList.remove('is-invalid');
     });
+
+    // Reset the form's validation state
+    const forms = document.querySelectorAll('.needs-validation');
+    forms.forEach(function(form) {
+      form.classList.remove('was-validated');
+    });
+  });
+
 
   document.getElementById('saveCategory').addEventListener('click', function() {
     const categoryNameInput = document.getElementById('newCategoryName');
