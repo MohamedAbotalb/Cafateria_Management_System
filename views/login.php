@@ -8,7 +8,7 @@ require_once "templates/head.php";
     <div class="row g-3 align-items-center my-3">
       <div class="mb-3">
         <label for="inputEmail" class="col-form-label d-block">Email</label>
-        <input type="email" id="inputEmail" class="form-control" aria-describedby="emailHelpInline" required>
+        <input type="email" id="inputEmail" class="form-control" aria-describedby="emailHelpInline" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
         <div class="invalid-feedback">Please enter a valid email.</div>
       </div>
     </div>
@@ -16,7 +16,7 @@ require_once "templates/head.php";
       <div class="mb-3">
         <label for="inputPassword" class="col-form-label">Password</label>
         <div class="input-group">
-          <input type="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpInline" required>
+          <input type="password" id="inputPassword" class="form-control" pattern="\S{6,}" aria-describedby="passwordHelpInline" required>
           <button class="btn btn-outline-secondary" type="button" id="togglePassword">
             <i class="fa fa-eye-slash"></i>
           </button>

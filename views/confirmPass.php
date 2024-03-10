@@ -9,7 +9,7 @@
           <div class="mb-3">
             <label for="inputPassword" class="col-form-label">Enter New Password</label>
             <div class="input-group">
-              <input type="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpInline" pattern=".{6,}" title="Password must contain at least 3 characters" required>
+              <input type="password" id="inputPassword" class="form-control" pattern="\S{6,}" aria-describedby="passwordHelpInline" pattern=".{6,}" title="Password must contain at least 3 characters" required>
               <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                 <i class="fa fa-eye-slash"></i>
               </button>
@@ -20,7 +20,7 @@
         <div class="mb-3">
           <label for="confirmPassword" class="col-form-label">Confirm New Password</label>
           <div class="input-group">
-            <input type="password" id="confirmPassword" class="form-control" aria-describedby="passwordHelpInline" required>
+            <input type="password" id="confirmPassword" class="form-control"  aria-describedby="passwordHelpInline" required>
             <button class="btn btn-outline-secondary" type="button" id="togglePassword">
               <i class="fa fa-eye-slash"></i>
             </button>

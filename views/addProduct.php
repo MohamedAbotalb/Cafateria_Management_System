@@ -5,7 +5,7 @@
   <form class="my-5 needs-validation" action="#" method="" enctype="multipart/form-data" novalidate>
     <div class="mb-3">
       <label for="productName" class="form-label">Product</label>
-      <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="[A-Za-z][A-Za-z\s]*" title="Product name must start with a letter and not contain numbers" required>
+      <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)*$" title="Product name must start with a letter and not contain numbers" required>
       <div class="invalid-feedback">
         Please enter a valid product name.
       </div>
@@ -59,7 +59,7 @@
       <div class="modal-body">
         <div class="mb-3">
           <label for="newCategoryName" class="form-label">Category Name</label>
-          <input type="text" class="form-control" id="newCategoryName" placeholder="Enter category name" required>
+          <input type="text" class="form-control" id="newCategoryName" placeholder="Enter category name" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)*$" required>
           <div class="invalid-feedback">
             Enter a valid category name.
           </div>
