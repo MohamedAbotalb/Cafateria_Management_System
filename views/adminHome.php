@@ -72,71 +72,21 @@ $db=new DB();
           <p class="display-5">Menu</p>
         </div>
         <div class="d-flex flex-wrap">
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item3.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">15</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                tea
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item4.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">12</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                coffee
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item5.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">20</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                spreso
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item6.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">7</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                cola
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item7.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">7</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                nescofe
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item8.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">30</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                spreso
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item1.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">20</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                tea
-              </p>
-            </div>
-          </div>
+          <?php
+          $products = $db->selectAll("product", ["available"], ["available"]);
+          foreach ($products as $product) {
+            echo "<div class='card m-3 product' style='width: 9rem'>
+                <img src='../public/images/{$product['image']}' class='card-img-top' alt='...' />
+                <h5 class='menu-price'>$<span class='productPrice'>15</span></h5>
+                <div class='card-body'>
+                    <p class='card-text'>
+                        {$product['name']}
+                    </p>
+                </div>
+            </div>";
+          }
+          ?>
         </div>
-      </div>
       <!-- end of menu -->
     </div>
   </div>
