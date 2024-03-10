@@ -1,7 +1,9 @@
 <?php
 require_once "templates/userNav.php";
 require_once "../models/db.php";
+require_once "../models/homePage.php";
 $db = new DB();
+$homePage = new HomePage();
 
 ?>
 
@@ -34,12 +36,12 @@ $db = new DB();
             <!-- start of product order -->
             <div class="list mx-3"></div>
             <!-- end of product order -->
-            <form>
+            <form method="post" action="../controllers/addProductController.php">
               <div class="form-floating my-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="note"></textarea>
                 <label for="floatingTextarea">Notes</label>
               </div>
-              <select class="form-select" aria-label="Default select example">
+              <select class="form-select" aria-label="Default select example" name="room">
                 <option selected>Select Room</option>
                 <?php
                 $rooms = $db->selectAll("room");
@@ -48,6 +50,8 @@ $db = new DB();
                 }
                 ?>
               </select>
+              <input type="hidden" name="invoicePrice" class="invoicePriceInput">
+
               <hr class="my-4" />
               <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
               <input type="submit" class="btn button" value="confirm" />
@@ -58,27 +62,30 @@ $db = new DB();
       <!-- end of order -->
       <!-- start of menu -->
       <div class="col-7 ">
-        <h5 class="text-muted "> latest order</h5>
-        <div class="d-flex flex-wrap">
+        
           <?php
-          require_once "../models/homePage.php";
-          $homePage = new HomePage();
           $query = $homePage->Innerjoin();
           $result = $db->getConnection()->query($query);
-
-          foreach ($result as $row) {
-            echo "<div class='card m-3' style='width: 9rem'>
-                <img src='../public/images/{$row['image']}' class='card-img-top' alt='...' />
-                <div class='card-body'>
-                  <p class='card-text'>
-                    {$row['name']}
-                  </p>
-                </div>
-              </div>";
+          if($result && $result->rowCount() > 0){
+            echo "<h5 class='text-muted '> latest order</h5>
+            <div class='d-flex flex-wrap'>";
+            foreach ($result as $row) {
+              echo "<div class='card m-3' style='width: 9rem'>
+                  <img src='../public/images/{$row['image']}' class='card-img-top' alt='...' />
+                  <div class='card-body'>
+                    <p class='card-text'>
+                      {$row['name']}
+                    </p>
+                  </div>
+                </div>";
+            }
+            echo "</div>
+          <hr class='my-4' />";
           }
+          
+          
           ?>
-        </div>
-        <hr class="my-4" />
+        
         <div class="section-title">
           <p class="display-5">Menu</p>
         </div>

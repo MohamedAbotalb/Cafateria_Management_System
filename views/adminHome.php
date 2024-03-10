@@ -33,20 +33,22 @@ $db=new DB();
             <!-- start of product order -->
             <div class="list mx-3"></div>
             <!-- end of product order -->
-            <form>
+            <form action="../controllers/addProductController.php" method="post">
               <div class="form-floating my-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="note"></textarea>
                 <label for="floatingTextarea">Notes</label>
               </div>
-              <select class="form-select " aria-label="Default select example">
-                <option selected>Select Room</option>
+              <select class="form-select " aria-label="Default select example" name='room' >
+                <option selected disabled >Select Room</option>
                 <?php
                 $rooms=$db->selectAll("room");
                 foreach($rooms as $room){
-                  echo "<option value='{$room['id']}'>{$room['id']}</option>";
+                  echo "<option value='{$room['id']}' >{$room['id']}</option>";
                 }
                 ?>
               </select>
+              <input type="hidden" name="invoicePrice" class="invoicePriceInput">
+              
               <hr class="my-4" />
               <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
               <input type="submit" class="btn button" value="confirm" />
