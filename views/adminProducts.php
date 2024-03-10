@@ -101,7 +101,7 @@ require_once "templates/adminNav.php"
                       <h5 class="modal-title" id="exampleModalToggleLabel2">Add New Category</h5>
                       <button type="button" class="btn-close" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body Form">
                       <div class="mb-3">
                         <label for="newCategoryName" class="form-label">Category Name</label>
                         <input type="text" class="form-control" id="newCategoryName" placeholder="Enter category name" required>
