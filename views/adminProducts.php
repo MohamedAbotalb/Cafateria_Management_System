@@ -156,4 +156,16 @@ require_once "templates/adminNav.php"
       categoryNameInput.classList.remove('is-invalid');
     }
   });
+  document.getElementById('productPrice').addEventListener('input', function() {
+    const productPriceInput = this;
+    const productPriceValue = productPriceInput.value;
+
+    if (/^0/.test(productPriceValue) || productPriceValue < 1 || productPriceValue > 100) {
+      productPriceInput.setCustomValidity('Please enter a valid price between 1 and 100 without starting with 0.');
+      productPriceInput.classList.add('is-invalid');
+    } else {
+      productPriceInput.setCustomValidity('');
+      productPriceInput.classList.remove('is-invalid');
+    }
+  });
 </script>
