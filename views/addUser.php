@@ -1,4 +1,4 @@
-  <?php
+<?php
   require_once "templates/adminNav.php";
   ?>
 
@@ -43,14 +43,14 @@
       </div>
       <div class="mb-3">
         <label for="roomNum" class="form-label">Room Number</label>
-        <input type="number" class="form-control" id="roomNum" name="roomNum" placeholder="Enter room number" min="1" required>
+        <input type="number" class="form-control" id="roomNum" name="roomNum"  placeholder="Enter room number" min="1" required>
         <div class="invalid-feedback">
           Please provide a valid room number.
         </div>
       </div>
       <div class="mb-3">
         <label for="ext" class="form-label">Extension</label>
-        <input type="number" class="form-control" id="ext" name="ext" placeholder="Enter Ext number" min="1" required>
+        <input type="number" class="form-control" id="ext" name="ext"  placeholder="Enter Ext number" min="1" required>
         <div class="invalid-feedback">
           Please provide a valid extension number.
         </div>

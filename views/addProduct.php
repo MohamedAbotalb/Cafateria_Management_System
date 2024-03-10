@@ -74,28 +74,41 @@
 </div>
 
 <script>
-  document.querySelector('button[type="reset"]').addEventListener('click', function() {
-    // Remove the 'is-invalid' class from all input fields and select elements
-    document.querySelectorAll('.is-invalid').forEach(function(element) {
-      element.classList.remove('is-invalid');
-    });
-
-    // Reset the form's validation state
-    const forms = document.querySelectorAll('.needs-validation');
-    forms.forEach(function(form) {
-      form.classList.remove('was-validated');
-    });
+document.querySelector('button[type="reset"]').addEventListener('click', function() {
+  // Remove the 'is-invalid' class from all input fields and select elements
+  document.querySelectorAll('.is-invalid').forEach(function(element) {
+    element.classList.remove('is-invalid');
   });
 
-
-  document.getElementById('saveCategory').addEventListener('click', function() {
-    const categoryNameInput = document.getElementById('newCategoryName');
-    const categoryName = categoryNameInput.value.trim();
-
-    if (!/^[A-Za-z][A-Za-z\s]*$/.test(categoryName)) {
-      categoryNameInput.classList.add('is-invalid');
-    } else {
-      categoryNameInput.classList.remove('is-invalid');
-    }
+  // Reset the form's validation state
+  const forms = document.querySelectorAll('.needs-validation');
+  forms.forEach(function(form) {
+    form.classList.remove('was-validated');
   });
-</script>
+});
+
+document.getElementById('saveCategory').addEventListener('click', function() {
+  const categoryNameInput = document.getElementById('newCategoryName');
+  const categoryName = categoryNameInput.value.trim();
+
+  if (!/^[A-Za-z][A-Za-z\s]*$/.test(categoryName)) {
+    categoryNameInput.classList.add('is-invalid');
+  } else {
+    categoryNameInput.classList.remove('is-invalid');
+  }
+});
+
+// Custom validation for the product price to ensure it doesn't start with 0
+document.getElementById('productPrice').addEventListener('input', function() {
+  const productPriceInput = this;
+  const productPriceValue = productPriceInput.value;
+
+  if (/^0/.test(productPriceValue) || productPriceValue < 1 || productPriceValue > 100) {
+    productPriceInput.setCustomValidity('Please enter a valid price between 1 and 100 without starting with 0.');
+    productPriceInput.classList.add('is-invalid');
+  } else {
+    productPriceInput.setCustomValidity('');
+    productPriceInput.classList.remove('is-invalid');
+  }
+});
+</script> 
