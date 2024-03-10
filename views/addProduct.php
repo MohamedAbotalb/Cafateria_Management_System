@@ -111,4 +111,4 @@ document.getElementById('productPrice').addEventListener('input', function() {
     productPriceInput.classList.remove('is-invalid');
   }
 });
-</script>
+</script> 
