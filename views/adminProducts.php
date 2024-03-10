@@ -73,11 +73,8 @@ require_once "templates/adminNav.php"
                               <option value="Fruit Juices">Fruit Juices</option>
                             </select>
                             <button type="button" class="btn use-btn" id="addCategoryBtn" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Add New Category</button>
-
-                            <!-- -->
-                            <!--  -->
+                            <div class="invalid-feedback">Please select a category.</div>
                           </div>
-                          <div class="invalid-feedback">Please select a category.</div>
                         </div>
                         <div class="mb-3">
                           <label for="productImage" class="form-label">Product Image</label>
