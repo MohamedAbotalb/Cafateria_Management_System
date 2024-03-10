@@ -42,7 +42,6 @@ $db=new DB();
                 <option selected>Select Room</option>
                 <?php
                 $rooms=$db->selectAll("room");
-                var_dump($rooms);
                 foreach($rooms as $room){
                   echo "<option value='{$room['id']}'>{$room['id']}</option>";
                 }
@@ -60,9 +59,12 @@ $db=new DB();
       <div class="col-7 ">
         <h5 class="text-muted "> Add to user</h5>
         <select class="form-select w-50 my-5" aria-label="Default select example">
-          <option value="1">Ahmed</option>
-          <option value="2">Ali</option>
-          <option value="3">Karim</option>
+        <?php
+                $users=$db->selectAll("user",["role"],["user"]);
+                foreach($users as $user){
+                  echo "<option value='{$user['id']}'>{$user['name']}</option>";
+                }
+                ?>
         </select>
         <hr class="my-5" />
 

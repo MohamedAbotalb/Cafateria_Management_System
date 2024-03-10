@@ -42,7 +42,6 @@ $db=new DB();
                 <option selected>Select Room</option>
                 <?php
                 $rooms=$db->selectAll("room");
-                var_dump($rooms);
                 foreach($rooms as $room){
                   echo "<option value='{$room['id']}'>{$room['id']}</option>";
                 }
