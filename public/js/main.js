@@ -2,6 +2,7 @@ window.onload = function () {
   const products = document.querySelectorAll('.product');
   const parent = document.querySelector('.list');
   let invoiceDiv = document.querySelector('.invoice-price');
+  let invoiceInput = document.querySelector('.invoicePriceInput');
   let invoice = 0;
   products.forEach((product) => {
     product.addEventListener('click', function () {
@@ -38,6 +39,7 @@ window.onload = function () {
           priceProduct.textContent = newPrice;
           invoice += price;
           invoiceDiv.textContent = invoice;
+          invoiceInput.value=invoice;
         });
 
         div.querySelector('.decrement').addEventListener('click', function () {
@@ -48,6 +50,8 @@ window.onload = function () {
             priceProduct.textContent = newPrice;
             invoice -= price;
             invoiceDiv.textContent = invoice;
+            invoiceInput.value=invoice;
+
           }
         });
 
@@ -57,9 +61,13 @@ window.onload = function () {
           );
           invoice -= decrementPrice;
           invoiceDiv.textContent = invoice;
+                    invoiceInput.value=invoice;
+
           div.remove();
         });
         invoiceDiv.textContent = invoice;
+                  invoiceInput.value=invoice;
+
       }
     });
   });
