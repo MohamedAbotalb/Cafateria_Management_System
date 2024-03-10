@@ -1,5 +1,8 @@
 <?php
 require_once "templates/userNav.php";
+require_once "../models/db.php";
+$db=new DB();
+
 ?>
 
 <!-- start of search -->
@@ -37,9 +40,13 @@ require_once "templates/userNav.php";
               </div>
               <select class="form-select" aria-label="Default select example">
                 <option selected>Select Room</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <?php
+                $rooms=$db->selectAll("room");
+                var_dump($rooms);
+                foreach($rooms as $room){
+                  echo "<option value='{$room['id']}'>{$room['id']}</option>";
+                }
+                ?>
               </select>
               <hr class="my-4" />
               <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
