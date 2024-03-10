@@ -1,7 +1,7 @@
 <?php
 require_once "templates/userNav.php";
 require_once "../models/db.php";
-$db=new DB();
+$db = new DB();
 
 ?>
 
@@ -12,7 +12,8 @@ $db=new DB();
     <div class="col-3">
       <form method="" action="">
         <div class="input-group mb-1">
-          <input type="text" class="form-control" placeholder="Enter item" aria-label="Recipient's username" aria-describedby="button-addon2" />
+          <input type="text" class="form-control" placeholder="Enter item" aria-label="Recipient's username"
+            aria-describedby="button-addon2" />
           <input type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2" value="search" />
         </div>
       </form>
@@ -41,8 +42,8 @@ $db=new DB();
               <select class="form-select" aria-label="Default select example">
                 <option selected>Select Room</option>
                 <?php
-                $rooms=$db->selectAll("room");
-                foreach($rooms as $room){
+                $rooms = $db->selectAll("room");
+                foreach ($rooms as $room) {
                   echo "<option value='{$room['id']}'>{$room['id']}</option>";
                 }
                 ?>
@@ -59,22 +60,23 @@ $db=new DB();
       <div class="col-7 ">
         <h5 class="text-muted "> latest order</h5>
         <div class="d-flex flex-wrap">
-          <div class="card m-3 " style="width: 9rem">
-            <img src="../public/images/item1.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <p class="card-text">
-                tea
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 " style="width: 9rem">
-            <img src="../public/images/item2.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <p class="card-text">
-                cola
-              </p>
-            </div>
-          </div>
+          <?php
+          require_once "../models/homePage.php";
+          $homePage = new HomePage();
+          $query = $homePage->Innerjoin();
+          $result = $db->getConnection()->query($query);
+
+          foreach ($result as $row) {
+            echo "<div class='card m-3' style='width: 9rem'>
+                <img src='../public/images/{$row['image']}' class='card-img-top' alt='...' />
+                <div class='card-body'>
+                  <p class='card-text'>
+                    {$row['name']}
+                  </p>
+                </div>
+              </div>";
+          }
+          ?>
         </div>
         <hr class="my-4" />
         <div class="section-title">
