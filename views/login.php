@@ -20,7 +20,7 @@ require_once "templates/head.php";
           <button class="btn btn-outline-secondary" type="button" id="togglePassword">
             <i class="fa fa-eye-slash"></i>
           </button>
-          <div class="invalid-feedback">Please enter your password.</div>
+          <div class="invalid-feedback">Please enter a valid password.</div>
         </div>
       </div>
     </div>
