@@ -3,15 +3,21 @@
 class DB
 {
   private $host = 'sql.freedb.tech';
-  private $dbname = 'freedb_cafateria';
-  private $user = 'freedb_cafateria_admin';
-  private $password = 'Kk7Yhs#?Xt?*Kc*';
+  private $dbname = 'freedb_cafeteria';
+  private $user = 'freedb_cafeteria_admin';
+  private $password = 'ke4$FA*d4xgqhG3';
   private $connection;
 
   function __construct()
   {
     $this->connection = new PDO("mysql:host=$this->host;dbname=$this->dbname;", $this->user, $this->password);
   }
+
+  function getConnection()
+  {
+    return $this->connection;
+  }
+
   public function selectAll($TbName, array $cond = [], array $values = [])
   {
     if (count($cond) !== count($values)) {
@@ -49,7 +55,6 @@ class DB
     return $result;
   }
 
-
   public function insert($TbName, array $values)
   {
     $keys = array_keys($values);
@@ -67,30 +72,28 @@ class DB
   }
 
   public function delete($TbName, array $cond = [], array $values = [])
-{
+  {
     try {
-        if (count($cond) !== count($values)) {
-            throw new InvalidArgumentException("Number of conditions must match the number of values.");
-        }
+      if (count($cond) !== count($values)) {
+        throw new InvalidArgumentException("Number of conditions must match the number of values.");
+      }
 
-        $conditions = [];
-        foreach ($cond as $column) {
-            $conditions[] = "$column = ?";
-        }
+      $conditions = [];
+      foreach ($cond as $column) {
+        $conditions[] = "$column = ?";
+      }
 
-        $whereClause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : '';
+      $whereClause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
-        $sql = "DELETE FROM {$TbName} {$whereClause}";
+      $sql = "DELETE FROM {$TbName} {$whereClause}";
 
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute($values);
+      $stmt = $this->connection->prepare($sql);
+      $stmt->execute($values);
     } catch (PDOException $e) {
-        
-        throw new Exception("Error in delete operation.", 0, $e);
+
+      throw new Exception("Error in delete operation.", 0, $e);
     }
-}
-
-
+  }
 
   public function update($TbName, array $values, array $cond)
   {
@@ -117,11 +120,4 @@ class DB
     $stmt = $this->connection->prepare($sql);
     $stmt->execute($params);
   }
-
-
-
-
-
 }
-
-?>

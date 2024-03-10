@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: sql.freedb.tech
--- Generation Time: Mar 09, 2024 at 03:54 PM
+-- Generation Time: Mar 10, 2024 at 09:28 AM
 -- Server version: 8.0.36-0ubuntu0.22.04.1
 -- PHP Version: 8.2.7
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `freedb_cafateria`
+-- Database: `freedb_cafeteria`
 --
 
 -- --------------------------------------------------------
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -40,7 +40,7 @@ CREATE TABLE `category` (
 
 CREATE TABLE `orders` (
   `id` int NOT NULL,
-  `note` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `status` enum('processing','out for delivery','done') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'processing',
   `order_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `room_id` int NOT NULL,
@@ -69,10 +69,10 @@ CREATE TABLE `order_product` (
 
 CREATE TABLE `product` (
   `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `price` double(10,2) NOT NULL,
   `category_id` int NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `available` enum('available','unavailable') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'available'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -87,6 +87,13 @@ CREATE TABLE `room` (
   `ext` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `room`
+--
+
+INSERT INTO `room` (`id`, `ext`) VALUES
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -95,13 +102,20 @@ CREATE TABLE `room` (
 
 CREATE TABLE `user` (
   `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `role` enum('user','admin') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'user',
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `room_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `role`, `image`, `room_id`) VALUES
+(1, 'admin', 'admin@admin.com', '7488e331b8b64e5794da3fa4eb10ad5d', 'admin', '', 1);
 
 --
 -- Indexes for dumped tables
@@ -177,7 +191,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
