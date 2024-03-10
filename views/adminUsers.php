@@ -140,37 +140,30 @@ require_once "templates/adminNav.php"
   </div>
 </div>
 <script>
-  // Toggle password visibility
   const togglePassword = document.getElementById("togglePassword");
   const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
 
-  togglePassword.addEventListener("click", function() {
-    const passwordInput = document.getElementById("password");
-    const icon = this.querySelector("i");
+  function showHidePassword(toggler, input) {
+    const icon = toggler.querySelector("i");
 
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
+    if (input.type === "password") {
+      input.type = "text";
       icon.classList.remove("fa-eye-slash");
       icon.classList.add("fa-eye");
     } else {
-      passwordInput.type = "password";
+      input.type = "password";
       icon.classList.remove("fa-eye");
       icon.classList.add("fa-eye-slash");
     }
+  }
+
+  togglePassword.addEventListener("click", function() {
+    const passwordInput = document.getElementById("password");
+    showHidePassword(togglePassword, passwordInput);
   });
 
   toggleConfirmPassword.addEventListener("click", function() {
     const confirmPasswordInput = document.getElementById("confirmPassword");
-    const icon = this.querySelector("i");
-
-    if (confirmPasswordInput.type === "password") {
-      confirmPasswordInput.type = "text";
-      icon.classList.remove("fa-eye-slash");
-      icon.classList.add("fa-eye");
-    } else {
-      confirmPasswordInput.type = "password";
-      icon.classList.remove("fa-eye");
-      icon.classList.add("fa-eye-slash");
-    }
+    showHidePassword(toggleConfirmPassword, confirmPasswordInput);
   });
 </script>
