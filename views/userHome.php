@@ -62,26 +62,30 @@ $homePage = new HomePage();
       <!-- end of order -->
       <!-- start of menu -->
       <div class="col-7 ">
-        <h5 class="text-muted "> latest order</h5>
-        <div class="d-flex flex-wrap">
+        
           <?php
-          
           $query = $homePage->Innerjoin();
           $result = $db->getConnection()->query($query);
-
-          foreach ($result as $row) {
-            echo "<div class='card m-3' style='width: 9rem'>
-                <img src='../public/images/{$row['image']}' class='card-img-top' alt='...' />
-                <div class='card-body'>
-                  <p class='card-text'>
-                    {$row['name']}
-                  </p>
-                </div>
-              </div>";
+          if($result && $result->rowCount() > 0){
+            echo "<h5 class='text-muted '> latest order</h5>
+            <div class='d-flex flex-wrap'>";
+            foreach ($result as $row) {
+              echo "<div class='card m-3' style='width: 9rem'>
+                  <img src='../public/images/{$row['image']}' class='card-img-top' alt='...' />
+                  <div class='card-body'>
+                    <p class='card-text'>
+                      {$row['name']}
+                    </p>
+                  </div>
+                </div>";
+            }
+            echo "</div>
+          <hr class='my-4' />";
           }
+          
+          
           ?>
-        </div>
-        <hr class="my-4" />
+        
         <div class="section-title">
           <p class="display-5">Menu</p>
         </div>
