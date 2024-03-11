@@ -1,6 +1,6 @@
 <?php
 require_once "templates/adminNav.php";
-include "../controllers/currentOrdersController.php";
+require_once "../controllers/currentOrdersController.php";
 
 $currentOrders = new CurrentOrdersController();
 
