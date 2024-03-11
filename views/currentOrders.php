@@ -32,7 +32,7 @@ $orders = $currentOrders->getCurrentOrders();
               <td> <?php echo $order['room_num'] ?> </td>
               <td> <?php echo $order['ext'] ?> </td>
               <td>
-                <a class="btn button text-decoration-none" href="deliverOrder.php?id=<?php echo $order['order_id'] ?>">deliver</a>
+                <a class="btn button text-decoration-none" href="../controllers/deliverOrder.php?id=<?php echo $order['order_id'] ?>">deliver</a>
               </td>
             </tr>
             <tr>
@@ -67,7 +67,6 @@ $orders = $currentOrders->getCurrentOrders();
         <p>There is no current orders</p>
       </div>
     <?php endif; ?>
-
   </div>
 </div>
 <!-- Orders end -->
