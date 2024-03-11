@@ -33,7 +33,7 @@ $db=new DB();
             <!-- start of product order -->
             <div class="list mx-3"></div>
             <!-- end of product order -->
-            <form action="../controllers/addProductController.php" method="post">
+            <form action="../controllers/addOrderController.php" method="post">
               <div class="form-floating my-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="note"></textarea>
                 <label for="floatingTextarea">Notes</label>

@@ -10,4 +10,4 @@ if(isset($_POST['room'])){
 }
 $invoicePrice=$_POST['invoicePrice'];
 
-$db->insert("orders",["note"=>$note,"status"=>"processing","room_id"=>$roomId,"total_price"=>$invoicePrice,"user_id"=>2]);
+$db->insert("orders",["note"=>$note,"room_id"=>$roomId,"total_price"=>$invoicePrice,"user_id"=>2]);
