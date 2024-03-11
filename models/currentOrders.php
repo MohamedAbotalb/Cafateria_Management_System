@@ -10,8 +10,8 @@ class CurrentOrders
           SELECT orders.id AS order_id, 
           orders.order_date, 
           orders.total_price, 
+          orders.room_id AS room_num,
           user.name AS username, 
-          user.room_id AS room_num,
           (SELECT ext FROM room WHERE room.id = user.room_id) AS ext,
           JSON_ARRAYAGG(
               JSON_OBJECT(
