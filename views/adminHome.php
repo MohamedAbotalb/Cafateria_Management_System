@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 require_once "templates/adminNav.php";
 require_once "../models/db.php";
 $db=new DB();
@@ -34,6 +35,7 @@ $db=new DB();
             <div class="list mx-3"></div>
             <!-- end of product order -->
             <form action="../controllers/addOrderController.php" method="post">
+            <input type="hidden" name="sourcePage" value="admin">
               <div class="form-floating my-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="note"></textarea>
                 <label for="floatingTextarea">Notes</label>
@@ -47,10 +49,18 @@ $db=new DB();
                 }
                 ?>
               </select>
+              <input type="hidden" name="productDetails" class="productDetails">
+
               <input type="hidden" name="invoicePrice" class="invoicePriceInput">
               
               <hr class="my-4" />
               <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
+              <?php
+                if ( $_SESSION['order_added']) {
+                     echo '<div class="alert alert-success successAlert">Order send successfully</div>';
+                     $_SESSION['order_added'] = false;
+                }
+              ?>
               <input type="submit" class="btn button" value="confirm" />
             </form>
           </div>
@@ -79,10 +89,12 @@ $db=new DB();
           foreach ($products as $product) {
             echo "<div class='card m-3 product' style='width: 9rem'>
                 <img src='../public/images/{$product['image']}' class='card-img-top' alt='...' />
-                <h5 class='menu-price'>$<span class='productPrice'>15</span></h5>
+                <h5 class='menu-price'>$<span class='productPrice'>{$product['price']}</span></h5>
                 <div class='card-body'>
                     <p class='card-text'>
                         {$product['name']}
+                        <input type='hidden' class='productId' value='{$product['id']}'>
+
                     </p>
                 </div>
             </div>";

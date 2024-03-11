@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 require_once "templates/userNav.php";
 require_once "../models/db.php";
 require_once "../models/homePage.php";
@@ -37,6 +38,7 @@ $homePage = new HomePage();
             <div class="list mx-3"></div>
             <!-- end of product order -->
             <form method="post" action="../controllers/addOrderController.php">
+            <input type="hidden" name="sourcePage" value="user">
               <div class="form-floating my-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="note"></textarea>
                 <label for="floatingTextarea">Notes</label>
@@ -51,9 +53,15 @@ $homePage = new HomePage();
                 ?>
               </select>
               <input type="hidden" name="invoicePrice" class="invoicePriceInput">
-
+              <input type="hidden" name="productDetails" class="productDetails">
               <hr class="my-4" />
               <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
+              <?php
+                if ( $_SESSION['order_added']) {
+                     echo '<div class="alert alert-success successAlert">Order send successfully</div>';
+                     $_SESSION['order_added'] = false;
+                }
+              ?>
               <input type="submit" class="btn button" value="confirm" />
             </form>
           </div>
@@ -76,7 +84,9 @@ $homePage = new HomePage();
                     <p class='card-text'>
                       {$row['name']}
                     </p>
+                    
                   </div>
+
                 </div>";
             }
             echo "</div>
@@ -95,10 +105,12 @@ $homePage = new HomePage();
           foreach ($products as $product) {
             echo "<div class='card m-3 product' style='width: 9rem'>
                 <img src='../public/images/{$product['image']}' class='card-img-top' alt='...' />
-                <h5 class='menu-price'>$<span class='productPrice'>15</span></h5>
+                <h5 class='menu-price'>$<span class='productPrice'>{$product['price']}</span></h5>
                 <div class='card-body'>
                     <p class='card-text'>
                         {$product['name']}
+                        <input type='hidden' class='productId' value='{$product['id']}'>
+
                     </p>
                 </div>
             </div>";
@@ -109,3 +121,6 @@ $homePage = new HomePage();
     </div>
   </div>
 </div>
+<script>
+   
+</script>
