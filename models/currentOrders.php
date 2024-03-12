@@ -27,7 +27,7 @@ class CurrentOrders
           JOIN product ON product.id = order_product.product_id 
           WHERE orders.status = 'processing' 
           GROUP BY orders.id, orders.order_date, orders.total_price, user.name, user.room_id
-          ORDER BY orders.order_date DESC;
+          ORDER BY orders.order_date;
         ";
     return $this->query;
   }
