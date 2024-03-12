@@ -8,7 +8,7 @@ $getEndDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
 
 $myOrdersController = new MyOrdersController();
 
-$data = $myOrdersController->getOrdersByUserId($getStartDate,$getEndDate,2);
+$data = $myOrdersController->getOrdersByUserId($getStartDate,$getEndDate,34);
 $totalPrice = 0;
 $orders = [];
 
