@@ -1,10 +1,12 @@
 <?php
+
 require_once "templates/adminNav.php";
+
 ?>
 
 <div class="container my-5">
   <h1 class="mb-4">Add User</h1>
-  <form class="needs-validation" action="#" method="" enctype="multipart/form-data" novalidate>
+  <form class="needs-validation" action="../controllers/addUserController.php" method="post" enctype="multipart/form-data" novalidate>
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)*$" title="Enter a valid name" required>
