@@ -32,7 +32,6 @@ window.onload = function () {
 
         parent.appendChild(div);
         invoice += parseInt(priceDiv.textContent);
-        // Add product details to the array
         productsData.push({
           product_id: productId,
           quantity: 1,
@@ -75,7 +74,7 @@ window.onload = function () {
             invoiceInput.value = invoice;
             const existingProductIndex = productsData.findIndex(
               (product) => product.product_id === productId
-            ); // Set the actual product_id here
+            ); 
             if (existingProductIndex !== -1) {
               productsData[existingProductIndex].quantity = quantityValue;
               productsData[existingProductIndex].amount = price*quantityValue;
@@ -119,12 +118,21 @@ window.onload = function () {
 
       }
     });
+    document.querySelector('.userSelect').addEventListener('change', function () {
+      let userID = this.value;
+      let Input = document.createElement('input');
+          Input.type = 'hidden';
+          Input.name = 'userID'; 
+          Input.value = userID;
+          document.querySelector(".order-details").appendChild(Input);
+  });
     setTimeout(function() {
       var successAlert = document.querySelector('.successAlert');
       if (successAlert) {
           successAlert.style.display = 'none';
       }
   }, 2000);
+  
   });
 
   function isProductInList(productId) {

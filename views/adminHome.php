@@ -34,7 +34,7 @@ $db=new DB();
             <!-- start of product order -->
             <div class="list mx-3"></div>
             <!-- end of product order -->
-            <form action="../controllers/addOrderController.php" method="post">
+            <form action="../controllers/addOrderController.php" method="post" class="order-details">
             <input type="hidden" name="sourcePage" value="admin">
               <div class="form-floating my-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="note"></textarea>
@@ -50,7 +50,6 @@ $db=new DB();
                 ?>
               </select>
               <input type="hidden" name="productDetails" class="productDetails">
-
               <input type="hidden" name="invoicePrice" class="invoicePriceInput">
               
               <hr class="my-4" />
@@ -70,7 +69,7 @@ $db=new DB();
       <!-- start of menu -->
       <div class="col-7 ">
         <h5 class="text-muted "> Add to user</h5>
-        <select class="form-select w-50 my-5" aria-label="Default select example">
+        <select class="form-select w-50 my-5 userSelect" aria-label="Default select example">
         <?php
                 $users=$db->select("user",["role"],["user"]);
                 foreach($users as $user){
