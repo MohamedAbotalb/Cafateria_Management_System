@@ -43,7 +43,7 @@ $db=new DB();
               <select class="form-select " aria-label="Default select example" name='room' >
                 <option selected disabled >Select Room</option>
                 <?php
-                $rooms=$db->selectAll("room");
+                $rooms=$db->select("room");
                 foreach($rooms as $room){
                   echo "<option value='{$room['id']}' >{$room['id']}</option>";
                 }
@@ -56,7 +56,7 @@ $db=new DB();
               <hr class="my-4" />
               <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
               <?php
-                if ( $_SESSION['order_added']) {
+                if ( isset($_SESSION['order_added']) && $_SESSION['order_added']) {
                      echo '<div class="alert alert-success successAlert">Order send successfully</div>';
                      $_SESSION['order_added'] = false;
                 }
@@ -72,7 +72,7 @@ $db=new DB();
         <h5 class="text-muted "> Add to user</h5>
         <select class="form-select w-50 my-5" aria-label="Default select example">
         <?php
-                $users=$db->selectAll("user",["role"],["user"]);
+                $users=$db->select("user",["role"],["user"]);
                 foreach($users as $user){
                   echo "<option value='{$user['id']}'>{$user['name']}</option>";
                 }
@@ -85,7 +85,7 @@ $db=new DB();
         </div>
         <div class="d-flex flex-wrap">
           <?php
-          $products = $db->selectAll("product", ["available"], ["available"]);
+          $products = $db->select("product", ["available"], ["available"]);
           foreach ($products as $product) {
             echo "<div class='card m-3 product' style='width: 9rem'>
                 <img src='../public/images/{$product['image']}' class='card-img-top' alt='...' />
