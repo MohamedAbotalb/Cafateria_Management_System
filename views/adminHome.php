@@ -60,7 +60,7 @@ $db=new DB();
                      $_SESSION['order_added'] = false;
                 }
               ?>
-              <input type="submit" class="btn button" value="confirm" />
+              <input type="submit" class="btn button" value="confirm" disabled />
             </form>
           </div>
         </div>
