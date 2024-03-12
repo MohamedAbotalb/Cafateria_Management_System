@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db->insert('user', ['name' => $name, 'email' => $email, 'password' => $hashedPassword, 'image' => $targetPath, 'room_id' => $roomNum]);
 
         echo "<script>alert('User added successfully.');</script>";
-        echo "<script>window.location.href = '../views/userHome.php';</script>";
+        echo "<script>window.location.href = '../views/login.php';</script>";
     } else {
         echo "<script>alert('" . implode("\\n", $errors) . "');</script>";
         echo "<script>window.history.back();</script>";
