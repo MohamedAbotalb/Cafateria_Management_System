@@ -116,6 +116,15 @@ window.onload = function () {
         productDetailsInput.value = JSON.stringify(productsData);
       }
     });
+    document.querySelector('.userSelect').addEventListener('change',function(){
+      let userID= this.value;
+      let Input = document.createElement('input');
+      Input.type = 'hidden';
+      Input.name = 'userID';
+      Input.value = userID;
+      document.querySelector(".order-details").appendChild(Input);
+
+    })
     setTimeout(function() {
       var successAlert = document.querySelector('.successAlert');
       if (successAlert) {
