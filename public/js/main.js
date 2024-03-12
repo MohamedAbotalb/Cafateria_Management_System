@@ -114,20 +114,14 @@ window.onload = function () {
         invoiceDiv.textContent = invoice;
         invoiceInput.value = invoice;
         productDetailsInput.value = JSON.stringify(productsData);
-        if(invoice>0){
-          document.querySelector('.button').disabled=false;
-        }
+        
       }
+      if(invoice>0){
+        document.querySelector('.button').disabled=false;
+      }
+      
     });
-    document.querySelector('.userSelect').addEventListener('change',function(){
-      let userID= this.value;
-      let Input = document.createElement('input');
-      Input.type = 'hidden';
-      Input.name = 'userID';
-      Input.value = userID;
-      document.querySelector(".order-details").appendChild(Input);
-
-    });
+    
     setTimeout(function() {
       var successAlert = document.querySelector('.successAlert');
       if (successAlert) {
@@ -135,7 +129,14 @@ window.onload = function () {
       }
   }, 2000);
   });
-
+  document.querySelector('.userSelect').addEventListener('change',function(){
+    let userID= this.value;
+    let Input = document.createElement('input');
+    Input.type = 'hidden';
+    Input.name = 'userID';
+    Input.value = userID;
+    document.querySelector(".order-details").appendChild(Input);
+  });
   function isProductInList(productId) {
     const existingProducts = parent.querySelectorAll(".order-item .col-3");
     for (let existingProduct of existingProducts) {
