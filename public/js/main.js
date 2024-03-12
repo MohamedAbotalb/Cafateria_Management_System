@@ -114,6 +114,9 @@ window.onload = function () {
         invoiceDiv.textContent = invoice;
         invoiceInput.value = invoice;
         productDetailsInput.value = JSON.stringify(productsData);
+        if(invoice>0){
+          document.querySelector('.button').disabled=false;
+        }
       }
     });
     document.querySelector('.userSelect').addEventListener('change',function(){
@@ -124,7 +127,7 @@ window.onload = function () {
       Input.value = userID;
       document.querySelector(".order-details").appendChild(Input);
 
-    })
+    });
     setTimeout(function() {
       var successAlert = document.querySelector('.successAlert');
       if (successAlert) {
