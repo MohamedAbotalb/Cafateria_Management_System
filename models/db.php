@@ -48,7 +48,7 @@ class DB
     $stmt->execute(array_values($values));
   }
 
-  public function update($tableName, array $values, array $conditions)
+  public function update($tableName, array $conditions, array $values)
   {
     $setClause = implode(' = ?, ', array_keys($values)) . ' = ?';
     $whereClause = implode(' = ? AND ', array_keys($conditions)) . ' = ?';
