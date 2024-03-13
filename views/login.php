@@ -28,7 +28,7 @@ require_once "templates/head.php";
       <button type="submit" class="btn btn-primary mb-3 w-25 m-auto">Log In</button><br>
     </div>
     <div class="row m-auto text-center">
-      <a href="./confirmPass.php" class="link-primary">Forgot Password?</a>
+      <a href="forgetPassword.php" class="link-primary">Forgot Password?</a>
     </div>
   </form>
 </div>
