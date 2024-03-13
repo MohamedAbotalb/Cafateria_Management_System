@@ -32,7 +32,6 @@ window.onload = function () {
 
         parent.appendChild(div);
         invoice += parseInt(priceDiv.textContent);
-        // Add product details to the array
         productsData.push({
           product_id: productId,
           quantity: 1,
@@ -58,8 +57,7 @@ window.onload = function () {
           ); // Set the actual product_id here
           if (existingProductIndex !== -1) {
             productsData[existingProductIndex].quantity = quantityValue;
-            productsData[existingProductIndex].amount =  price*quantityValue;
-
+            productsData[existingProductIndex].amount = price * quantityValue;
           }
           productDetailsInput.value = JSON.stringify(productsData);
         });
@@ -75,11 +73,10 @@ window.onload = function () {
             invoiceInput.value = invoice;
             const existingProductIndex = productsData.findIndex(
               (product) => product.product_id === productId
-            ); // Set the actual product_id here
+            ); 
             if (existingProductIndex !== -1) {
               productsData[existingProductIndex].quantity = quantityValue;
-              productsData[existingProductIndex].amount = price*quantityValue;
-
+              productsData[existingProductIndex].amount = price * quantityValue;
             }
             productDetailsInput.value = JSON.stringify(productsData);
           }
@@ -102,7 +99,8 @@ window.onload = function () {
           );
 
           if (removedProductIndex !== -1) {
-            const removedProductAmount = productsData[removedProductIndex].amount;
+            const removedProductAmount =
+              productsData[removedProductIndex].amount;
             productsData.splice(removedProductIndex, 1);
 
             invoice -= removedProductAmount;
@@ -116,17 +114,29 @@ window.onload = function () {
         invoiceDiv.textContent = invoice;
         invoiceInput.value = invoice;
         productDetailsInput.value = JSON.stringify(productsData);
-
+        
       }
+      if(invoice>0){
+        document.querySelector('.button').disabled=false;
+      }
+      
     });
+    
     setTimeout(function() {
       var successAlert = document.querySelector('.successAlert');
       if (successAlert) {
-          successAlert.style.display = 'none';
+        successAlert.style.display = "none";
       }
   }, 2000);
   });
-
+  document.querySelector('.userSelect').addEventListener('change',function(){
+    let userID= this.value;
+    let Input = document.createElement('input');
+    Input.type = 'hidden';
+    Input.name = 'userID';
+    Input.value = userID;
+    document.querySelector(".order-details").appendChild(Input);
+  });
   function isProductInList(productId) {
     const existingProducts = parent.querySelectorAll(".order-item .col-3");
     for (let existingProduct of existingProducts) {
@@ -188,23 +198,41 @@ window.onload = function () {
       messageTag.textContent = "Please enter End Date";
       messageTag.style.cssText = "color:red";
       divEndDate.appendChild(messageTag);
+      return;
+    }
+    if (startDate.value >= endDate.value) {
+      messageTag.textContent = "Start Date Must Be Smaller Than End Date";
+      messageTag.style.cssText = "color:red";
+      divEndDate.appendChild(messageTag);
+      return;
+    }
+    if (startDate.value && endDate.value && startDate.value < endDate.value) {
+      window.location.assign(
+        `http://localhost:8080/cafateria/Cafateria_Management_System/views/myOrdersView.php?startDate=${startDate.value}&endDate=${endDate.value}`
+      );
     }
   };
 
   endDate.onchange = function (e) {
-    if (endDate.value) {
+    if (endDate.value || startDate.value < endDate.value) {
       messageTag.remove();
     }
     if (startDate.value == "") {
       messageTag.textContent = "Please enter Start Date";
       messageTag.style.cssText = "color:red";
       divStartDate.appendChild(messageTag);
+      return;
     }
     if (startDate.value >= endDate.value) {
       messageTag.textContent = "Start Date Must Be Smaller Than End Date";
       messageTag.style.cssText = "color:red";
       divEndDate.appendChild(messageTag);
+      return;
+    }
+    if (startDate.value && endDate.value && startDate.value < endDate.value) {
+      window.location.assign(
+        `http://localhost:8080/cafateria/Cafateria_Management_System/views/myOrdersView.php?startDate=${startDate.value}&endDate=${endDate.value}`
+      );
     }
   };
 };
-
