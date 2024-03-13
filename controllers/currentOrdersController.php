@@ -27,6 +27,13 @@ class CurrentOrdersController
   {
     $updates = ["status" => "out for delivery"];
     $condition = ["id" => "$id"];
-    $this->db->update('orders', $updates, $condition);
+    $this->db->update('orders', $condition, $updates);
+  }
+
+  public function doneOrder($id)
+  {
+    $updates = ["status" => "done"];
+    $condition = ["id" => "$id"];
+    $this->db->update('orders', $condition, $updates);
   }
 }
