@@ -17,11 +17,12 @@ require_once "head.php";
         <a href="/user-orders" class="nav-item nav-link mx-3">My Orders</a>
       </div>
       <ul class="navbar-nav mx-5">
-        <li class="nav-item ">
-          <a class="nav-link" href="/user" id="navbarDropdown" aria-expanded="false">
-            <img class="nav-img rounded-circle" src="../public/images/user1.png" width="60px" />
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link" id="navbarDropdown" aria-expanded="false">
+            <img class="nav-img rounded-circle ms-1" src="../public/images/user1.png" width="60px" />
             <span class="nav-user small">Username</span>
           </a>
+          <a href="../controllers/logout.php" class="nav-link mx-2">Logout</a>
         </li>
       </ul>
     </div>
