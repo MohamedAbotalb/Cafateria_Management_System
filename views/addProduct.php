@@ -13,7 +13,6 @@ $categories = $db->select("category", [], [], false);
 <div class="container my-5">
   <h1>Add Product</h1>
   <form id="addProductForm" class="my-5 needs-validation" action="addProductController.php" method="POST" enctype="multipart/form-data" novalidate>
-    <!-- Product Name -->
     <div class="mb-3">
       <label for="productName" class="form-label">Product Name</label>
       <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)*$" title="Product name must start with a letter and not contain numbers" required>
@@ -21,7 +20,6 @@ $categories = $db->select("category", [], [], false);
         Please enter a valid product name.
       </div>
     </div>
-    <!-- Product Price -->
     <div class="mb-3">
       <label for="productPrice" class="form-label">Price</label>
       <div class="input-group">
@@ -32,7 +30,6 @@ $categories = $db->select("category", [], [], false);
         </div>
       </div>
     </div>
-    <!-- Product Category -->
     <div class="mb-3">
       <label for="productCategory" class="form-label">Category</label>
       <div class="input-group">
@@ -46,7 +43,6 @@ $categories = $db->select("category", [], [], false);
         <div class="invalid-feedback">Please select a category.</div>
       </div>
     </div>
-    <!-- Product Image -->
     <div class="mb-3">
       <label for="productImage" class="form-label">Product Image</label>
       <input type="file" class="form-control" id="productImage" name="productImage" required>
@@ -88,12 +84,10 @@ $categories = $db->select("category", [], [], false);
 
 <script>
   document.querySelector('button[type="reset"]').addEventListener('click', function() {
-    // Remove the 'is-invalid' class from all input fields and select elements
     document.querySelectorAll('.is-invalid').forEach(function(element) {
       element.classList.remove('is-invalid');
     });
 
-    // Reset the form's validation state
     const forms = document.querySelectorAll('.needs-validation');
     forms.forEach(function(form) {
       form.classList.remove('was-validated');
@@ -104,7 +98,7 @@ $categories = $db->select("category", [], [], false);
     const categoryNameInput = document.getElementById('newCategoryName');
     const categoryName = categoryNameInput.value.trim();
 
-    if (!/^[A-Za-z]{3,}$/.test(categoryName)) {
+    if (!/^[A-Za-z][A-Za-z\s]{3,}$/.test(categoryName)) {
       categoryNameInput.classList.add('is-invalid');
     } else {
       categoryNameInput.classList.remove('is-invalid');
@@ -116,19 +110,18 @@ $categories = $db->select("category", [], [], false);
       xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
-            // Category added successfully, update the dropdown options
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
               const newCategoryOption = document.createElement('option');
               newCategoryOption.value = response.categoryName;
               newCategoryOption.text = response.categoryName;
               document.getElementById('productCategory').appendChild(newCategoryOption);
-              $('#addCategoryModal').modal('hide'); // Close the modal
+              $('#addCategoryModal').modal('hide');
             } else {
-              alert(response.message); // Display error message
+              alert(response.message);
             }
           } else {
-            alert('Error: Unable to add category.'); // Display error message
+            alert('Error: Unable to add category.');
           }
         }
       };
@@ -137,7 +130,6 @@ $categories = $db->select("category", [], [], false);
   });
 
 
-  // Custom validation for the product price to ensure it doesn't start with 0
   document.getElementById('productPrice').addEventListener('input', function() {
     const productPriceInput = this;
     const productPriceValue = productPriceInput.value;
@@ -151,9 +143,8 @@ $categories = $db->select("category", [], [], false);
     }
   });
 
-  // Clear category name input when the modal is closed
   $('#addCategoryModal').on('hidden.bs.modal', function() {
-    document.getElementById('newCategoryName').value = ''; // Clear the input field
-    document.getElementById('newCategoryName').classList.remove('is-invalid'); // Remove 'is-invalid' class if present
+    document.getElementById('newCategoryName').value = '';
+    document.getElementById('newCategoryName').classList.remove('is-invalid');
   });
 </script>
