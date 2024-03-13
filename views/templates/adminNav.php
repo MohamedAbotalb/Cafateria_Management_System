@@ -24,11 +24,11 @@ require_once "head.php";
       </div>
       <ul class="navbar-nav mx-5">
         <li class="nav-item d-flex align-items-center">
-          <a class="nav-link" id="navbarDropdown" aria-expanded="false">
-            <img class="nav-img rounded-circle ms-1" src="../public/images/user1.png" width="60px" />
-            <span class="nav-user small">Admin</span>
+          <a class="nav-link small" aria-expanded="false">
+            <span class="nav-user ">Admin</span>
+            <img class="nav-img rounded-circle ms-2" src="../public/images/user1.png" width="60px" />
           </a>
-          <a href="../controllers/logout.php" class="nav-link ms-2">Logout</a>
+          <a href="../controllers/logout.php" class="nav-link small ms-3">Logout</a>
         </li>
       </ul>
     </div>
