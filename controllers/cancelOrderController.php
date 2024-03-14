@@ -5,7 +5,7 @@ $id=$_GET['id'];
 
 $DB = new DB();
 $DB->delete('orders',['id'] , [$id]);
-header("Location:myOrdersView.php");
+header("Location:../views/myOrders.php");
 
 
 ?>
