@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $existingProduct = $db->select('product', ['name'], [$productName], true);
     if ($existingProduct) {
-        $_SESSION['errors'] = ["productName" => "A product with this name already exists."];
+        $_SESSION['errors'] = ["productName" => "Product already exists."];
         header("Location: ../views/addProduct.php");
         exit;
     }
