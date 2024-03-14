@@ -1,18 +1,33 @@
 <?php
 require_once "templates/adminNav.php";
 require_once "../models/db.php";
+session_start(); 
 
 $db = new DB();
-
-$conn = $db->getConnection();
-
 $categories = $db->select("category", [], [], false);
 
+$errorMessages = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$successMessage = isset($_SESSION['success']) ? $_SESSION['success'] : '';
+
+unset($_SESSION['errors']);
+unset($_SESSION['success']);
 ?>
 
 <div class="container my-5">
   <h1>Add Product</h1>
-  <form id="addProductForm" class="my-5 needs-validation" action="addProductController.php" method="POST" enctype="multipart/form-data" novalidate>
+  <?php if (!empty($errorMessages)) : ?>
+    <div class="alert alert-danger" role="alert">
+      <?php foreach ($errorMessages as $error) : ?>
+        <p><?= htmlspecialchars($error) ?></p>
+      <?php endforeach; ?>
+    </div>
+  <?php endif; ?>
+  <?php if ($successMessage) : ?>
+    <div class="alert alert-success" role="alert">
+      <?= htmlspecialchars($successMessage) ?>
+    </div>
+  <?php endif; ?>
+  <form id="addProductForm" class="my-5 needs-validation" action="../controllers/addProductController.php" method="POST" enctype="multipart/form-data" novalidate>
     <div class="mb-3">
       <label for="productName" class="form-label">Product Name</label>
       <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)*$" title="Product name must start with a letter and not contain numbers" required>
@@ -56,7 +71,6 @@ $categories = $db->select("category", [], [], false);
     </div>
   </form>
 </div>
-
 <!-- Modal for Adding New Category -->
 <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-dialog-centered">
@@ -83,6 +97,21 @@ $categories = $db->select("category", [], [], false);
 </div>
 
 <script>
+  (function() {
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+      .forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+
   document.querySelector('button[type="reset"]').addEventListener('click', function() {
     document.querySelectorAll('.is-invalid').forEach(function(element) {
       element.classList.remove('is-invalid');
@@ -128,7 +157,6 @@ $categories = $db->select("category", [], [], false);
       xhr.send('categoryName=' + encodeURIComponent(categoryName));
     }
   });
-
 
   document.getElementById('productPrice').addEventListener('input', function() {
     const productPriceInput = this;
