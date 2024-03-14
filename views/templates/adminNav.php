@@ -8,7 +8,6 @@ if (!isset($_SESSION['logged_in'])) {
 } else if ($_SESSION['user']['role'] !== 'admin') {
   header('Location: userHome.php');
 }
-
 ?>
 
 <!-- Navbar start -->
