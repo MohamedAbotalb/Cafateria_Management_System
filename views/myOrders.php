@@ -8,13 +8,13 @@ $getEndDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
 
 $myOrdersController = new MyOrdersController();
 
-$data = $myOrdersController->getOrdersByUserId($getStartDate,$getEndDate,34);
+$data = $myOrdersController->getOrdersByUserId($getStartDate,$getEndDate,$_SESSION['user']['id']);
 $totalPrice = 0;
 $orders = [];
 
 foreach ($data as $row) {
   $orderId = $row['id'];
-
+  $totalPrice += $row['total_price'];
   if (!isset($orders[$orderId])) {
     $orders[$orderId] = [
       'id' => $row['id'],
@@ -114,7 +114,7 @@ foreach ($data as $row) {
               <?php
               if ($order['status'] == 'processing') {
 
-                echo "<a class='btn text-white text-decoration-none' href='deleteOrder.php?id={$order['id']}' style='background-color: #362517;'>CANCEL</a>";
+                echo "<a class='btn text-white text-decoration-none' href='../controllers/cancelOrderController.php?id={$order['id']}' style='background-color: #362517;'>CANCEL</a>";
               }
               ?>
             </div>
@@ -196,5 +196,55 @@ foreach ($data as $row) {
       });
 
     });
+    const startDate = document.getElementById("dateFrom");
+  const endDate = document.getElementById("dateTo");
+  const divStartDate = document.getElementById("errorDateFrom");
+  const divEndDate = document.getElementById("errorDateTo");
+  var messageTag = document.createElement("div");
 
+  startDate.onchange = function (e) {
+    if (startDate.value || startDate.value < endDate.value) {
+      messageTag.remove();
+    }
+    if (endDate.value == "") {
+      messageTag.textContent = "Please enter End Date";
+      messageTag.style.cssText = "color:red";
+      divEndDate.appendChild(messageTag);
+      return;
+    }
+    if (startDate.value >= endDate.value) {
+      messageTag.textContent = "Start Date Must Be Smaller Than End Date";
+      messageTag.style.cssText = "color:red";
+      divEndDate.appendChild(messageTag);
+      return;
+    }
+    if (startDate.value && endDate.value && startDate.value < endDate.value) {
+      window.location.assign(
+        `http://localhost:8080/cafateria/Cafateria_Management_System/views/myOrders.php?startDate=${startDate.value}&endDate=${endDate.value}`
+      );
+    }
+  };
+
+  endDate.onchange = function (e) {
+    if (endDate.value || startDate.value < endDate.value) {
+      messageTag.remove();
+    }
+    if (startDate.value == "") {
+      messageTag.textContent = "Please enter Start Date";
+      messageTag.style.cssText = "color:red";
+      divStartDate.appendChild(messageTag);
+      return;
+    }
+    if (startDate.value >= endDate.value) {
+      messageTag.textContent = "Start Date Must Be Smaller Than End Date";
+      messageTag.style.cssText = "color:red";
+      divEndDate.appendChild(messageTag);
+      return;
+    }
+    if (startDate.value && endDate.value && startDate.value < endDate.value) {
+      window.location.assign(
+        `http://localhost:8080/cafateria/Cafateria_Management_System/views/myOrders.php?startDate=${startDate.value}&endDate=${endDate.value}`
+      );
+    }
+  };
   </script>
