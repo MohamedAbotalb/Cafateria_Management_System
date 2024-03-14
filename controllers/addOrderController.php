@@ -1,20 +1,22 @@
 <?php
+session_start();
 require_once "../models/db.php";
 $db=new db();
-// echo "<pre>";
-// var_dump($_POST);
-// echo "</pre>";
+
 $note=$_POST['note'];
-if(isset($_POST['room'])){
+if(isset($_POST['room'] )){
     $roomId=$_POST['room'];
-}else{
-    $roomId=2;
+}else if(!isset($_POST['room']) && $_POST['sourcePage'] === 'admin' ){
+    $customer=$db->select('user',['id'],[$_POST['userID']],true);
+    $roomId = $customer['room_id'] ;
+}else if(!isset($_POST['room']) && $_POST['sourcePage'] === 'user' ){
+    $roomId = $_SESSION['room_id'] ;
 }
 $invoicePrice=$_POST['invoicePrice'];
 if(isset($_POST['userID'])){
     $userId=$_POST['userID'];
 }else{
-    $userId= 34;
+    $userId= $_SESSION["user_id"];
 }
 
 $db->insert("orders",["note"=>$note,"room_id"=>$roomId,"total_price"=>$invoicePrice,"user_id"=>$userId]);
@@ -28,10 +30,9 @@ foreach ($productDetails as $product) {
    $db->insert("order_product", ["order_id" => $order_id, "product_id" => $productId, "quantity" => $quantity, "amount" => $amount]);
 }
 
-session_start();
-$_SESSION['order_added'] = true;
-if ($_POST['sourcePage'] === 'admin') {
-    header("location:../views/adminHome.php");
-} else {
-    header("location:../views/userHome.php");
-}
+// $_SESSION['order_added'] = true;
+// if ($_POST['sourcePage'] === 'admin') {
+//     header("location:../views/adminHome.php");
+// } else {
+//     header("location:../views/userHome.php");
+// }

@@ -15,11 +15,12 @@ window.onload = function () {
       const priceDiv = product.querySelector(".productPrice");
       const productId = product.querySelector(".productId").value;
       const price = parseInt(priceDiv.textContent);
-      if (!isProductInList(name.textContent)) {
+      if (!isProductInList(productId)) {
         let div = document.createElement("div");
 
         div.innerHTML = `
                     <div class="row container text-center order-item border align-items-center my-2">
+                        <input class="id" type="hidden" value="${productId}">
                         <div class="col-3 ">${name.textContent}</div>
                         <div class="col-2 border quantity">1</div>
                         <div class="col-2 my-1">
@@ -138,9 +139,9 @@ window.onload = function () {
     document.querySelector(".order-details").appendChild(Input);
   });
   function isProductInList(productId) {
-    const existingProducts = parent.querySelectorAll(".order-item .col-3");
+    const existingProducts = parent.querySelectorAll(".order-item .id");
     for (let existingProduct of existingProducts) {
-      if (existingProduct.textContent === productId) {
+      if (existingProduct.value === productId) {
         return true;
       }
     }
