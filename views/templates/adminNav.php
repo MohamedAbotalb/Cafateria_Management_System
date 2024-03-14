@@ -1,7 +1,9 @@
 <?php
 require_once "head.php";
-session_start();
-
+// Check if session is not already started
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 // Check if the user is logged in and his role is admin or not
 if (!isset($_SESSION['logged_in'])) {
   header('Location: login.php');
