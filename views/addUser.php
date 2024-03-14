@@ -1,9 +1,5 @@
 <?php
 require_once "templates/adminNav.php";
-// Check if session is not already started
-if (session_status() == PHP_SESSION_NONE) {
-  session_start();
-}
 
 $errorMessages = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 $successMessage = isset($_SESSION['success']) ? $_SESSION['success'] : '';

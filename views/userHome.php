@@ -1,10 +1,8 @@
 <?php
-// Check if session is not already started
-if (session_status() == PHP_SESSION_NONE) {
-  session_start();
-}require_once "templates/userNav.php";
+require_once "templates/userNav.php";
 require_once "../models/db.php";
 require_once "../models/homePage.php";
+
 $db = new DB();
 $homePage = new HomePage();
 
