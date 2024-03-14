@@ -4,7 +4,7 @@ require_once "templates/head.php";
 
 <div class="container my-5">
   <h1 class="text-center">Cafeteria</h1>
-  <form action="../controllers/resetPasswordController.php" method="post" class="w-50 m-auto text-bg-light my-5 p-3 rounded shadow-lg bg-body-tertiary" novalidate>
+  <form action="../controllers/authenticateController.php" method="post" class="col-md-4 m-auto text-bg-light my-5 p-3 rounded shadow-lg bg-body-tertiary" novalidate>
     <div class="row g-3 align-items-center my-3">
       <div class="mb-3">
         <label for="inputPassword" class="col-form-label">Enter New Password</label>
@@ -21,7 +21,7 @@ require_once "templates/head.php";
       <label for="confirmPassword" class="col-form-label">Confirm New Password</label>
       <div class="input-group">
         <input type="password" id="confirmPassword" class="form-control" aria-describedby="passwordHelpInline" required>
-        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+        <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
           <i class="fa fa-eye-slash"></i>
         </button>
         <div class="invalid-feedback">Passwords do not match.</div>
@@ -29,7 +29,7 @@ require_once "templates/head.php";
     </div>
     <div class="row m-auto text-center">
       <div class="col">
-        <button type="submit" name="update" class="btn btn-primary">Update Password</button>
+        <button type="submit" name="update" class="btn btn-primary">Update</button>
       </div>
     </div>
   </form>
@@ -80,9 +80,12 @@ require_once "templates/head.php";
 
     // Add event listener to toggle password visibility button
     const togglePasswordButton = document.getElementById('togglePassword');
+    const toggleConfirmPasswordButton = document.getElementById('toggleConfirmPassword');
     togglePasswordButton.addEventListener('click', function() {
       togglePasswordVisibility('inputPassword', 'togglePassword');
-      togglePasswordVisibility('confirmPassword', 'togglePassword');
+    });
+    toggleConfirmPasswordButton.addEventListener('click', function() {
+      togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword');
     });
 
   });

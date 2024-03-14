@@ -14,21 +14,21 @@ unset($_SESSION['errors']);
 
 <div class="container my-5">
   <h1 class="text-center">Cafeteria</h1>
-  <form action="../controllers/resetPasswordController.php" method="post" class="w-50 m-auto text-bg-light my-5 p-3 rounded shadow-lg bg-body-tertiary" novalidate>
+  <form action="../controllers/authenticateController.php" method="post" class="col-md-4 m-auto text-bg-light my-5 p-3 rounded shadow-lg bg-body-tertiary" novalidate>
     <div class="row g-3 align-items-center my-3">
-      <h3 class="text-center my-3">Forget Password</h3>
+      <h3 class="text-center my-3">Reset your password</h3>
       <div class="mb-3">
-        <label for="inputEmail" class="col-form-label d-block fs-5">Email</label>
+        <label for="inputEmail" class="col-form-label d-block">Email</label>
         <input type="email" name="email" id="inputEmail" class="form-control" aria-describedby="emailHelpInline" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
         <div class="invalid-feedback">Please enter a valid email.</div>
       </div>
-      <?php if (isset($errors['forgetPassword'])) : ?>
-        <span class="text-danger text-center fs-5"> <?php echo $errors['forgetPassword'] ?> </span>
-      <?php endif; ?>
     </div>
-
+    <?php if (isset($errors['forgetPassword'])) : ?>
+      <p class="fs-5 alert alert-danger rounded text-center p-2 mb-4"><?= $errors['forgetPassword'] ?></p>
+    <?php endif; ?>
     <div class="row m-auto text-center">
-      <button type="submit" name="send" class="btn btn-primary mb-3 w-25 m-auto">Send</button><br>
+      <button type="submit" name="forget" class="btn btn-primary mb-4 w-25 m-auto">Send</button>
+      <a href="login.php" class="link-primary">Return to login</a>
     </div>
   </form>
 </div>

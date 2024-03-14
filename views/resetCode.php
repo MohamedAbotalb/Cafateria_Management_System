@@ -14,19 +14,18 @@ unset($_SESSION['errors']);
 
 <div class="container my-5">
   <h1 class="text-center">Cafeteria</h1>
-  <form action="../controllers/resetPasswordController.php" method="post" class="w-50 m-auto text-bg-light my-5 p-3 rounded shadow-lg bg-body-tertiary" novalidate>
+  <form action="../controllers/authenticateController.php" method="post" class="col-md-4 m-auto text-bg-light my-5 p-3 rounded shadow-lg bg-body-tertiary" novalidate>
     <div class="row g-3 align-items-center my-3">
       <h3 class="text-center my-3">Password Reset Code</h3>
-      <p class="text-center my-3 fs-5">We have sent your email a 6-digits code, please fill it hear</p>
+      <p class="text-center my-3">We have sent your email a 6-digits code, please fill it here</p>
       <div class="mb-3">
         <input type="text" name="resetCode" id="resetCode" class="form-control" aria-describedby="resetCodeHelpInline" pattern="[0-9]{6}" required>
         <div class="invalid-feedback">Please enter a 6-digits code</div>
       </div>
-      <?php if (isset($errors['resetCode'])) : ?>
-        <span class="text-danger text-center fs-5"> <?php echo $errors['resetCode'] ?> </span>
-      <?php endif; ?>
     </div>
-
+    <?php if (isset($errors['resetCode'])) : ?>
+      <p class="fs-5 alert alert-danger rounded text-center p-2 mb-4"><?= $errors['resetCode'] ?></p>
+    <?php endif; ?>
     <div class="row m-auto text-center">
       <button type="submit" name="validate" class="btn btn-primary mb-3 w-25 m-auto">Send</button><br>
     </div>
