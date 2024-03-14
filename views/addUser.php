@@ -4,24 +4,19 @@ require_once "templates/adminNav.php";
 $errorMessages = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 $successMessage = isset($_SESSION['success']) ? $_SESSION['success'] : '';
 
-unset($_SESSION['errors'], $_SESSION['success']);
+unset($_SESSION['errors']);
+unset($_SESSION['success']);
 ?>
 
 <div class="container my-5">
   <h1 class="mb-4">Add User</h1>
-  <?php if (!empty($errorMessages) && is_array($errorMessages)) : ?>
+  <?php if (!empty($errorMessages)) : ?>
     <div class="alert alert-danger" role="alert">
-      <?php foreach ($errorMessages as $key => $message) : ?>
-        <p><?= htmlspecialchars($message) ?></p>
+      <?php foreach ($errorMessages as $error) : ?>
+        <p><?= htmlspecialchars($error) ?></p>
       <?php endforeach; ?>
     </div>
   <?php endif; ?>
-  <?php if ($successMessage) : ?>
-    <div class="alert alert-success" role="alert">
-      <?= htmlspecialchars($successMessage) ?>
-    </div>
-  <?php endif; ?>
-
   <form class="needs-validation" action="../controllers/addUserController.php" method="post" enctype="multipart/form-data" novalidate>
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
@@ -87,8 +82,7 @@ unset($_SESSION['errors'], $_SESSION['success']);
 <script>
   (function() {
 
-    const forms = document.querySelectorAll('.needs-validation');
-
+    let forms = document.querySelectorAll('.needs-validation');
     // Function to check if a number starts with 0
     function startsWithZero(value) {
       return /^0/.test(value);
@@ -96,8 +90,8 @@ unset($_SESSION['errors'], $_SESSION['success']);
 
     // Function to check the validity of room number and extension number
     function validateRoomAndExtension() {
-      const roomNumInput = document.getElementById('roomNum');
-      const extInput = document.getElementById('ext');
+      let roomNumInput = document.getElementById('roomNum');
+      let extInput = document.getElementById('ext');
 
       if (startsWithZero(roomNumInput.value)) {
         roomNumInput.setCustomValidity('Room number must not start with 0.');
@@ -114,8 +108,8 @@ unset($_SESSION['errors'], $_SESSION['success']);
 
     // Function to check if password and confirm password match
     function validatePasswordConfirmation() {
-      const passwordInput = document.getElementById('password');
-      const confirmPasswordInput = document.getElementById('confirmPassword');
+      let passwordInput = document.getElementById('password');
+      let confirmPasswordInput = document.getElementById('confirmPassword');
 
       if (passwordInput.value !== confirmPasswordInput.value) {
         confirmPasswordInput.setCustomValidity('Passwords do not match.');
@@ -126,7 +120,7 @@ unset($_SESSION['errors'], $_SESSION['success']);
 
     // Function to check if password is at least 6 characters and does not contain spaces
     function validatePasswordLength() {
-      var passwordInput = document.getElementById('password');
+      let passwordInput = document.getElementById('password');
 
       if (passwordInput.value.length < 6 || /\s/.test(passwordInput.value)) {
         passwordInput.setCustomValidity('Password must be at least 6 characters long and must not contain spaces.');
@@ -134,13 +128,11 @@ unset($_SESSION['errors'], $_SESSION['success']);
         passwordInput.setCustomValidity('');
       }
     }
-
-
     // Toggle password visibility
     function togglePasswordVisibility(inputId, buttonId) {
-      const passwordInput = document.getElementById(inputId);
-      const button = document.getElementById(buttonId);
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      let passwordInput = document.getElementById(inputId);
+      let button = document.getElementById(buttonId);
+      let type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
       passwordInput.setAttribute('type', type);
 
       if (type === 'password') {
@@ -188,4 +180,5 @@ unset($_SESSION['errors'], $_SESSION['success']);
         });
       });
   })();
+
 </script>
