@@ -29,13 +29,17 @@ if (!isset($_SESSION['logged_in'])) {
         <a href="/admin-manual.php" class="nav-item nav-link mx-3 small">manual orders</a>
         <a href="/admin-checks.php" class="nav-item nav-link mx-3 small">checks</a>
       </div>
-      <ul class="navbar-nav mx-4">
-        <li class="nav-item d-flex align-items-center">
-          <a class="nav-link small" aria-expanded="false">
-            <img class="nav-img rounded-circle ms-2" src="<?= $_SESSION['user']['image'] ?>" width="60px" />
+      <ul class="navbar-nav mx-4 d-flex align-items-center">
+        <li class="nav-item">
+          <a class="nav-link small d-flex align-items-center" aria-expanded="false">
+            <img class="nav-img rounded-circle me-3" src="<?= $_SESSION['user']['image'] ?>" width="60px" />
             <span class="nav-user"><?= $_SESSION['user']['name'] ?></span>
           </a>
-          <span class="text-white fw-bold fs-3">|</span>
+        </li>
+        <li class="nav-item d-none d-md-block">
+          <span class="text-white fw-bold fs-3 mx-2">|</span>
+        </li>
+        <li class="nav-item">
           <a href="../controllers/authenticateController.php" class="nav-link small">logout</a>
         </li>
       </ul>
