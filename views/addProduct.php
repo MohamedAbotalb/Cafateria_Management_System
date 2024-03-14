@@ -1,7 +1,11 @@
 <?php
 require_once "templates/adminNav.php";
 require_once "../models/db.php";
-session_start(); 
+// Check if session is not already started
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
+ 
 
 $db = new DB();
 $categories = $db->select("category", [], [], false);

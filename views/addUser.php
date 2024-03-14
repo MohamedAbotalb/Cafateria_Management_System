@@ -1,6 +1,9 @@
 <?php
 require_once "templates/adminNav.php";
-session_start();
+// Check if session is not already started
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 
 $errorMessages = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 $successMessage = isset($_SESSION['success']) ? $_SESSION['success'] : '';
@@ -10,7 +13,7 @@ unset($_SESSION['errors'], $_SESSION['success']);
 
 <div class="container my-5">
   <h1 class="mb-4">Add User</h1>
-  <?php if (!empty($errorMessages)) : ?>
+  <?php if (!empty($errorMessages) && is_array($errorMessages)) : ?>
     <div class="alert alert-danger" role="alert">
       <?php foreach ($errorMessages as $key => $message) : ?>
         <p><?= htmlspecialchars($message) ?></p>
@@ -22,6 +25,7 @@ unset($_SESSION['errors'], $_SESSION['success']);
       <?= htmlspecialchars($successMessage) ?>
     </div>
   <?php endif; ?>
+
   <form class="needs-validation" action="../controllers/addUserController.php" method="post" enctype="multipart/form-data" novalidate>
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>

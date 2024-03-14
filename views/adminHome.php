@@ -1,6 +1,8 @@
 <?php
-session_start();
-require_once "templates/adminNav.php";
+// Check if session is not already started
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}require_once "templates/adminNav.php";
 require_once "../models/db.php";
 $db = new DB();
 ?>
