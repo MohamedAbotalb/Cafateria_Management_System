@@ -18,4 +18,10 @@ class HomePage
         LIMIT 3; ";
         return $this->query;
     }
+
+    public function searchProduct($productName)
+    {
+        $this->query = "SELECT * FROM product WHERE name LIKE '$productName%'";
+        return $this->query;
+    }
 }

@@ -12,7 +12,7 @@ class CurrentOrders
           orders.total_price, 
           orders.room_id AS room_num,
           user.name AS username, 
-          (SELECT ext FROM room WHERE room.id = user.room_id) AS ext,
+          (SELECT ext FROM room WHERE room.id = orders.room_id) AS ext,
           JSON_ARRAYAGG(
               JSON_OBJECT(
                 'name', product.name,
@@ -27,7 +27,7 @@ class CurrentOrders
           JOIN product ON product.id = order_product.product_id 
           WHERE orders.status = 'processing' 
           GROUP BY orders.id, orders.order_date, orders.total_price, user.name, user.room_id
-          ORDER BY orders.order_date DESC;
+          ORDER BY orders.order_date;
         ";
     return $this->query;
   }

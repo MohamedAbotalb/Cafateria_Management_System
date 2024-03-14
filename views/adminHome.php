@@ -1,8 +1,8 @@
 <?php
-session_start(); 
 require_once "templates/adminNav.php";
 require_once "../models/db.php";
-$db=new DB();
+
+$db = new DB();
 ?>
 
 <!-- start of search -->
@@ -11,12 +11,10 @@ $db=new DB();
     <div class="col-9"></div>
 
     <div class="col-3">
-      <form method="" action="">
-        <div class="input-group mb-1">
-          <input type="text" class="form-control" placeholder="Enter item" aria-label="Recipient's username" aria-describedby="button-addon2" />
-          <input type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2" value="search" />
-        </div>
-      </form>
+      <div class="input-group mb-1">
+        <input id="searchInput" type="text" name="product" class="form-control rounded-pill" placeholder="Enter item"
+          aria-label="Recipient's username" aria-describedby="button-addon2" />
+      </div>
     </div>
 
   </div>
@@ -37,28 +35,29 @@ $db=new DB();
             <form action="../controllers/addOrderController.php" method="post" class="order-details">
             <input type="hidden" name="sourcePage" value="admin">
               <div class="form-floating my-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="note"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                  name="note"></textarea>
                 <label for="floatingTextarea">Notes</label>
               </div>
-              <select class="form-select " aria-label="Default select example" name='room' >
-                <option selected disabled >Select Room</option>
+              <select class="form-select " aria-label="Default select example" name='room'>
+                <option selected disabled>Select Room</option>
                 <?php
-                $rooms=$db->select("room");
-                foreach($rooms as $room){
+                $rooms = $db->select("room");
+                foreach ($rooms as $room) {
                   echo "<option value='{$room['id']}' >{$room['id']}</option>";
                 }
                 ?>
               </select>
               <input type="hidden" name="productDetails" class="productDetails">
               <input type="hidden" name="invoicePrice" class="invoicePriceInput">
-              
+
               <hr class="my-4" />
               <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
               <?php
-                if ( isset($_SESSION['order_added']) && $_SESSION['order_added']) {
-                     echo '<div class="alert alert-success successAlert">Order send successfully</div>';
-                     $_SESSION['order_added'] = false;
-                }
+              if (isset($_SESSION['order_added']) && $_SESSION['order_added']) {
+                echo '<div class="alert alert-success successAlert">Order send successfully</div>';
+                $_SESSION['order_added'] = false;
+              }
               ?>
               <input type="submit" class="btn button" value="confirm" disabled />
             </form>
@@ -82,7 +81,7 @@ $db=new DB();
         <div class="section-title">
           <p class="display-5">Menu</p>
         </div>
-        <div class="d-flex flex-wrap">
+        <div id="product-card" class="d-flex flex-wrap">
           <?php
           $products = $db->select("product", ["available"], ["available"]);
           foreach ($products as $product) {
@@ -100,7 +99,56 @@ $db=new DB();
           }
           ?>
         </div>
-      <!-- end of menu -->
+        <!-- end of menu -->
+      </div>
     </div>
   </div>
-</div>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const card = document.getElementById("product-card")
+
+    searchInput.addEventListener('keyup', function (e) {
+      e.preventDefault()
+
+      const productName = e.target.value.trim();
+
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          showProduct(this.responseText);
+
+        }
+      };
+      xmlhttp.open("GET", "../controllers/searchProductController.php?p=" + productName, true);
+      xmlhttp.send();
+
+
+    })
+
+    function showProduct(products) {
+
+      const productsArray = JSON.parse(products);
+
+      card.innerHTML = "";
+      if (Array.isArray(productsArray) && productsArray.length > 0) {
+        productsArray.forEach(product => {
+          card.innerHTML += `
+        <div class='card m-3 product' style='width: 9rem'>
+          <img src='../public/images/${product.image}' class='card-img-top' alt='...' />
+          <h5 class='menu-price'>$<span class='productPrice'>${product.price}</span></h5>
+          <div class='card-body'>
+            <p class='card-text'>
+              ${product.name}
+              <input type='hidden' class='productId' value='${product.id}'>
+            </p>
+          </div>
+        </div>`;
+        });
+      } else {
+        card.innerHTML = "<p>No products found.</p>";
+      }
+    }
+
+
+  </script>

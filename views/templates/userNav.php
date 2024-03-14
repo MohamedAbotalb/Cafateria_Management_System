@@ -1,5 +1,13 @@
 <?php
 require_once "head.php";
+// Check if session is not already started
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
+// Check if the user is logged in or not
+if (!isset($_SESSION['logged_in'])) {
+  header('Location: login.php');
+}
 ?>
 
 <!-- Navbar start -->
@@ -16,12 +24,18 @@ require_once "head.php";
         <a href="/user-home" class="nav-item nav-link mx-3">Home</a>
         <a href="/user-orders" class="nav-item nav-link mx-3">My Orders</a>
       </div>
-      <ul class="navbar-nav mx-5">
-        <li class="nav-item ">
-          <a class="nav-link" href="/user" id="navbarDropdown" aria-expanded="false">
-            <img class="nav-img rounded-circle" src="../public/images/user1.png" width="60px" />
-            <span class="nav-user small">Username</span>
+      <ul class="navbar-nav mx-4 d-flex align-items-center">
+        <li class="nav-item">
+          <a class="nav-link small d-flex align-items-center" aria-expanded="false">
+            <img class="nav-img rounded-circle me-3" src="<?= $_SESSION['user']['image'] ?>" width="60px" />
+            <span class="nav-user"><?= $_SESSION['user']['name'] ?></span>
           </a>
+        </li>
+        <li class="nav-item d-none d-md-block">
+          <span class="text-white fw-bold fs-3 mx-2">|</span>
+        </li>
+        <li class="nav-item">
+          <a href="../controllers/authenticateController.php" class="nav-link small">logout</a>
         </li>
       </ul>
     </div>
