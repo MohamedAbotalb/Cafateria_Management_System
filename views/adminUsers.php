@@ -128,7 +128,7 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
         </div>
         <div class="modal-body">
           <!-- Form for editing user -->
-          <form id="editUserForm<?= $user['id']; ?>" class="needs-validation Form" action="../controllers/updateUserController.php" method="post" enctype="multipart/form-data" novalidate>
+          <form id="editUserForm<?= $user['id']; ?>" class="needs-validation Form" action="../controllers/updateUser.php" method="post" enctype="multipart/form-data" novalidate>
             <input type="hidden" name="userId" value="<?= $user['id']; ?>">
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
@@ -175,7 +175,7 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
       </div>
     </div>
   </div>
-  <!-- Add this script to handle deletion and update page -->
+  <!--  handle deletion and update page -->
   <script>
     // Function to handle deletion confirmation
     function confirmDelete(userId) {
@@ -226,7 +226,7 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
       var formData = new FormData(this);
       $.ajax({
         type: "POST",
-        url: "../controllers/updateUserController.php",
+        url: "../controllers/updateUser.php",
         data: formData,
         processData: false,
         contentType: false,
@@ -251,11 +251,12 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
           } else {
             // Display error message
 
-            if (data.message === "Email already exists. Please choose a different email.") {
-              $('#emailNotification').text(data.message).show();
+            if (data.errors.email === "Email already exists. Please choose a different email.") {
+              $('#emailNotification').text(data.errors.email).show();
+              console.log(data.errors.email);
             }
             if (data.message === 'Room not found') {
-              $('#roomNotification').text(data.message).show();
+              $('#roomNotification').text(data.errors.email).show();
             }
 
             // alert("Error: " + data.error);
