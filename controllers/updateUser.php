@@ -91,15 +91,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "SELECT email FROM user WHERE id = :id",
             [":id" => $userId]
         )[0]['email'];
-
-        if ($email !== $currentUserEmail) {
-            // If the email is different from the current user's email, check if it exists
-            $emailExists = $db2->exists("user", ["email" => $email]);
-            if ($emailExists) {
-                // Email already exists, add error to array
-                addError($errors, 'email', 'Email already exists. Please choose a different email.');
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            addError($errors, 'invalidEmail', 'Invalid email. Please write valid email.');
+        } else {
+            if ($email !== $currentUserEmail) {
+                // If the email is different from the current user's email, check if it exists
+                $emailExists = $db2->exists("user", ["email" => $email]);
+                if ($emailExists) {
+                    // Email already exists, add error to array
+                    addError($errors, 'existEmail', 'Email already exists. Please choose a different email.');
+                }
             }
         }
+
+
 
         // Check if a file is uploaded
         if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] === UPLOAD_ERR_OK) {

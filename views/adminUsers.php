@@ -20,7 +20,7 @@ $total_rows = count($allUsers);
 $pages = ceil($total_rows / $rows_per_page);
 //selected row in one page with limit
 $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.room_id = r.id WHERE u.id != $adminId LIMIT $start, $rows_per_page");
-// select1("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id LIMIT $start, $rows_per_page");
+
 ?>
 
 <div class="container">
@@ -144,7 +144,9 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
                 Please provide a valid email address.
               </div>
               <!-- Notification email exist -->
-              <div id="emailNotification" class="invalid-feedback"></div>
+              <div id="existEmailNotification" class="invalid-feedback"></div>
+              <!-- Notification invalidEmail -->
+              <div id="invalidEmailNotification" class="invalid-feedback"></div>
             </div>
             <div class=" mb-3">
               <label for="roomNum" class="form-label">Room Number</label>
@@ -152,7 +154,7 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
               <div class="invalid-feedback">
                 Please provide a valid room number.
               </div>
-              <!-- Notification room exist -->
+              <!-- Notification room not exist -->
               <div id="roomNotification" class="invalid-feedback"></div>
             </div>
             <div class="mb-3">
@@ -161,6 +163,10 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
               <div class="invalid-feedback">
                 Please provide a valid extension number.
               </div>
+              <!-- Notification ext not exist -->
+              <div id="extNotification" class="invalid-feedback"></div>
+              <div id="room&extNotification" class="invalid-feedback"></div>
+
             </div>
             <div class="mb-3">
               <label for="profilePicture" class="form-label">Profile Picture</label>
@@ -193,7 +199,7 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
           if (data.success) {
             // If successful, hide the modal
             $('#deleteModal' + userId).modal('hide');
-            // Optionally, you can remove the deleted user from the page immediately
+            // remove the deleted user from the page immediately
             $('#userRow' + userId).remove();
           } else {
             // If deletion failed, display an error message
@@ -214,11 +220,39 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
       });
     });
   </script>
+  <!-- <script> -->
+  // let forms = document.querySelectorAll('.needs-validation');
+  // Array.prototype.slice.call(forms)
+  // .forEach(function(form) {
+  // form.addEventListener('submit', function(event) {
+  // if (!form.checkValidity()) {
+  // event.preventDefault();
+  // event.stopPropagation();
+  // }
+
+  // form.classList.add('was-validated');
+  // }, false);
+
+
+
+  // form.querySelector('#roomNum').addEventListener('input', validateRoomAndExtension);
+  // form.querySelector('#ext').addEventListener('input', validateRoomAndExtension);
+
+  // });
+  <!-- </script> -->
   <!-- handel edit user form -->
   <script>
     // AJAX form submission
     $("#editUserForm<?= $user['id']; ?>").submit(function(event) {
       event.preventDefault(); // Prevent default form submission
+      let form = this; // Reference to the form
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+        form.classList.add('was-validated');
+        return;
+      }
+      // form.classList.add('was-validated');
       // Clear existing notifications
       $('#emailNotification').hide();
       $('#roomNotification').hide();
@@ -250,13 +284,18 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
             // console.log(updatedUser.image);
           } else {
             // Display error message
-
-            if (data.errors.email === "Email already exists. Please choose a different email.") {
-              $('#emailNotification').text(data.errors.email).show();
-              console.log(data.errors.email);
+            let errors = data.errors;
+            if (errors.email) {
+              $('#invalidEmailNotification').text(data.errors.invalidEmail).show();
             }
-            if (data.message === 'Room not found') {
-              $('#roomNotification').text(data.errors.email).show();
+            if (errors.email) {
+              $('#existEmailNotification').text(data.errors.existEmail).show();
+            }
+            if (errors.room) {
+              $('#roomNotification').text(data.errors.room).show();
+            }
+            if (errors.room$ext) {
+              $('#room&extNotification').text(data.errors.room$ext).show();
             }
 
             // alert("Error: " + data.error);
