@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $productName = htmlspecialchars(trim($_POST['productName']));
     $price = htmlspecialchars(trim($_POST['productPrice']));
     $categoryName = htmlspecialchars(trim($_POST['productCategory']));
-    $errors = []; 
+    $fails = []; 
 
     $existingProduct = $db->select('product', ['name'], [$productName], true);
     if ($existingProduct) {
-        $_SESSION['errors'] = ["productName" => "Product already exists."];
+        $_SESSION['fails'] = ["productName" => "Product already exists."];
         header("Location: ../views/addProduct.php");
         exit;
     }
@@ -31,15 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ]);
 
         if (!move_uploaded_file($_FILES['productImage']['tmp_name'], $target)) {
-            $_SESSION['errors'] = ["productImage" => "Failed to upload image."];
+            $_SESSION['fails'] = ["productImage" => "Failed to upload image."];
             header("Location: ../views/addProduct.php");
             exit;
         }
 
-        // $_SESSION['success'] = "Product added successfully!";
+        $_SESSION['done'] = "Product added successfully!";
         header("Location: ../views/adminProducts.php");
     } catch (Exception $e) {
-        $_SESSION['errors'] = ["general" => "Error adding product: " . $e->getMessage()];
+        $_SESSION['fails'] = ["general" => "Error adding product: " . $e->getMessage()];
         header("Location: ../views/addProduct.php");
         exit;
     }

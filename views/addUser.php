@@ -11,10 +11,15 @@ unset($_SESSION['success']);
 <div class="container my-5">
   <h1 class="mb-4">Add User</h1>
   <?php if (!empty($errorMessages)) : ?>
-    <div class="alert alert-danger" role="alert">
+    <div class="fs-5 alert alert-danger rounded text-center p-2 mb-4" role="alert">
       <?php foreach ($errorMessages as $error) : ?>
         <p><?= htmlspecialchars($error) ?></p>
       <?php endforeach; ?>
+    </div>
+  <?php endif; ?>
+  <?php if ($successMessage) : ?>
+    <div class="fs-5 alert alert-danger rounded text-center p-2 mb-4" role="alert">
+      <?= htmlspecialchars($successMessage) ?>
     </div>
   <?php endif; ?>
   <form class="needs-validation" action="../controllers/addUserController.php" method="post" enctype="multipart/form-data" novalidate>
@@ -180,5 +185,4 @@ unset($_SESSION['success']);
         });
       });
   })();
-
 </script>
