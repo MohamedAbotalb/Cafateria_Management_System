@@ -12,8 +12,11 @@ $db = new DB();
 
     <div class="col-3">
       <div class="input-group mb-1">
-        <input id="searchInput" type="text" name="product" class="form-control rounded-pill" placeholder="Enter item"
-          aria-label="Recipient's username" aria-describedby="button-addon2" />
+        <div class="input-group mb-3 border rounded">
+          <span class="input-group-text bg-transparent border-0"><i class="fas fa-search"></i></span>
+          <input id="searchInput" type="text" name="product" class="form-control border-0"
+            placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
+        </div>
       </div>
     </div>
 
@@ -30,10 +33,10 @@ $db = new DB();
         <div class="card">
           <div class="card-body">
             <!-- start of product order -->
-            <div class="list mx-3"></div>
+            <div class="list"></div>
             <!-- end of product order -->
             <form action="../controllers/addOrderController.php" method="post" class="order-details">
-            <input type="hidden" name="sourcePage" value="admin">
+              <input type="hidden" name="sourcePage" value="admin">
               <div class="form-floating my-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
                   name="note"></textarea>
@@ -44,7 +47,7 @@ $db = new DB();
                 <?php
                 $rooms = $db->select("room");
                 foreach ($rooms as $room) {
-                  if($room['id']!=0){
+                  if ($room['id'] != 0) {
                     echo "<option value='{$room['id']}' >{$room['id']}</option>";
 
                   }
@@ -55,10 +58,10 @@ $db = new DB();
               <input type="hidden" name="invoicePrice" class="invoicePriceInput">
 
               <hr class="my-4" />
-              <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
+              <p class="fs-4">EGP <span class="invoice-price">0</span></p>
               <?php
-              if (isset($_SESSION['order_added']) && $_SESSION['order_added']) {
-                echo '<div class="alert alert-success successAlert">Order send successfully</div>';
+              if (isset ($_SESSION['order_added']) && $_SESSION['order_added']) {
+                echo '<div class="alert alert-success successAlert">Order Added Successfully</div>';
                 $_SESSION['order_added'] = false;
               }
               ?>
@@ -72,15 +75,15 @@ $db = new DB();
       <div class="col-7 text-capitalize">
         <h5 class="text-muted "> Add to user</h5>
         <div class="selectOptionUser">
-        <select class="form-select w-50 mt-5 mb-2 userSelect" aria-label="Default select example">
-        <option selected disabled>Select user</option>
-        <?php
-                $users=$db->select("user",["role"],["user"]);
-                foreach($users as $user){
-                  echo "<option value='{$user['id']}' class='text-capitalize'>{$user['name']}</option>";
-                }
-                ?>
-        </select>
+          <select class="form-select w-50 mt-5 mb-2 userSelect" aria-label="Default select example">
+            <option selected disabled>Select user</option>
+            <?php
+            $users = $db->select("user", ["role"], ["user"]);
+            foreach ($users as $user) {
+              echo "<option value='{$user['id']}' class='text-capitalize'>{$user['name']}</option>";
+            }
+            ?>
+          </select>
         </div>
         <hr class="my-5" />
 

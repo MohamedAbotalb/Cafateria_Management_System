@@ -15,8 +15,11 @@ $homePage = new HomePage();
     <div class="col-3">
 
       <div class="input-group mb-1">
-        <input id="searchInput" type="text" name="product" class="form-control rounded-pill"
-          placeholder="Enter item" aria-label="Recipient's username" aria-describedby="button-addon2" />
+      <div class="input-group mb-3 border rounded">
+          <span class="input-group-text bg-transparent border-0"><i class="fas fa-search"></i></span>
+          <input id="searchInput" type="text" name="product" class="form-control border-0"
+            placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
+        </div>
       </div>
 
     </div>
@@ -34,7 +37,7 @@ $homePage = new HomePage();
         <div class="card">
           <div class="card-body">
             <!-- start of product order -->
-            <div class="list mx-3"></div>
+            <div class="list"></div>
             <!-- end of product order -->
             <form method="post" action="../controllers/addOrderController.php" class="order-details">
               <input type="hidden" class="selectedUser" value="">
@@ -58,10 +61,10 @@ $homePage = new HomePage();
               <input type="hidden" name="invoicePrice" class="invoicePriceInput">
               <input type="hidden" name="productDetails" class="productDetails">
               <hr class="my-4" />
-              <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
+              <p class="fs-4">EGP <span class="invoice-price">0</span></p>
               <?php
               if (isset($_SESSION['order_added']) && $_SESSION['order_added']) {
-                echo '<div class="alert alert-success successAlert">Order send successfully</div>';
+                echo '<div class="alert alert-success successAlert">Order Added Successfully</div>';
                 $_SESSION['order_added'] = false;
               }
               ?>
