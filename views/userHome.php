@@ -44,7 +44,7 @@ $homePage = new HomePage();
                 <label for="floatingTextarea">Notes</label>
               </div>
               <select class="form-select" aria-label="Default select example" name="room">
-                <option selected>Select Room</option>
+                <option selected disabled>Select Room</option>
                 <?php
                 $rooms = $db->select("room");
                 foreach ($rooms as $room) {
