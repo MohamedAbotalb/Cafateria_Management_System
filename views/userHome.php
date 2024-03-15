@@ -37,7 +37,7 @@ $homePage = new HomePage();
             <div class="list mx-3"></div>
             <!-- end of product order -->
             <form method="post" action="../controllers/addOrderController.php" class="order-details">
-              <input type="hidden" class="selectedUser" name="userID" value="">
+              <input type="hidden" class="selectedUser" value="">
               <input type="hidden" name="sourcePage" value="user">
               <div class="form-floating my-3">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
@@ -108,7 +108,7 @@ $homePage = new HomePage();
           foreach ($products as $product) {
             echo "<div class='card m-3 product' style='width: 9rem'>
                 <img src='../public/images/{$product['image']}' class='card-img-top' alt='...' />
-                <h5 class='menu-price'>$<span class='productPrice'>{$product['price']}</span></h5>
+                <h5 class='menu-price'><span class='productPrice'>{$product['price']}</span>LE</h5>
                 <div class='card-body'>
                     <p class='card-text'>
                     {$product['name']}
