@@ -1,11 +1,11 @@
 <?php
 require_once "templates/adminNav.php";
 
-$errorMessages = isset($_SESSION['fail']) ? $_SESSION['fail'] : [];
-$successMessage = isset($_SESSION['done']) ? $_SESSION['done'] : '';
+$errorMessages = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$successMessage = isset($_SESSION['success']) ? $_SESSION['success'] : '';
 
-unset($_SESSION['fail']);
-unset($_SESSION['done']);
+unset($_SESSION['errors']);
+unset($_SESSION['success']);
 ?>
 
 <div class="container my-5">
@@ -15,6 +15,11 @@ unset($_SESSION['done']);
       <?php foreach ($errorMessages as $error) : ?>
         <p><?= htmlspecialchars($error) ?></p>
       <?php endforeach; ?>
+    </div>
+  <?php endif; ?>
+  <?php if ($successMessage) : ?>
+    <div class="fs-5 alert alert-danger rounded text-center p-2 mb-4" role="alert">
+      <?= htmlspecialchars($successMessage) ?>
     </div>
   <?php endif; ?>
   <form class="needs-validation" action="../controllers/addUserController.php" method="post" enctype="multipart/form-data" novalidate>
@@ -180,5 +185,4 @@ unset($_SESSION['done']);
         });
       });
   })();
-
 </script>
