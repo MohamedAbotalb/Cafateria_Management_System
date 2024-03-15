@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Instantiate the DB class 
         $db = new DB();
-        $db2 = new allup();
+        $db2 = new UsersandProducts();
         // Handle file upload 
         if ($_FILES['productImage']['error'] === UPLOAD_ERR_OK) {
             $tempFile = $_FILES['productImage']['tmp_name'];
