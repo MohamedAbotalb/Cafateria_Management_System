@@ -117,12 +117,16 @@ window.onload = function () {
         productDetailsInput.value = JSON.stringify(productsData);
         
       }
-      if(invoice>0){
+      if(invoice>0 && document.querySelector('.selectedUser')){
         document.querySelector('.button').disabled=false;
       }
-      
+      else{
+        let message = document.createElement('p');
+        message.classList.add('alert' ,'alert-danger', 'w-50');
+        message.textContent="you must choose user";
+        document.querySelector(".selectOptionUser").appendChild(message);
+      }
     });
-    
     setTimeout(function() {
       var successAlert = document.querySelector('.successAlert');
       if (successAlert) {
@@ -136,7 +140,15 @@ window.onload = function () {
     Input.type = 'hidden';
     Input.name = 'userID';
     Input.value = userID;
+    Input.classList.add('selectedUser');
     document.querySelector(".order-details").appendChild(Input);
+    if (invoice > 0 && document.querySelector('.selectedUser')) {
+      document.querySelector('.button').disabled = false;
+      let messageElement = document.querySelector(".selectOptionUser").querySelector('p');
+      if (messageElement) {
+          messageElement.parentNode.removeChild(messageElement);
+      }
+  }
   });
   function isProductInList(productId) {
     const existingProducts = parent.querySelectorAll(".order-item .id");
