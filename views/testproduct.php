@@ -79,7 +79,7 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form class="needs-validation Form mb-0" action="../controllers/updateProduct.php" method="post" enctype="multipart/form-data" id="editProductForm<?= $product['id']; ?>" novalidate>
+                                                <form class="needs-validation Form mb-0" action="../controllers/updateProductController.php" method="post" enctype="multipart/form-data" id="editProductForm<?= $product['id']; ?>" novalidate>
                                                     <div class="mb-3">
                                                         <label for="productName" class="form-label">Product</label>
                                                         <input type="hidden" name="productId" value="<?= $product['id']; ?>">
@@ -243,7 +243,7 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
 
             $.ajax({
                 type: "POST",
-                url: "../controllers/updateProduct.php",
+                url: "../controllers/updateProductController.php",
                 data: formData,
                 processData: false,
                 contentType: false,

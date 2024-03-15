@@ -128,7 +128,7 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
         </div>
         <div class="modal-body">
           <!-- Form for editing user -->
-          <form id="editUserForm<?= $user['id']; ?>" class="needs-validation Form" action="../controllers/updateUser.php" method="post" enctype="multipart/form-data" novalidate>
+          <form id="editUserForm<?= $user['id']; ?>" class="needs-validation Form" action="../controllers/updateUserController.php" method="post" enctype="multipart/form-data" novalidate>
             <input type="hidden" name="userId" value="<?= $user['id']; ?>">
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
@@ -226,7 +226,7 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
       var formData = new FormData(this);
       $.ajax({
         type: "POST",
-        url: "../controllers/updateUser.php",
+        url: "../controllers/updateUserController.php",
         data: formData,
         processData: false,
         contentType: false,
