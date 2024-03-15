@@ -1,11 +1,11 @@
 <?php
 require_once "templates/adminNav.php";
 
-$errorMessages = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
-$successMessage = isset($_SESSION['success']) ? $_SESSION['success'] : '';
+$errorMessages = isset($_SESSION['fail']) ? $_SESSION['fail'] : [];
+$successMessage = isset($_SESSION['done']) ? $_SESSION['done'] : '';
 
-unset($_SESSION['errors']);
-unset($_SESSION['success']);
+unset($_SESSION['fail']);
+unset($_SESSION['done']);
 ?>
 
 <div class="container my-5">
