@@ -44,7 +44,10 @@ $db = new DB();
                 <?php
                 $rooms = $db->select("room");
                 foreach ($rooms as $room) {
-                  echo "<option value='{$room['id']}' >{$room['id']}</option>";
+                  if($room['id']!=0){
+                    echo "<option value='{$room['id']}' >{$room['id']}</option>";
+
+                  }
                 }
                 ?>
               </select>
@@ -69,6 +72,7 @@ $db = new DB();
       <div class="col-7 ">
         <h5 class="text-muted "> Add to user</h5>
         <select class="form-select w-50 my-5 userSelect" aria-label="Default select example">
+        <option selected disabled>Select user</option>
         <?php
                 $users=$db->select("user",["role"],["user"]);
                 foreach($users as $user){
