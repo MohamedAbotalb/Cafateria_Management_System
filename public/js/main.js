@@ -17,18 +17,18 @@ window.onload = function () {
       const price = parseInt(priceDiv.textContent);
       if (!isProductInList(productId)) {
         let div = document.createElement("div");
-
+        div.classList.add("border","my-3");
         div.innerHTML = `
-                    <div class="row container text-center order-item border align-items-center my-2">
+                    <div class="row container text-center order-item align-items-center">
                         <input class="id" type="hidden" value="${productId}">
-                        <div class="col-3 ">${name.textContent}</div>
-                        <div class="col-2 border quantity">1</div>
+                        <div class="col-4 text-capitalize">${name.textContent}</div>
+                        <div class="col-2 border quantity fs-5">1</div>
                         <div class="col-2 my-1">
-                            <div class="increment fs-5">+</div>
-                            <div class="decrement fs-5">-</div>
+                            <div class="increment fs-4">+</div>
+                            <div class="decrement fs-4">-</div>
                         </div>
-                        <div class="col-3 price-product">${priceDiv.textContent}</div>
-                        <div class="col-2 close"> &times;</div>
+                        <div class="col-3 price-product fs-5">${priceDiv.textContent}</div>
+                        <div class="col-1 close fs-4"> &times;</div>
                     </div>`;
 
         parent.appendChild(div);
