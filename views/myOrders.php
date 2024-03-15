@@ -96,7 +96,7 @@ foreach ($data as $row) {
           <div class="row">
             <div class="col-3 border border-2 pt-3 d-flex justify-content-between">
               <span>
-                <?php echo $order['order_date'] ?> PM
+              <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?>
               </span>
               <span id="heading-<?php  echo $order['id'] ?>">
                 <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $order['id'] ?>"
@@ -212,17 +212,7 @@ foreach ($data as $row) {
       divEndDate.appendChild(messageTag);
       return;
     }
-    if (startDate.value >= endDate.value) {
-      messageTag.textContent = "Start Date Must Be Smaller Than End Date";
-      messageTag.style.cssText = "color:red";
-      divEndDate.appendChild(messageTag);
-      return;
-    }
-    if (startDate.value && endDate.value && startDate.value < endDate.value) {
-      window.location.assign(
-        `http://localhost:8080/cafateria/Cafateria_Management_System/views/myOrders.php?startDate=${startDate.value}&endDate=${endDate.value}`
-      );
-    }
+    validate(startDate,endDate);
   };
 
   endDate.onchange = function (e) {
@@ -235,7 +225,12 @@ foreach ($data as $row) {
       divStartDate.appendChild(messageTag);
       return;
     }
-    if (startDate.value >= endDate.value) {
+    validate(startDate,endDate);
+
+  };
+
+function validate(startDate,endDate){
+  if (startDate.value >= endDate.value) {
       messageTag.textContent = "Start Date Must Be Smaller Than End Date";
       messageTag.style.cssText = "color:red";
       divEndDate.appendChild(messageTag);
@@ -243,8 +238,9 @@ foreach ($data as $row) {
     }
     if (startDate.value && endDate.value && startDate.value < endDate.value) {
       window.location.assign(
-        `http://localhost:8080/cafateria/Cafateria_Management_System/views/myOrders.php?startDate=${startDate.value}&endDate=${endDate.value}`
+        `${window.location.origin}/Cafateria_Management_System/views/myOrders.php?startDate=${startDate.value}&endDate=${endDate.value}`
       );
     }
-  };
+}
+
   </script>

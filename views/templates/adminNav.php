@@ -23,11 +23,11 @@ if (!isset($_SESSION['logged_in'])) {
     </button>
     <div class="collapse navbar-collapse text-capitalize justify-content-between" id="navbarCollapse">
       <div class="navbar-nav px-5">
-        <a href="/views/adminHome.php" class="nav-item nav-link mx-3 small">home</a>
-        <a href="/views/adminProducts.php" class="nav-item nav-link mx-3 small">products</a>
-        <a href="/views/adminUsers.php" class="nav-item nav-link mx-3 small">users</a>
-        <a href="/views/manualOrders.php" class="nav-item nav-link mx-3 small">manual orders</a>
-        <a href="/views/checks.php" class="nav-item nav-link mx-3 small">checks</a>
+        <a href="./adminHome.php" class="nav-item nav-link mx-3 small">home</a>
+        <a href="./adminProducts.php" class="nav-item nav-link mx-3 small">products</a>
+        <a href="./adminUsers.php" class="nav-item nav-link mx-3 small">users</a>
+        <a href="./manualOrders.php" class="nav-item nav-link mx-3 small">manual orders</a>
+        <a href="./checks.php" class="nav-item nav-link mx-3 small">checks</a>
       </div>
       <ul class="navbar-nav mx-4 d-flex align-items-center">
         <li class="nav-item">
