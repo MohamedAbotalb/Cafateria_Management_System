@@ -71,7 +71,8 @@ $db = new DB();
       <!-- start of menu -->
       <div class="col-7 ">
         <h5 class="text-muted "> Add to user</h5>
-        <select class="form-select w-50 my-5 userSelect" aria-label="Default select example">
+        <div class="selectOptionUser">
+        <select class="form-select w-50 mt-5 mb-2 userSelect" aria-label="Default select example">
         <option selected disabled>Select user</option>
         <?php
                 $users=$db->select("user",["role"],["user"]);
@@ -80,6 +81,7 @@ $db = new DB();
                 }
                 ?>
         </select>
+        </div>
         <hr class="my-5" />
 
         <div class="section-title">

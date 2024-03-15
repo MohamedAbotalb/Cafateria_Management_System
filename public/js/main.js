@@ -55,7 +55,7 @@ window.onload = function () {
           invoiceInput.value = invoice;
           const existingProductIndex = productsData.findIndex(
             (product) => product.product_id === productId
-          ); // Set the actual product_id here
+          ); 
           if (existingProductIndex !== -1) {
             productsData[existingProductIndex].quantity = quantityValue;
             productsData[existingProductIndex].amount = price * quantityValue;
@@ -99,17 +99,6 @@ window.onload = function () {
             (product) => product.product_id === productId
           );
 
-          if (removedProductIndex !== -1) {
-            const removedProductAmount =
-              productsData[removedProductIndex].amount;
-            productsData.splice(removedProductIndex, 1);
-
-            invoice -= removedProductAmount;
-            invoiceDiv.textContent = invoice;
-            invoiceInput.value = invoice;
-            productDetailsInput.value = JSON.stringify(productsData);
-          }
-
           div.remove();
         });
         invoiceDiv.textContent = invoice;
@@ -117,12 +106,20 @@ window.onload = function () {
         productDetailsInput.value = JSON.stringify(productsData);
         
       }
-      if(invoice>0){
+      if(invoice>0 && document.querySelector('.selectedUser')){
         document.querySelector('.button').disabled=false;
       }
-      
+      else{
+        let message = document.querySelector(".selectOptionUser p");
+
+      if (!message) {
+          message = document.createElement('p');
+          message.classList.add('alert','alert-danger','w-50');
+          message.textContent = "You must choose a user";
+          document.querySelector(".selectOptionUser").appendChild(message);
+      }
+      }
     });
-    
     setTimeout(function() {
       var successAlert = document.querySelector('.successAlert');
       if (successAlert) {
@@ -136,7 +133,15 @@ window.onload = function () {
     Input.type = 'hidden';
     Input.name = 'userID';
     Input.value = userID;
+    Input.classList.add('selectedUser');
     document.querySelector(".order-details").appendChild(Input);
+    if (invoice > 0 && document.querySelector('.selectedUser')) {
+      document.querySelector('.button').disabled = false;
+      let messageElement = document.querySelector(".selectOptionUser").querySelector('p');
+      if (messageElement) {
+          messageElement.parentNode.removeChild(messageElement);
+      }
+  }
   });
   function isProductInList(productId) {
     const existingProducts = parent.querySelectorAll(".order-item .id");

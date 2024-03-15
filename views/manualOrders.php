@@ -7,11 +7,6 @@ $currentOrders = new CurrentOrdersController();
 // Get all current orders
 $orders = $currentOrders->getCurrentOrders();
 
-// $date = "2024-02-27 15:30:00"; // Example date
-// $convertedDate = date("Y/m/d g:i A", strtotime($date)); // Convert date format
-
-// echo $convertedDate; // Output: 2024-02-27 3:30 PM
-
 ?>
 
 <!-- Orders start -->
@@ -21,7 +16,7 @@ $orders = $currentOrders->getCurrentOrders();
     <?php if (count($orders) > 0) : ?>
       <?php foreach ($orders as $order) : ?>
         <table class="table table-bordered border-secondary text-center text-capitalize fs-5">
-          <thead>
+          <thead class="text-white fs-4" style="background-color: #362517;">
             <tr>
               <th>Order Date</th>
               <th>Name</th>
