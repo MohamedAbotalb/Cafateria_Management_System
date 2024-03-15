@@ -19,10 +19,10 @@ if (!isset($_SESSION['logged_in'])) {
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+    <div class="collapse navbar-collapse text-capitalize justify-content-between" id="navbarCollapse">
       <div class="navbar-nav px-5">
-        <a href="/user-home" class="nav-item nav-link mx-3">Home</a>
-        <a href="/user-orders" class="nav-item nav-link mx-3">My Orders</a>
+        <a href="/views/userHome" class="nav-item nav-link mx-3">home</a>
+        <a href="/views/myOrders" class="nav-item nav-link mx-3">my orders</a>
       </div>
       <ul class="navbar-nav mx-4 d-flex align-items-center">
         <li class="nav-item">
