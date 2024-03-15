@@ -48,7 +48,9 @@ $homePage = new HomePage();
                 <?php
                 $rooms = $db->select("room");
                 foreach ($rooms as $room) {
-                  echo "<option value='{$room['id']}'>{$room['id']}</option>";
+                  if($room['id'] != 0){
+                     echo "<option value='{$room['id']}'>{$room['id']}</option>";
+                  }
                 }
                 ?>
               </select>
