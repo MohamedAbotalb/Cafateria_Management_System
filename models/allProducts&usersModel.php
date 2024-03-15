@@ -1,29 +1,18 @@
 <?php
 
-class allup
+class UsersandProducts
 {
-    private $host = 'sql.freedb.tech';
-    private $dbname = 'freedb_cafeteria';
-    private $user = 'freedb_cafeteria_admin';
-    private $password = 'ke4$FA*d4xgqhG3';
-    private $connection;
+    private $db;
 
-    function __construct()
+    public function __construct()
     {
-        $this->connection = new PDO("mysql:host=$this->host;dbname=$this->dbname;", $this->user, $this->password);
+        $this->db = new DB();
     }
 
-    function getConnection()
-    {
-        return $this->connection;
-    }
-
-
-
-    public function select1($sql, $params = [])
+    public function select($sql, $params = [])
     {
         try {
-            $stmt = $this->connection->prepare($sql);
+            $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -34,48 +23,20 @@ class allup
         }
     }
 
-    // public function insert1($TbName, array $values)
-    // {
-    //     $keys = array_keys($values);
-    //     $keys = implode(',', $keys);
-    //     $value = array_values($values);
-    //     $value = "'" . implode("','", $value) . "'";
-    //     $array = [];
-    //     for ($i = 0; $i < count($values); $i++) {
-    //         $array[$i] = "?";
-    //     }
-    //     $marks = implode(",", $array);
-    //     $sql = "INSERT INTO {$TbName} ({$keys}) VALUES ({$marks})";
-    //     $stmt = $this->connection->prepare($sql);
-    //     $stmt->execute(array_values($values));
-
-    //     // Return the last inserted ID
-    //     return $this->connection->lastInsertId();
-    // }
-
-
-
-    public function exists($table, $conditions, $excludeId = null)
+    public function exists($table, $conditions)
     {
         $query = "SELECT COUNT(*) FROM $table WHERE ";
         $keys = array_keys($conditions);
-
-        // Exclude ID condition if provided
-        if ($excludeId !== null) {
-            $conditions["id[!]"] = $excludeId;
-        }
-
         foreach ($keys as $key) {
             $query .= "$key = :$key AND ";
         }
         // Remove the last "AND" from the query
         $query = rtrim($query, "AND ");
 
-        $stmt = $this->connection->prepare($query);
+        $stmt = $this->db->getConnection()->prepare($query);
         $stmt->execute($conditions);
         $count = $stmt->fetchColumn();
 
         return $count > 0;
     }
-
 }

@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Instantiate the DB class
         $db = new DB();
-        $db2 = new allup();
+        $db2 = new UsersandProducts();
 
         // Check if the room exists
         if (!roomExists($roomNum, $db2)) {
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Check if the email already exists in the database
-        $currentUserEmail = $db2->select1(
+        $currentUserEmail = $db2->select(
             "SELECT email FROM user WHERE id = :id",
             [":id" => $userId]
         )[0]['email'];
@@ -140,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db->update("room", ["id" => $roomNum], ["ext" => $ext]);
 
         // Fetch the updated user data from the database (from both tables)
-        $updatedUser = $db2->select1(
+        $updatedUser = $db2->select(
             "SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.room_id = r.id WHERE u.id = :id",
             [":id" => $userId]
         );
