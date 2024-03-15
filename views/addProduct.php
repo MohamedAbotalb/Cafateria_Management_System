@@ -29,9 +29,9 @@ unset($_SESSION['success']);
   <form id="addProductForm" class="my-5 needs-validation" action="../controllers/addProductController.php" method="POST" enctype="multipart/form-data" novalidate>
     <div class="mb-3">
       <label for="productName" class="form-label">Product Name</label>
-      <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)*$" title="Product name must start with a letter and not contain numbers" required>
+      <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="^[A-Za-z]{3,}(?:\s[A-Za-z]+)*$" title="Product name must be at least three characters long and must start with a letter" required>
       <div class="invalid-feedback">
-        Please enter a valid product name.
+        Product name must be at least three characters.
       </div>
     </div>
     <div class="mb-3">
@@ -40,7 +40,7 @@ unset($_SESSION['success']);
         <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Enter product price" min="1" max="100" required>
         <span class="m-2 fs-5">EGP</span>
         <div class="invalid-feedback">
-          Please enter a valid price.
+          Please enter a valid price between 1 and 100.
         </div>
       </div>
     </div>
@@ -85,6 +85,7 @@ unset($_SESSION['success']);
           <div class="invalid-feedback">
             Enter a valid category name.
           </div>
+          <div id="categoryError" class="text-danger" style="display: none;"></div>
         </div>
       </div>
       <div class="modal-footer">
@@ -94,7 +95,6 @@ unset($_SESSION['success']);
     </div>
   </div>
 </div>
-
 <script>
   (function() {
     var forms = document.querySelectorAll('.needs-validation')
@@ -146,16 +146,21 @@ unset($_SESSION['success']);
               document.getElementById('productCategory').appendChild(newCategoryOption);
               $('#addCategoryModal').modal('hide');
             } else {
-              alert(response.message);
+              // Display error message
+              const errorMessageContainer = document.getElementById('categoryError');
+              errorMessageContainer.innerText = response.message;
+              errorMessageContainer.style.display = 'block';
             }
           } else {
             alert('Error: Unable to add category.');
           }
         }
       };
+
       xhr.send('categoryName=' + encodeURIComponent(categoryName));
     }
   });
+
 
   document.getElementById('productPrice').addEventListener('input', function() {
     const productPriceInput = this;

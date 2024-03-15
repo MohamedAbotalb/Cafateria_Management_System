@@ -1,6 +1,5 @@
 <?php
 require_once '../models/db.php'; 
-
 session_start();
 $db = new DB();
 
@@ -37,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        $_SESSION['success'] = "Product added successfully!";
-        header("Location: ../views/addProduct.php");
+        // $_SESSION['success'] = "Product added successfully!";
+        header("Location: ../views/adminProducts.php");
     } catch (Exception $e) {
         $_SESSION['errors'] = ["general" => "Error adding product: " . $e->getMessage()];
         header("Location: ../views/addProduct.php");

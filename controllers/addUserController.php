@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db->insert('user', ['name' => $name, 'email' => $email, 'password' => $hashedPassword, 'image' => $targetPath, 'room_id' => $roomNum]);
 
         $_SESSION['success'] = "User added successfully!";
-        // header("Location: ../views/.php");
+        header("Location: ../views/adminUsers.php");
         exit();
     } else {
         $_SESSION['errors'] = ["general" => "Error adding product: " . $e->getMessage()];
