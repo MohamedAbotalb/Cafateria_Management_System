@@ -7,6 +7,11 @@ $currentOrders = new CurrentOrdersController();
 // Get all current orders
 $orders = $currentOrders->getCurrentOrders();
 
+// $date = "2024-02-27 15:30:00"; // Example date
+// $convertedDate = date("Y/m/d g:i A", strtotime($date)); // Convert date format
+
+// echo $convertedDate; // Output: 2024-02-27 3:30 PM
+
 ?>
 
 <!-- Orders start -->
@@ -27,7 +32,7 @@ $orders = $currentOrders->getCurrentOrders();
           </thead>
           <tbody>
             <tr>
-              <td> <?php echo $order['order_date'] ?> </td>
+              <td> <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?> </td>
               <td> <?php echo $order['username'] ?> </td>
               <td> <?php echo $order['room_num'] ?> </td>
               <td> <?php echo $order['ext'] ?> </td>
