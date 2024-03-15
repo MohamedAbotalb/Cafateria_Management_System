@@ -220,26 +220,7 @@ $users = $db2->select1("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.roo
       });
     });
   </script>
-  <!-- <script> -->
-  // let forms = document.querySelectorAll('.needs-validation');
-  // Array.prototype.slice.call(forms)
-  // .forEach(function(form) {
-  // form.addEventListener('submit', function(event) {
-  // if (!form.checkValidity()) {
-  // event.preventDefault();
-  // event.stopPropagation();
-  // }
 
-  // form.classList.add('was-validated');
-  // }, false);
-
-
-
-  // form.querySelector('#roomNum').addEventListener('input', validateRoomAndExtension);
-  // form.querySelector('#ext').addEventListener('input', validateRoomAndExtension);
-
-  // });
-  <!-- </script> -->
   <!-- handel edit user form -->
   <script>
     // AJAX form submission
