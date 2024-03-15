@@ -18,7 +18,7 @@ unset($_SESSION['success']);
     </div>
   <?php endif; ?>
   <?php if ($successMessage) : ?>
-    <div class="fs-5 alert alert-danger rounded text-center p-2 mb-4" role="alert">
+    <div class="fs-5 alert alert-success rounded text-center p-2 mb-4" role="alert">
       <?= htmlspecialchars($successMessage) ?>
     </div>
   <?php endif; ?>
