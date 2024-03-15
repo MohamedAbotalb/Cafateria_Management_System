@@ -9,7 +9,5 @@ if (isset($_GET['id'])) {
   $orders = new CurrentOrdersController();
   $orders->deliverOrder($orderId);
   $_SESSION['delivery_order_id'] = $orderId;
-  header('Location:../views/currentOrders.php');
+  header('Location:../views/manualOrders.php');
 }
-
-?>
