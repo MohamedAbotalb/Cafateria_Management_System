@@ -2,7 +2,39 @@
 // Include DB class
 require_once "../models/db.php";
 require_once "../models/allProducts&usersModel.php";
+function validateEmail($email)
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
+}
 
+function isEmailUnique($email)
+{
+    $db = new DB();
+    $result = $db->select('user', ['email'], [$email], true);
+    return !$result;
+}
+
+function validateImage($file)
+{
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    if (!in_array($file['type'], $allowedTypes)) {
+        return false;
+    }
+
+    if ($file['size'] > 2 * 1024 * 1024) {
+        return false;
+    }
+
+    return true;
+}
+
+function validate_data($data)
+{
+    $data = trim($data);
+    $data = addslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 // Check if the form is submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
@@ -11,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Get the form data
         $name = $_POST["name"];
-        $email = $_POST["email"];
+        $email = validateEmail(isEmailUnique($_POST["email"]));
         $roomNum = $_POST["roomNum"];
         $ext = $_POST["ext"];
         $userId = $_POST["userId"];
