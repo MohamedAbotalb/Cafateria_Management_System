@@ -181,7 +181,7 @@ foreach ($data as $row) {
   </div>
   <!-- End Table -->
 
-  <script>
+<script>
     $(function () {
       $('#datepickerOne').datepicker({
         format: 'yyyy-mm-dd',

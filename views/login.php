@@ -13,6 +13,20 @@ $errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
 unset($_SESSION['errors']);
 ?>
 
+<!-- Styles -->
+<link rel="stylesheet" href="../public/style.css">
+<style>
+  h1{
+        color:#da9f5b;
+        font-size:75px;
+        font-family: "Pacifico", cursive;
+        font-weight:bold;
+    }
+    h3{
+      color:#da9f5b;
+      font-family: "Pacifico", cursive;
+    }
+</style>
 <div class="container my-5">
   <h1 class="text-center">Cafeteria</h1>
   <form action="../controllers/authenticateController.php" method="post" class="col-md-4 m-auto text-bg-light my-5 p-3 rounded shadow-lg bg-body-tertiary" novalidate>
@@ -40,7 +54,7 @@ unset($_SESSION['errors']);
       <p class="fs-5 alert alert-danger rounded text-center p-2 mb-4"><?= $errors['login'] ?></p>
     <?php endif; ?>
     <div class="row m-auto text-center">
-      <button type="submit" name="login" class="btn btn-primary mb-4 w-25 m-auto">Log In</button>
+      <button type="submit" name="login" class="btn button mb-4 w-25 m-auto">Log In</button>
       <a href="forgetPassword.php" class="link-primary">Forgot Password?</a>
     </div>
   </form>
