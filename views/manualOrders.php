@@ -27,12 +27,12 @@ $orders = $currentOrders->getCurrentOrders();
           </thead>
           <tbody>
             <tr>
-              <td> <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?> </td>
-              <td> <?php echo $order['username'] ?> </td>
-              <td> <?php echo $order['room_num'] ?> </td>
-              <td> <?php echo $order['ext'] ?> </td>
-              <td>
-                <a class="btn button text-decoration-none" href="../controllers/deliverOrder.php?id=<?php echo $order['order_id'] ?>">deliver</a>
+              <td class="align-middle"> <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?> </td>
+              <td class="align-middle"> <?php echo $order['username'] ?> </td>
+              <td class="align-middle"> <?php echo $order['room_num'] ?> </td>
+              <td class="align-middle"> <?php echo $order['ext'] ?> </td>
+              <td >
+                <button type="button" class="btn button fs-5 mx-auto" data-bs-toggle="modal" data-bs-target="#confirmModal_<?php echo $order['order_id'] ?>">Deliver</button>
               </td>
             </tr>
             <tr>
@@ -44,7 +44,7 @@ $orders = $currentOrders->getCurrentOrders();
                       <div class="w-75 mx-sm-auto position-relative text-center">
                         <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
                         <div class="product-price">
-                          <span class="d-flex justify-content-center align-items-center h-100"><?php echo $product['price'] ?> LE</span>
+                          <span class="d-flex justify-content-center align-items-center h-100"><?php echo $product['price'] ?>LE</span>
                         </div>
                         <div class="my-4">
                           <p class="product-name"><?php echo $product['name'] ?></p>
@@ -61,6 +61,27 @@ $orders = $currentOrders->getCurrentOrders();
             </tr>
           </tbody>
         </table>
+
+        <!-- Modal for each order -->
+        <div class="modal fade text-capitalize" id="confirmModal_<?php echo $order['order_id'] ?>" data-bs-backdrop="static" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delivery</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class="fs-5">Confirm order delivery</p>
+              </div>
+              <div class="modal-footer">
+                <a class="btn button text-decoration-none" href="../controllers/deliverOrder.php?id=<?php echo $order['order_id'] ?>">yes</a>
+                <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal end -->
+
       <?php endforeach; ?>
     <?php else : ?>
       <div class="text-center fs-2">
