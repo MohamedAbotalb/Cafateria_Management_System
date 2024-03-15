@@ -15,7 +15,7 @@ unset($_SESSION['success']);
 <div class="container my-5">
   <h1>Add Product</h1>
   <?php if (!empty($errorMessages)) : ?>
-    <div class="alert alert-danger" role="alert">
+    <div class="fs-5 alert alert-danger rounded text-center p-2 mb-4" role="alert">
       <?php foreach ($errorMessages as $error) : ?>
         <p><?= htmlspecialchars($error) ?></p>
       <?php endforeach; ?>
@@ -161,6 +161,22 @@ unset($_SESSION['success']);
     }
   });
 
+  document.querySelector('#addCategoryModal .btn-secondary').addEventListener('click', function() {
+    hideCategoryErrorMessage();
+  });
+
+  $('#addCategoryModal').on('hidden.bs.modal', function() {
+    document.getElementById('newCategoryName').value = '';
+    document.getElementById('newCategoryName').classList.remove('is-invalid');
+    hideCategoryErrorMessage();
+  });
+
+
+  function hideCategoryErrorMessage() {
+    const errorMessageContainer = document.getElementById('categoryError');
+    errorMessageContainer.innerText = '';
+    errorMessageContainer.style.display = 'none';
+  }
 
   document.getElementById('productPrice').addEventListener('input', function() {
     const productPriceInput = this;
@@ -173,10 +189,5 @@ unset($_SESSION['success']);
       productPriceInput.setCustomValidity('');
       productPriceInput.classList.remove('is-invalid');
     }
-  });
-
-  $('#addCategoryModal').on('hidden.bs.modal', function() {
-    document.getElementById('newCategoryName').value = '';
-    document.getElementById('newCategoryName').classList.remove('is-invalid');
   });
 </script>
