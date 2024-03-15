@@ -42,6 +42,7 @@ try {
                   INNER JOIN orders ON user.id = orders.user_id
                   WHERE orders.order_date BETWEEN :start_date AND :end_date
                   GROUP BY user.id, user.name";
+                  
         $stmt = $connection->prepare($query);
         $stmt->execute([
             'start_date' => $startDate,
