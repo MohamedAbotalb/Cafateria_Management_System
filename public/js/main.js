@@ -122,7 +122,7 @@ window.onload = function () {
       }
       else{
         let message = document.createElement('p');
-        message.classList.add('alert' ,'alert-danger', 'w-50');
+        message.classList.add('alert' ,'alert-warning', 'w-50');
         message.textContent="you must choose user";
         document.querySelector(".selectOptionUser").appendChild(message);
       }
