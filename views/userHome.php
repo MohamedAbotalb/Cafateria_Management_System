@@ -26,7 +26,7 @@ $homePage = new HomePage();
 <!-- end of search -->
 
 <!-- start of menu -->
-<div class="container-fluid mt-1">
+<div class="container-fluid mt-1 text-capitalize">
   <div class="container">
     <div class="row">
       <!-- start of order -->

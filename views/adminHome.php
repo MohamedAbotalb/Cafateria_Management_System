@@ -69,7 +69,7 @@ $db = new DB();
       </div>
       <!-- end of order -->
       <!-- start of menu -->
-      <div class="col-7 ">
+      <div class="col-7 text-capitalize">
         <h5 class="text-muted "> Add to user</h5>
         <div class="selectOptionUser">
         <select class="form-select w-50 mt-5 mb-2 userSelect" aria-label="Default select example">
@@ -77,7 +77,7 @@ $db = new DB();
         <?php
                 $users=$db->select("user",["role"],["user"]);
                 foreach($users as $user){
-                  echo "<option value='{$user['id']}'>{$user['name']}</option>";
+                  echo "<option value='{$user['id']}' class='text-capitalize'>{$user['name']}</option>";
                 }
                 ?>
         </select>
