@@ -55,7 +55,7 @@ window.onload = function () {
           invoiceInput.value = invoice;
           const existingProductIndex = productsData.findIndex(
             (product) => product.product_id === productId
-          ); // Set the actual product_id here
+          ); 
           if (existingProductIndex !== -1) {
             productsData[existingProductIndex].quantity = quantityValue;
             productsData[existingProductIndex].amount = price * quantityValue;
@@ -99,17 +99,6 @@ window.onload = function () {
             (product) => product.product_id === productId
           );
 
-          if (removedProductIndex !== -1) {
-            const removedProductAmount =
-              productsData[removedProductIndex].amount;
-            productsData.splice(removedProductIndex, 1);
-
-            invoice -= removedProductAmount;
-            invoiceDiv.textContent = invoice;
-            invoiceInput.value = invoice;
-            productDetailsInput.value = JSON.stringify(productsData);
-          }
-
           div.remove();
         });
         invoiceDiv.textContent = invoice;
@@ -121,10 +110,14 @@ window.onload = function () {
         document.querySelector('.button').disabled=false;
       }
       else{
-        let message = document.createElement('p');
-        message.classList.add('alert' ,'alert-warning', 'w-50');
-        message.textContent="you must choose user";
-        document.querySelector(".selectOptionUser").appendChild(message);
+        let message = document.querySelector(".selectOptionUser p");
+
+      if (!message) {
+          message = document.createElement('p');
+          message.classList.add('alert','alert-danger','w-50');
+          message.textContent = "You must choose a user";
+          document.querySelector(".selectOptionUser").appendChild(message);
+      }
       }
     });
     setTimeout(function() {
