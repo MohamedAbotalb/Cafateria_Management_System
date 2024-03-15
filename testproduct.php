@@ -6,8 +6,8 @@ require_once "../models/db.php";
 $db = new DB();
 $adminId = 1;
 // Fetch all users with room information from the 'user' and 'room' tables using a join
-$products = $db->select1("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id");
-$categories = $db->selectAll("category");
+$products = $db->select("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id");
+$categories = $db->select("category");
 echo var_dump(
     $categories
 );
@@ -43,9 +43,18 @@ echo var_dump(
                             <td><?= $product['name']; ?></td>
                             <td><?= $product['price']; ?></td>
                             <td><img src='./imgs/<?= $product['image']; ?>' alt='User Image' style='max-width: 50px; max-height: 50px;'></td>
-                            <td><a class=" btn btn-success fs-5 ">
-                                    <?= $product['available']; ?>
-                                </a>
+                            <td>
+                                <!-- change statuse -->
+                                <?php
+                                if ($product['available'] == "active") {
+                                ?>
+                                    <a class=" btn btn-success fs-5 " onclick="changeStatus(<?= $product['id']; ?>)"><?= $product['available']; ?></a>
+                                <?php
+                                } else {
+                                ?>
+                                    <a class=" btn btn-success fs-5 " onclick="changeStatus(<?= $product['id']; ?>)"><?= $product['available']; ?></a>
+                                <?php
+                                } ?>
                             </td>
                             <td class='text-center'>
                                 <!-- Button trigger modal***edit*** -->
