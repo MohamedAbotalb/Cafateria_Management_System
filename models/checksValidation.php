@@ -61,9 +61,9 @@ try {
             $query .= " AND (order_date >= :start_date AND order_date <= :end_date)";
         }
 
-        $query .= " AND user.id = :user_id"; // Move this condition here
+        $query .= " AND user.id = :user_id"; 
 
-        $query .= " GROUP BY orders.order_date"; // Grouping should be here
+        $query .= " GROUP BY orders.order_date"; 
 
         // Prepare and execute the query
         $stmt = $connection->prepare($query);
@@ -84,19 +84,19 @@ try {
 ?>
 
 <!-- Display list of users and their total amounts -->
-<h2>List of Users and Total Amounts</h2>
-<ul>
-    <?php foreach ($users as $user) : ?>
-        <li>
-            <a href="?user_id=<?php echo $user['id']; ?>">
-                <?php echo $user['name']; ?>
-            </a>
-            - Total Amount: <?php echo $user['total_amount']; ?>
-        </li>
-    <?php endforeach; ?>
-</ul>
+<!-- <h2>List of Users and Total Amounts</h2> -->
+<!-- <ul> -->
+    <?php //foreach ($users as $user) : ?>
+        <!-- <li> -->
+            <!-- <a href="?user_id=<?php //echo $user['id']; ?>"> -->
+                <?php //echo $user['name']; ?>
+            <!-- </a> -->
+            <!-- - Total Amount: <?php //echo $user['total_amount']; ?> -->
+        <!-- </li> -->
+    <?php //endforeach; ?>
+<!-- </ul> -->
 
-<?php if (isset($_GET['user_id'])) : ?>
+<?php /*if (isset($_GET['user_id'])) : ?>
     <!-- Display order details for the selected user -->
     <h2>Order Details</h2>
     <ul>
@@ -107,4 +107,4 @@ try {
             </li>
         <?php endforeach; ?>
     </ul>
-<?php endif; ?>
+<?php endif;*/ ?>
