@@ -119,8 +119,8 @@ class FormValidator {
   }
   
   document.addEventListener("DOMContentLoaded", () => {
-    const forms = document.querySelectorAll(".needs-validation");
-    const formValidator = new FormValidator(forms);
+    let forms = document.querySelectorAll(".needs-validation");
+    let formValidator = new FormValidator(forms);
     formValidator.setupEventListeners();
   });
   

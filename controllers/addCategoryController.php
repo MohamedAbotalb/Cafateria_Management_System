@@ -1,7 +1,7 @@
 <?php
 require_once "../models/db.php";
 
-class CategoryHandler {
+class CategoryController {
     private $db;
 
     public function __construct() {
@@ -20,6 +20,6 @@ class CategoryHandler {
     }
 }
 
-$categoryHandler = new CategoryHandler();
-echo $categoryHandler->addCategory($_POST["categoryName"]);
+$categoryController = new CategoryController();
+echo $categoryController->addCategory($_POST["categoryName"]);
 ?>
