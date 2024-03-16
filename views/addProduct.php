@@ -15,7 +15,7 @@ unset($_SESSION['done']);
 <div class="container my-5">
   <h1>Add Product</h1>
   <?php if (!empty($errorMessages)) : ?>
-    <div class="fs-5 alert alert-danger rounded text-center" role="alert">
+    <div class="fs-5 alert alert-danger rounded text-center p-2 mb-4" role="alert">
       <?php foreach ($errorMessages as $error) : ?>
         <p><?= htmlspecialchars($error) ?></p>
       <?php endforeach; ?>
@@ -95,99 +95,4 @@ unset($_SESSION['done']);
     </div>
   </div>
 </div>
-<script>
-  (function() {
-    var forms = document.querySelectorAll('.needs-validation')
-    Array.prototype.slice.call(forms)
-      .forEach(function(form) {
-        form.addEventListener('submit', function(event) {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-
-          form.classList.add('was-validated')
-        }, false)
-      })
-  })()
-
-  document.querySelector('button[type="reset"]').addEventListener('click', function() {
-    document.querySelectorAll('.is-invalid').forEach(function(element) {
-      element.classList.remove('is-invalid');
-    });
-
-    const forms = document.querySelectorAll('.needs-validation');
-    forms.forEach(function(form) {
-      form.classList.remove('was-validated');
-    });
-  });
-
-  document.getElementById('saveCategory').addEventListener('click', function() {
-    const categoryNameInput = document.getElementById('newCategoryName');
-    const categoryName = categoryNameInput.value.trim();
-
-    if (!/^[A-Za-z][A-Za-z\s]{3,}$/.test(categoryName)) {
-      categoryNameInput.classList.add('is-invalid');
-    } else {
-      categoryNameInput.classList.remove('is-invalid');
-
-      // Send an AJAX request to add the new category
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '../controllers/addCategoryController.php', true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            if (response.success) {
-              const newCategoryOption = document.createElement('option');
-              newCategoryOption.value = response.categoryName;
-              newCategoryOption.text = response.categoryName;
-              document.getElementById('productCategory').appendChild(newCategoryOption);
-              $('#addCategoryModal').modal('hide');
-            } else {
-              // Display error message
-              const errorMessageContainer = document.getElementById('categoryError');
-              errorMessageContainer.innerText = response.message;
-              errorMessageContainer.style.display = 'block';
-            }
-          } else {
-            alert('Error: Unable to add category.');
-          }
-        }
-      };
-
-      xhr.send('categoryName=' + encodeURIComponent(categoryName));
-    }
-  });
-
-  document.querySelector('#addCategoryModal .btn-secondary').addEventListener('click', function() {
-    hideCategoryErrorMessage();
-  });
-
-  $('#addCategoryModal').on('hidden.bs.modal', function() {
-    document.getElementById('newCategoryName').value = '';
-    document.getElementById('newCategoryName').classList.remove('is-invalid');
-    hideCategoryErrorMessage();
-  });
-
-
-  function hideCategoryErrorMessage() {
-    const errorMessageContainer = document.getElementById('categoryError');
-    errorMessageContainer.innerText = '';
-    errorMessageContainer.style.display = 'none';
-  }
-
-  document.getElementById('productPrice').addEventListener('input', function() {
-    const productPriceInput = this;
-    const productPriceValue = productPriceInput.value;
-
-    if (/^0/.test(productPriceValue) || productPriceValue < 1 || productPriceValue > 100) {
-      productPriceInput.setCustomValidity('Please enter a valid price between 1 and 100 without starting with 0.');
-      productPriceInput.classList.add('is-invalid');
-    } else {
-      productPriceInput.setCustomValidity('');
-      productPriceInput.classList.remove('is-invalid');
-    }
-  });
-</script>
+<script src="../public/js/addProduct.js"></script>
