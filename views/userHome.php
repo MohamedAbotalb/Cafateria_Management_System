@@ -15,15 +15,12 @@ $orderModel = new OrderModel();
     <div class="col-3">
 
       <div class="input-group mb-1">
-      <div class="input-group mb-3 border rounded">
+        <div class="input-group mb-3 border rounded">
           <span class="input-group-text bg-transparent border-0"><i class="fas fa-search"></i></span>
-          <input id="searchInput" type="text" name="product" class="form-control border-0"
-            placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
+          <input id="searchInput" type="text" name="product" class="form-control border-0" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
         </div>
       </div>
-
     </div>
-
   </div>
 </div>
 <!-- end of search -->
@@ -39,12 +36,11 @@ $orderModel = new OrderModel();
             <!-- start of product order -->
             <div class="list"></div>
             <!-- end of product order -->
-            <form method="post" action="../controllers/order.php" class="order-details">
+            <form method="post" action="../controllers/orderController.php" class="order-details">
               <input type="hidden" class="selectedUser" value="">
               <input type="hidden" name="sourcePage" value="user">
               <div class="form-floating my-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                  name="note"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="note"></textarea>
                 <label for="floatingTextarea">Notes</label>
               </div>
               <select class="form-select" aria-label="Default select example" name="room">
@@ -52,8 +48,8 @@ $orderModel = new OrderModel();
                 <?php
                 $rooms = $db->select("room");
                 foreach ($rooms as $room) {
-                  if($room['id'] != 0){
-                     echo "<option value='{$room['id']}'>{$room['id']}</option>";
+                  if ($room['id'] != 0) {
+                    echo "<option value='{$room['id']}'>{$room['id']}</option>";
                   }
                 }
                 ?>
@@ -68,7 +64,7 @@ $orderModel = new OrderModel();
                 $_SESSION['order_added'] = false;
               }
               ?>
-              <input type="submit" class="btn button" value="confirm" disabled/>
+              <input type="submit" class="btn button" value="confirm" disabled />
             </form>
           </div>
         </div>
@@ -85,15 +81,13 @@ $orderModel = new OrderModel();
             <div class='d-flex flex-wrap'>";
           foreach ($result as $row) {
             echo "<div class='card m-3' style='width: 9rem'>
-                  <img src='../public/images/{$row['image']}' class='card-img-top' alt='...' />
-                  <div class='card-body'>
-                    <p class='card-text'>
-                      {$row['name']}
-                    </p>
-                    
-                  </div>
-
-                </div>";
+                    <img src='../public/images/{$row['image']}' class='card-img-top' alt='...' />
+                    <div class='card-body'>
+                      <p class='card-text'>
+                        {$row['name']}
+                      </p>
+                    </div>
+                  </div>";
           }
           echo "</div>
           <hr class='my-4' />";
@@ -115,8 +109,7 @@ $orderModel = new OrderModel();
                 <div class='card-body'>
                     <p class='card-text'>
                     {$product['name']}
-                        <input type='hidden' class='productId' value='{$product['id']}'>
-                        
+                        <input type='hidden' class='productId' value='{$product['id']}'>         
                     </p>
                     </div>
             </div>";
@@ -131,13 +124,12 @@ $orderModel = new OrderModel();
     const searchInput = document.getElementById("searchInput");
     const card = document.getElementById("product-card")
 
-    searchInput.addEventListener('keyup', function (e) {
-      e.preventDefault()
+    searchInput.addEventListener('keyup', function(e) {
+      e.preventDefault();
 
       const productName = e.target.value.trim();
-
       var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function () {
+      xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           showProduct(this.responseText);
 
@@ -145,12 +137,9 @@ $orderModel = new OrderModel();
       };
       xmlhttp.open("GET", "../controllers/searchProductController.php?p=" + productName, true);
       xmlhttp.send();
+    });
 
-
-    })
- 
     function showProduct(products) {
-      
       const productsArray = JSON.parse(products);
 
       card.innerHTML = "";
@@ -172,6 +161,4 @@ $orderModel = new OrderModel();
         card.innerHTML = "<p>No products found.</p>";
       }
     }
-
-
   </script>
