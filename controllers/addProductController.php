@@ -3,9 +3,22 @@ require_once '../models/db.php';
 session_start();
 $db = new DB();
 
+function validateImage($file) {
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    if (!in_array($file['type'], $allowedTypes)) {
+        return false;
+    }
+
+    if ($file['size'] > 2 * 1024 * 1024) { 
+        return false;
+    }
+
+    return true;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $image = $_FILES['productImage']['name'];
-    $target = "../public/images/" . basename($image);
+    $image = $_FILES['productImage'];
+    $target = "../public/images/" . basename($image['name']);
 
     $productName = htmlspecialchars(trim($_POST['productName']));
     $price = htmlspecialchars(trim($_POST['productPrice']));
@@ -27,10 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'name' => $productName,
             'price' => $price,
             'category_id' => $categoryId,
-            'image' => $image
+            'image' => $image['name']
         ]);
 
-        if (!move_uploaded_file($_FILES['productImage']['tmp_name'], $target)) {
+        if (!move_uploaded_file($image['tmp_name'], $target)) {
             $_SESSION['fails'] = ["productImage" => "Failed to upload image."];
             header("Location: ../views/addProduct.php");
             exit;

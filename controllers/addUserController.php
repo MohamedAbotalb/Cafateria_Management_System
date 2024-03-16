@@ -1,6 +1,8 @@
 <?php
 require_once "../models/db.php";
 session_start();
+$db = new DB();
+
 function validateEmail($email)
 {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -8,7 +10,7 @@ function validateEmail($email)
 
 function isEmailUnique($email)
 {
-    $db = new DB();
+    global $db; 
     $result = $db->select('user', ['email'], [$email], true);
     return !$result;
 }
@@ -28,7 +30,6 @@ function validateImage($file)
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -36,49 +37,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ext = $_POST['ext'];
     $profilePicture = $_FILES['profilePicture'];
 
-    // Validate data
     $errors = [];
-    if (!isEmailUnique($email)) {
-        $_SESSION['errors'] = ["email" => "Email already exists."];
-        header("Location: ../views/addUser.php");
-        exit();
-    }
 
-    $defaultImagePath = "../public/images/user1.png";
-
-    if (empty($errors)) {
-
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $db = new DB();
-
-        // Check if room number already exists
-        $existingRoom = $db->select('room', ['id'], [$roomNum], true);
-        if (!$existingRoom) {
-            $db->insert('room', ['id' => $roomNum, 'ext' => $ext]);
+    try {
+        if (!validateEmail($email)) {
+            throw new Exception("Invalid email format.");
         }
 
-        // Insert data into database
-        $fileName = '';
+        if (!isEmailUnique($email)) {
+            throw new Exception("Email already exists.");
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        
+        $db->insert('room', ['id' => $roomNum, 'ext' => $ext]);
+
+        $fileName = $defaultImagePath = "../public/images/user1.png";
+        
         if ($profilePicture['error'] !== UPLOAD_ERR_NO_FILE) {
+            if (!validateImage($profilePicture)) {
+                throw new Exception("Invalid image file.");
+            }
+            
             $targetDir = "../public/images/";
             $fileName = uniqid() . '_' . basename($profilePicture['name']);
             $targetPath = $targetDir . $fileName;
-            move_uploaded_file($profilePicture['tmp_name'], $targetPath);
-        } else {
-            $targetPath = $defaultImagePath;
+            if (!move_uploaded_file($profilePicture['tmp_name'], $targetPath)) {
+                throw new Exception("Failed to upload image.");
+            }
         }
 
-        // Insert user data
-        $db->insert('user', ['name' => $name, 'email' => $email, 'password' => $hashedPassword, 'image' => $targetPath, 'room_id' => $roomNum]);
+        $db->insert('user', [
+            'name' => $name,
+            'email' => $email,
+            'password' => $hashedPassword,
+            'image' => $fileName,
+            'room_id' => $roomNum
+        ]);
 
         $_SESSION['success'] = "User added successfully!";
         header("Location: ../views/adminUsers.php");
-        exit();
-    } else {
-        $_SESSION['errors'] = ["general" => "Error adding product: " . $e->getMessage()];
-
-        exit();
+    } catch (Exception $e) {
+        $_SESSION['errors'] = ["general" => "Error adding user: " . $e->getMessage()];
+        header("Location: ../views/addUser.php");
     }
 }
 ?>
