@@ -7,6 +7,8 @@ if (session_status() == PHP_SESSION_NONE) {
 // Check if the user is logged in or not
 if (!isset($_SESSION['logged_in'])) {
   header('Location: login.php');
+} else if ($_SESSION['user']['role'] !== 'user') {
+  header('Location: adminHome.php');
 }
 ?>
 
