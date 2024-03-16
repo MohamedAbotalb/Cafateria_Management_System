@@ -12,8 +12,8 @@ unset($_SESSION['fails']);
 unset($_SESSION['done']);
 ?>
 
-<div class="container my-5">
-  <h1>Add Product</h1>
+<div class="container my-5 col-md-6">
+  <h1 class="mb-1">Add Product</h1>
   <?php if (!empty($errorMessages)) : ?>
     <div class="fs-5 alert alert-danger rounded text-center p-2 mb-4" role="alert">
       <?php foreach ($errorMessages as $error) : ?>
@@ -26,47 +26,53 @@ unset($_SESSION['done']);
       <?= htmlspecialchars($successMessage) ?>
     </div>
   <?php endif; ?>
-  <form id="addProductForm" class="my-5 needs-validation" action="../controllers/addProductController.php" method="POST" enctype="multipart/form-data" novalidate>
-    <div class="mb-3">
-      <label for="productName" class="form-label">Product Name</label>
-      <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="^[A-Za-z]{3,}(?:\s[A-Za-z]+)*$" title="Product name must be at least three characters long and must start with a letter" required>
-      <div class="invalid-feedback">
-        Product name must be at least three characters.
-      </div>
-    </div>
-    <div class="mb-3">
-      <label for="productPrice" class="form-label">Price</label>
-      <div class="input-group">
-        <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Enter product price" min="1" max="100" required>
-        <span class="m-2 fs-5">EGP</span>
+  <form id="addProductForm" class="my-5 needs-validation row" action="../controllers/addProductController.php" method="POST" enctype="multipart/form-data" novalidate>
+    <div class="col-md-12">
+      <div class="mb-3">
+        <label for="productName" class="form-label">Product Name</label>
+        <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="^[A-Za-z]{3,}(?:\s[A-Za-z]+)*$" title="Product name must be at least three characters long and must start with a letter" required>
         <div class="invalid-feedback">
-          Please enter a valid price between 1 and 100.
+          Product name must be at least three characters.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="productPrice" class="form-label">Price</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Enter product price" min="1" max="100" required>
+          <span class="m-2 fs-5">EGP</span>
+          <div class="invalid-feedback">
+            Please enter a valid price between 1 and 100.
+          </div>
         </div>
       </div>
     </div>
-    <div class="mb-3">
-      <label for="productCategory" class="form-label">Category</label>
-      <div class="input-group">
-        <select class="form-select" id="productCategory" name="productCategory" required>
-          <option value="" selected disabled>Select category</option>
-          <?php foreach ($categories as $category) : ?>
-            <option value="<?= htmlspecialchars($category['name']) ?>"><?= htmlspecialchars($category['name']) ?></option>
-          <?php endforeach; ?>
-        </select>
-        <button type="button" class="btn button" id="addCategoryBtn" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add New Category</button>
-        <div class="invalid-feedback">Please select a category.</div>
+    <div class="col-md-12">
+      <div class="mb-3">
+        <label for="productCategory" class="form-label">Category</label>
+        <div class="input-group">
+          <select class="form-select" id="productCategory" name="productCategory" required>
+            <option value="" selected disabled>Select category</option>
+            <?php foreach ($categories as $category) : ?>
+              <option value="<?= htmlspecialchars($category['name']) ?>"><?= htmlspecialchars($category['name']) ?></option>
+            <?php endforeach; ?>
+          </select>
+          <button type="button" class="btn button" id="addCategoryBtn" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add New Category</button>
+          <div class="invalid-feedback">Please select a category.</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="productImage" class="form-label">Product Image</label>
+        <input type="file" class="form-control" id="productImage" name="productImage" required>
+        <div class="invalid-feedback">
+          Please upload a product image.
+        </div>
       </div>
     </div>
-    <div class="mb-3">
-      <label for="productImage" class="form-label">Product Image</label>
-      <input type="file" class="form-control" id="productImage" name="productImage" required>
-      <div class="invalid-feedback">
-        Please upload a product image.
+    <div class="col-md-12">
+      <div class="mb-3">
+        <button type="submit" class="btn button">Save</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
       </div>
-    </div>
-    <div class="mb-3">
-      <button type="submit" class="btn button">Save</button>
-      <button type="reset" class="btn btn-secondary">Reset</button>
     </div>
   </form>
 </div>
