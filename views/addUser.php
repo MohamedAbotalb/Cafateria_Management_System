@@ -26,21 +26,21 @@ unset($_SESSION['success']);
     <div class="row">
       <div class="col-md-12">
         <div class="mb-3">
-          <label for="name" class="form-label">Name</label>
+          <label for="name" class="form-label h6">Name</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)*$" title="Enter a valid name" required>
           <div class="invalid-feedback">
             Please provide a valid name.
           </div>
         </div>
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label h6">Email</label>
           <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
           <div class="invalid-feedback">
             Please provide a valid email address.
           </div>
         </div>
         <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label h6">Password</label>
           <div class="input-group">
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" pattern="\S{6,}" required>
             <button class="btn btn-outline-secondary" type="button" id="togglePassword">
@@ -50,7 +50,7 @@ unset($_SESSION['success']);
           </div>
         </div>
         <div class="mb-3">
-          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <label for="confirmPassword" class="form-label h6">Confirm Password</label>
           <div class="input-group">
             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
             <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
@@ -64,21 +64,21 @@ unset($_SESSION['success']);
       </div>
       <div class="col-md-12">
         <div class="mb-3">
-          <label for="roomNum" class="form-label">Room Number</label>
+          <label for="roomNum" class="form-label h6">Room Number</label>
           <input type="number" class="form-control" id="roomNum" name="roomNum" placeholder="Enter room number" min="1" max="50" required>
           <div class="invalid-feedback">
             Please provide a valid room number.
           </div>
         </div>
         <div class="mb-3">
-          <label for="ext" class="form-label">Extension</label>
+          <label for="ext" class="form-label h6">Extension</label>
           <input type="number" class="form-control" id="ext" name="ext" placeholder="Enter Ext number" min="1" max="50" required>
           <div class="invalid-feedback">
             Please provide a valid extension number.
           </div>
         </div>
         <div class="mb-3">
-          <label for="profilePicture" class="form-label">Profile Picture</label>
+          <label for="profilePicture" class="form-label h6">Profile Picture</label>
           <input type="file" class="form-control" id="profilePicture" name="profilePicture">
         </div>
       </div>

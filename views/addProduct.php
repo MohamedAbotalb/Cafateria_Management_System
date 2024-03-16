@@ -29,14 +29,14 @@ unset($_SESSION['done']);
   <form id="addProductForm" class="my-4 needs-validation row" action="../controllers/addProductController.php" method="POST" enctype="multipart/form-data" novalidate>
     <div class="col-md-12">
       <div class="mb-3">
-        <label for="productName" class="form-label">Product Name</label>
+        <label for="productName" class="form-label h6">Product Name</label>
         <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter product name" pattern="^[A-Za-z]{3,}(?:\s[A-Za-z]+)*$" title="Product name must be at least three characters long and must start with a letter" required>
         <div class="invalid-feedback">
           Product name must be at least three characters.
         </div>
       </div>
       <div class="mb-3">
-        <label for="productPrice" class="form-label">Price</label>
+        <label for="productPrice" class="form-label h6">Price</label>
         <div class="input-group">
           <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Enter product price" min="1" max="100" required>
           <span class="m-2 fs-5">EGP</span>
@@ -48,7 +48,7 @@ unset($_SESSION['done']);
     </div>
     <div class="col-md-12">
       <div class="mb-3">
-        <label for="productCategory" class="form-label">Category</label>
+        <label for="productCategory" class="form-label h6">Category</label>
         <div class="input-group">
           <select class="form-select" id="productCategory" name="productCategory" required>
             <option value="" selected disabled>Select category</option>
@@ -61,7 +61,7 @@ unset($_SESSION['done']);
         </div>
       </div>
       <div class="mb-3">
-        <label for="productImage" class="form-label">Product Image</label>
+        <label for="productImage" class="form-label h6">Product Image</label>
         <input type="file" class="form-control" id="productImage" name="productImage" required>
         <div class="invalid-feedback">
           Please upload a product image.
@@ -86,7 +86,7 @@ unset($_SESSION['done']);
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          <label for="newCategoryName" class="form-label">Category Name</label>
+          <label for="newCategoryName" class="form-label h6">Category Name</label>
           <input type="text" class="form-control" id="newCategoryName" placeholder="Enter category name" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)*$" required>
           <div class="invalid-feedback">
             Enter a valid category name.
