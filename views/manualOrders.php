@@ -1,8 +1,8 @@
 <?php
 require_once "templates/adminNav.php";
-require_once "../controllers/currentOrdersController.php";
+require_once "../controllers/order.php";
 
-$currentOrders = new CurrentOrdersController();
+$currentOrders = new OrderController();
 
 // Get all current orders
 $orders = $currentOrders->getCurrentOrders();
@@ -74,7 +74,7 @@ $orders = $currentOrders->getCurrentOrders();
                 <p class="fs-5">Confirm order delivery</p>
               </div>
               <div class="modal-footer">
-                <a class="btn button text-decoration-none" href="../controllers/deliverOrder.php?id=<?php echo $order['order_id'] ?>">yes</a>
+                <a class="btn button text-decoration-none" href="../controllers/order.php?id=<?php echo $order['order_id'] ?>">yes</a>
                 <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal">No</button>
               </div>
             </div>

@@ -39,7 +39,7 @@ $homePage = new HomePage();
             <!-- start of product order -->
             <div class="list"></div>
             <!-- end of product order -->
-            <form method="post" action="../controllers/addOrderController.php" class="order-details">
+            <form method="post" action="../controllers/order.php" class="order-details">
               <input type="hidden" class="selectedUser" value="">
               <input type="hidden" name="sourcePage" value="user">
               <div class="form-floating my-3">
