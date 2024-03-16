@@ -1,5 +1,8 @@
 <?php
 require_once "templates/adminNav.php";
+require_once "../models/db.php";
+
+$db = new DB();
 ?>
 
 <!-- start of search -->
@@ -8,12 +11,13 @@ require_once "templates/adminNav.php";
     <div class="col-9"></div>
 
     <div class="col-3">
-      <form method="" action="">
-        <div class="input-group mb-1">
-          <input type="text" class="form-control" placeholder="Enter item" aria-label="Recipient's username" aria-describedby="button-addon2" />
-          <input type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2" value="search" />
+      <div class="input-group mb-1">
+        <div class="input-group mb-3 border rounded">
+          <span class="input-group-text bg-transparent border-0"><i class="fas fa-search"></i></span>
+          <input id="searchInput" type="text" name="product" class="form-control border-0"
+            placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
         </div>
-      </form>
+      </div>
     </div>
 
   </div>
@@ -29,107 +33,131 @@ require_once "templates/adminNav.php";
         <div class="card">
           <div class="card-body">
             <!-- start of product order -->
-            <div class="list mx-3"></div>
+            <div class="list"></div>
             <!-- end of product order -->
-            <form>
+            <form action="../controllers/addOrderController.php" method="post" class="order-details">
+              <input type="hidden" name="sourcePage" value="admin">
               <div class="form-floating my-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                  name="note"></textarea>
                 <label for="floatingTextarea">Notes</label>
               </div>
-              <select class="form-select " aria-label="Default select example">
-                <option selected>Select Room</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+              <select class="form-select " aria-label="Default select example" name='room'>
+                <option selected disabled>Select Room</option>
+                <?php
+                $rooms = $db->select("room");
+                foreach ($rooms as $room) {
+                  if ($room['id'] != 0) {
+                    echo "<option value='{$room['id']}' >{$room['id']}</option>";
+
+                  }
+                }
+                ?>
               </select>
+              <input type="hidden" name="productDetails" class="productDetails">
+              <input type="hidden" name="invoicePrice" class="invoicePriceInput">
+
               <hr class="my-4" />
-              <p class="fw-bold"><span class="invoice-price">0</span> EGP</p>
-              <input type="submit" class="btn button" value="confirm" />
+              <p class="fs-4">EGP <span class="invoice-price">0</span></p>
+              <?php
+              if (isset ($_SESSION['order_added']) && $_SESSION['order_added']) {
+                echo '<div class="alert alert-success successAlert">Order Added Successfully</div>';
+                $_SESSION['order_added'] = false;
+              }
+              ?>
+              <input type="submit" class="btn button" value="confirm" disabled />
             </form>
           </div>
         </div>
       </div>
       <!-- end of order -->
       <!-- start of menu -->
-      <div class="col-7 ">
+      <div class="col-7 text-capitalize">
         <h5 class="text-muted "> Add to user</h5>
-        <select class="form-select w-50 my-5" aria-label="Default select example">
-          <option value="1">Ahmed</option>
-          <option value="2">Ali</option>
-          <option value="3">Karim</option>
-        </select>
+        <div class="selectOptionUser">
+          <select class="form-select w-50 mt-5 mb-2 userSelect" aria-label="Default select example">
+            <option selected disabled>Select user</option>
+            <?php
+            $users = $db->select("user", ["role"], ["user"]);
+            foreach ($users as $user) {
+              echo "<option value='{$user['id']}' class='text-capitalize'>{$user['name']}</option>";
+            }
+            ?>
+          </select>
+        </div>
         <hr class="my-5" />
 
         <div class="section-title">
           <p class="display-5">Menu</p>
         </div>
-        <div class="d-flex flex-wrap">
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item3.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">15</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                tea
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item4.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">12</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                coffee
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item5.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">20</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                spreso
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item6.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">7</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                cola
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item7.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">7</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                nescofe
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item8.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">30</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                spreso
-              </p>
-            </div>
-          </div>
-          <div class="card m-3 product" style="width: 9rem">
-            <img src="../public/images/item1.jpg" class="card-img-top" alt="..." />
-            <h5 class="menu-price">$<span class="productPrice">20</span></h5>
-            <div class="card-body">
-              <p class="card-text">
-                tea
-              </p>
-            </div>
-          </div>
+        <div id="product-card" class="d-flex flex-wrap">
+          <?php
+          $products = $db->select("product", ["available"], ["available"]);
+          foreach ($products as $product) {
+            echo "<div class='card m-3 product' style='width: 9rem'>
+                <img src='../public/images/{$product['image']}' class='card-img-top' alt='...' />
+                <h5 class='menu-price'>$<span class='productPrice'>{$product['price']}</span></h5>
+                <div class='card-body'>
+                    <p class='card-text'>
+                        {$product['name']}
+                        <input type='hidden' class='productId' value='{$product['id']}'>
+
+                    </p>
+                </div>
+            </div>";
+          }
+          ?>
         </div>
+        <!-- end of menu -->
       </div>
-      <!-- end of menu -->
     </div>
   </div>
-</div>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const card = document.getElementById("product-card")
+
+    searchInput.addEventListener('keyup', function (e) {
+      e.preventDefault()
+
+      const productName = e.target.value.trim();
+
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          showProduct(this.responseText);
+
+        }
+      };
+      xmlhttp.open("GET", "../controllers/searchProductController.php?p=" + productName, true);
+      xmlhttp.send();
+
+
+    })
+
+    function showProduct(products) {
+
+      const productsArray = JSON.parse(products);
+
+      card.innerHTML = "";
+      if (Array.isArray(productsArray) && productsArray.length > 0) {
+        productsArray.forEach(product => {
+          card.innerHTML += `
+        <div class='card m-3 product' style='width: 9rem'>
+          <img src='../public/images/${product.image}' class='card-img-top' alt='...' />
+          <h5 class='menu-price'>$<span class='productPrice'>${product.price}</span></h5>
+          <div class='card-body'>
+            <p class='card-text'>
+              ${product.name}
+              <input type='hidden' class='productId' value='${product.id}'>
+            </p>
+          </div>
+        </div>`;
+        });
+      } else {
+        card.innerHTML = "<p>No products found.</p>";
+      }
+    }
+
+
+  </script>

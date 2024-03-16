@@ -1,10 +1,28 @@
 <?php
 require_once "templates/adminNav.php";
+
+$errorMessages = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$successMessage = isset($_SESSION['success']) ? $_SESSION['success'] : '';
+
+unset($_SESSION['errors']);
+unset($_SESSION['success']);
 ?>
 
 <div class="container my-5">
   <h1 class="mb-4">Add User</h1>
-  <form class="needs-validation" action="#" method="" enctype="multipart/form-data" novalidate>
+  <?php if (!empty($errorMessages)) : ?>
+    <div class="fs-5 alert alert-danger rounded text-center p-2 mb-4" role="alert">
+      <?php foreach ($errorMessages as $error) : ?>
+        <p><?= htmlspecialchars($error) ?></p>
+      <?php endforeach; ?>
+    </div>
+  <?php endif; ?>
+  <?php if ($successMessage) : ?>
+    <div class="fs-5 alert alert-success rounded text-center p-2 mb-4" role="alert">
+      <?= htmlspecialchars($successMessage) ?>
+    </div>
+  <?php endif; ?>
+  <form class="needs-validation" action="../controllers/addUserController.php" method="post" enctype="multipart/form-data" novalidate>
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" pattern="^[A-Za-z]+(?:\s[A-Za-z]+)*$" title="Enter a valid name" required>
@@ -69,8 +87,7 @@ require_once "templates/adminNav.php";
 <script>
   (function() {
 
-    const forms = document.querySelectorAll('.needs-validation');
-
+    let forms = document.querySelectorAll('.needs-validation');
     // Function to check if a number starts with 0
     function startsWithZero(value) {
       return /^0/.test(value);
@@ -78,8 +95,8 @@ require_once "templates/adminNav.php";
 
     // Function to check the validity of room number and extension number
     function validateRoomAndExtension() {
-      const roomNumInput = document.getElementById('roomNum');
-      const extInput = document.getElementById('ext');
+      let roomNumInput = document.getElementById('roomNum');
+      let extInput = document.getElementById('ext');
 
       if (startsWithZero(roomNumInput.value)) {
         roomNumInput.setCustomValidity('Room number must not start with 0.');
@@ -96,8 +113,8 @@ require_once "templates/adminNav.php";
 
     // Function to check if password and confirm password match
     function validatePasswordConfirmation() {
-      const passwordInput = document.getElementById('password');
-      const confirmPasswordInput = document.getElementById('confirmPassword');
+      let passwordInput = document.getElementById('password');
+      let confirmPasswordInput = document.getElementById('confirmPassword');
 
       if (passwordInput.value !== confirmPasswordInput.value) {
         confirmPasswordInput.setCustomValidity('Passwords do not match.');
@@ -108,7 +125,7 @@ require_once "templates/adminNav.php";
 
     // Function to check if password is at least 6 characters and does not contain spaces
     function validatePasswordLength() {
-      var passwordInput = document.getElementById('password');
+      let passwordInput = document.getElementById('password');
 
       if (passwordInput.value.length < 6 || /\s/.test(passwordInput.value)) {
         passwordInput.setCustomValidity('Password must be at least 6 characters long and must not contain spaces.');
@@ -116,13 +133,11 @@ require_once "templates/adminNav.php";
         passwordInput.setCustomValidity('');
       }
     }
-
-
     // Toggle password visibility
     function togglePasswordVisibility(inputId, buttonId) {
-      const passwordInput = document.getElementById(inputId);
-      const button = document.getElementById(buttonId);
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      let passwordInput = document.getElementById(inputId);
+      let button = document.getElementById(buttonId);
+      let type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
       passwordInput.setAttribute('type', type);
 
       if (type === 'password') {

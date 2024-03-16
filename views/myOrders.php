@@ -1,5 +1,37 @@
 <?php
 require_once "templates/userNav.php";
+require_once "../controllers/myOrdersController.php";
+
+$getStartDate = isset($_GET['startDate']) ? $_GET['startDate'] : '';
+$getEndDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
+
+
+$myOrdersController = new MyOrdersController();
+
+$data = $myOrdersController->getOrdersByUserId($getStartDate,$getEndDate,$_SESSION['user']['id']);
+$totalPrice = 0;
+$orders = [];
+
+foreach ($data as $row) {
+  $orderId = $row['id'];
+  $totalPrice += $row['total_price'];
+  if (!isset($orders[$orderId])) {
+    $orders[$orderId] = [
+      'id' => $row['id'],
+      'note' => $row['note'],
+      'status' => $row['status'],
+      'order_date' => $row['order_date'],
+      'room_id' => $row['room_id'],
+      'user_id' => $row['user_id'],
+      'total_price' => $row['total_price'],
+      'products' => [],
+    ];
+  }
+
+  $data = $myOrdersController->getProductsByOrderId($orderId);
+  array_push($orders[$orderId]['products'], $data);
+}
+
 ?>
 
 <div class="container mt-5">
@@ -8,7 +40,11 @@ require_once "templates/userNav.php";
   <div class="row">
     <div class="col-md-6" id="errorDateFrom">
       <div class="input-group date " id="datepickerOne">
-        <input type="text" class="form-control" id="dateFrom" />
+
+        <?php
+        echo "<input type='text' class='form-control' id='dateFrom' value='{$getStartDate}' />";
+
+        ?>
         <span class="input-group-append">
           <span class="input-group-text h-100 bg-light d-block">
             <i class="fa fa-calendar"></i>
@@ -18,7 +54,10 @@ require_once "templates/userNav.php";
     </div>
     <div class="col-md-6" id="errorDateTo">
       <div class="input-group date" id="datepickerTwo">
-        <input type="text" class="form-control" id="dateTo" />
+        <?php
+        echo "<input type='text' class='form-control' id='dateTo' value='{$getEndDate}' />";
+
+        ?>
         <span class="input-group-append">
           <span class="input-group-text h-100 bg-light d-block">
             <i class="fa fa-calendar"></i>
@@ -27,7 +66,9 @@ require_once "templates/userNav.php";
       </div>
     </div>
   </div>
-  <!-- end search -->
+
+
+
   <!-- Table -->
 
   <div class="container mt-5 text-center">
@@ -45,283 +86,161 @@ require_once "templates/userNav.php";
         <h4>Action</h4>
       </div>
     </div>
-
     <div id="accordionExample">
-      <div class="accordion-item border-0 p-0 m-0">
-        <div class="row">
-          <div class="col-3 border border-2 pt-3 d-flex justify-content-between">
-            <span>2024-03-05 08.30 PM</span>
-            <span id="headingOne">
-              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              </button>
-            </span>
+
+      <?php
+      foreach ($orders as $order) {
+        ?>
+
+        <div class="accordion-item border-0 p-0 m-0">
+          <div class="row">
+            <div class="col-3 border border-2 pt-3 d-flex justify-content-between">
+              <span>
+              <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?>
+              </span>
+              <span id="heading-<?php  echo $order['id'] ?>">
+                <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $order['id'] ?>"
+                  aria-expanded="true" aria-controls="collapse-<?php echo $order['id'] ?>">
+                </button>
+              </span>
+            </div>
+            <div class="col-3 border border-2 pt-3">
+              <?php echo $order['status'] ?>
+            </div>
+            <div class="col-3 border border-2 pt-3">
+              <?php echo $order['total_price'] ?> EGP
+            </div>
+            <div class="col-3 border border-2 py-2 text-center">
+              <?php
+              if ($order['status'] == 'processing') {
+
+                echo "<a class='btn text-white text-decoration-none' href='../controllers/cancelOrderController.php?id={$order['id']}' style='background-color: #362517;'>CANCEL</a>";
+              }
+              ?>
+            </div>
           </div>
-          <div class="col-3 border border-2 pt-3">Processing</div>
-          <div class="col-3 border border-2 pt-3">35 EGP</div>
-          <div class="col-3 border border-2 py-2 text-center">
-            <a class="btn text-white text-decoration-none" href="" style="background-color: #362517; ">CANCEL</a>
-          </div>
-        </div>
-        <div id="collapseOne" class="accordion-collapse collapse row border border-2" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 text-capitalize">
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item1.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">4 LE</span>
+          <div id="collapse-<?php echo $order['id']?>" class="accordion-collapse collapse row border border-2" aria-labelledby="heading-<?php echo $order['id'] ?>"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+
+              <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 text-capitalize">
+                <?php
+
+                foreach ($order['products'][0] as $product) {
+                  ?>
+
+                  <div class="col mt-4">
+                    <div class="w-75 mx-sm-auto position-relative text-center">
+                      <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle"
+                        style="width: 140px; height: 140px" alt="product" />
+                      <div class="product-price">
+                        <span class="d-flex justify-content-center align-items-center h-100">
+                          <?php echo $product['price'] ?> LE
+                        </span>
+                      </div>
+                      <div class="my-4">
+                        <p class="product-name">
+                          <?php echo $product['name'] ?>
+                        </p>
+                        <p class="product-quantity">
+                          <?php echo $product['quantity'] ?>
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div class="my-4">
-                    <p class="product-name">tea</p>
-                    <p class="product-quantity">2</p>
-                  </div>
-                </div>
+
+
+                <?php } ?>
+
               </div>
 
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item2.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">3 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">cola</p>
-                    <p class="product-quantity">3</p>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item3.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">6 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">coffee</p>
-                    <p class="product-quantity">2</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item4.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">8 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">tea</p>
-                    <p class="product-quantity">1</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item5.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">9 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">coffee</p>
-                    <p class="product-quantity">2</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="accordion-item border-0 p-0 m-0">
-        <div class="row">
-          <div class="col-3 border border-2 pt-3 d-flex justify-content-between">
-            <span>2024-03-05 08.30 PM</span>
-            <span id="headingTwo">
-              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-              </button>
-            </span>
-          </div>
-          <div class="col-3 border border-2 pt-3">Processing</div>
-          <div class="col-3 border border-2 pt-3">35 EGP</div>
-          <div class="col-3 border border-2 py-2 text-center">
-            <a class="btn text-white text-decoration-none" href="" style="background-color: #362517;">CANCEL</a>
-          </div>
-        </div>
-        <div id="collapseTwo" class="accordion-collapse collapse row border border-2" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 text-capitalize">
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item1.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">4 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">tea</p>
-                    <p class="product-quantity">2</p>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item2.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">3 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">cola</p>
-                    <p class="product-quantity">3</p>
-                  </div>
-                </div>
-              </div>
+      <?php } ?>
 
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item3.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">6 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">coffee</p>
-                    <p class="product-quantity">2</p>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item4.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">8 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">tea</p>
-                    <p class="product-quantity">1</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item5.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">9 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">coffee</p>
-                    <p class="product-quantity">2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item border-0 p-0 m-0">
-        <div class="row">
-          <div class="col-3 border border-2 pt-3 d-flex justify-content-between">
-            <span>2024-03-05 08.30 PM</span>
-            <span id="headingThree">
-              <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-              </button>
-            </span>
-          </div>
-          <div class="col-3 border border-2 pt-3">Processing</div>
-          <div class="col-3 border border-2 pt-3">35 EGP</div>
-          <div class="col-3 border border-2 py-2 text-center">
-            <a class="btn text-white text-decoration-none" href="" style="background-color: #362517; ">CANCEL</a>
-          </div>
-        </div>
-        <div id="collapseThree" class="accordion-collapse collapse row border border-2" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 text-capitalize">
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item1.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">4 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">tea</p>
-                    <p class="product-quantity">2</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item2.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">3 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">cola</p>
-                    <p class="product-quantity">3</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item3.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">6 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">coffee</p>
-                    <p class="product-quantity">2</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item4.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">8 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">tea</p>
-                    <p class="product-quantity">1</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col mt-4">
-                <div class="w-75 mx-sm-auto position-relative text-center">
-                  <img src="../public/images/item5.jpg" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                  <div class="product-price">
-                    <span class="d-flex justify-content-center align-items-center h-100">9 LE</span>
-                  </div>
-                  <div class="my-4">
-                    <p class="product-name">coffee</p>
-                    <p class="product-quantity">2</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
   <!--End Table-->
+
+
+
+
+
+
   <div class="row justify-content-center">
     <div class="total-price mt-4 fs-2 d-flex px-5">
-      <p style="margin: auto;">Total: EGP <span>35</span></p>
+      <p style="margin: auto;">Total: <span>
+          <?php echo $totalPrice ?>
+        </span> EGP </p>
     </div>
   </div>
   <!-- End Table -->
 
-  <script>
-    $(function() {
-      $("#datepickerOne").datepicker();
+<script>
+    $(function () {
+      $('#datepickerOne').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+      });
 
     });
-    $(function() {
-      $("#datepickerTwo").datepicker();
+    $(function () {
+      $('#datepickerTwo').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+      });
+
     });
+    const startDate = document.getElementById("dateFrom");
+  const endDate = document.getElementById("dateTo");
+  const divStartDate = document.getElementById("errorDateFrom");
+  const divEndDate = document.getElementById("errorDateTo");
+  var messageTag = document.createElement("div");
+
+  startDate.onchange = function (e) {
+    if (startDate.value || startDate.value < endDate.value) {
+      messageTag.remove();
+    }
+    if (endDate.value == "") {
+      messageTag.textContent = "Please enter End Date";
+      messageTag.style.cssText = "color:red";
+      divEndDate.appendChild(messageTag);
+      return;
+    }
+    validate(startDate,endDate);
+  };
+
+  endDate.onchange = function (e) {
+    if (endDate.value || startDate.value < endDate.value) {
+      messageTag.remove();
+    }
+    if (startDate.value == "") {
+      messageTag.textContent = "Please enter Start Date";
+      messageTag.style.cssText = "color:red";
+      divStartDate.appendChild(messageTag);
+      return;
+    }
+    validate(startDate,endDate);
+
+  };
+
+function validate(startDate,endDate){
+  if (startDate.value >= endDate.value) {
+      messageTag.textContent = "Start Date Must Be Smaller Than End Date";
+      messageTag.style.cssText = "color:red";
+      divEndDate.appendChild(messageTag);
+      return;
+    }
+    if (startDate.value && endDate.value && startDate.value < endDate.value) {
+      window.location.assign(
+        `${window.location.origin}/Cafateria_Management_System/views/myOrders.php?startDate=${startDate.value}&endDate=${endDate.value}`
+      );
+    }
+}
+
   </script>
