@@ -1,8 +1,8 @@
 <?php
 
 require_once "../models/db.php";
-require_once "../models/homePage.php";
-$homePage = new HomePage();
+require_once "../models/orderModel.php";
+$orderModel = new OrderModel();
 
 $db = new DB();
 $connection = $db->getConnection();
@@ -10,7 +10,7 @@ $p = isset($_GET["p"]) ? $_GET["p"] : "";
 
 $result = [];
 if (!empty($p)) {
-    $query = $homePage->searchProduct($p);
+    $query = $orderModel->searchProduct($p);
     $data = $connection->query($query);
     $result = $data->fetchAll(PDO::FETCH_ASSOC);
 } else {
