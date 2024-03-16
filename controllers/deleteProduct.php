@@ -2,7 +2,7 @@
 
 require_once "../models/db.php";
 
-class UserDeleter
+class ProductDeleter
 {
     private $db;
 
@@ -11,33 +11,33 @@ class UserDeleter
         $this->db = new DB();
     }
 
-    public function deleteUser($userId)
+    public function deleteProduct($productId)
     {
-        // Delete the user from the database
-        $this->db->delete("user", ["id"], [$userId]);
+        // Delete the product from the database
+        $this->db->delete("product", ["id"], [$productId]);
     }
 
     public function processRequest()
     {
         // Check if the request method is GET
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            // Check if the user ID is provided
+            // Check if the product ID is provided
             if (isset($_GET["id"])) {
-                // Get the user ID to be deleted
-                $userIdToDelete = $_GET["id"];
+                // Get the product ID to be deleted
+                $productIdToDelete = $_GET["id"];
 
                 try {
-                    // Delete the user
-                    $this->deleteUser($userIdToDelete);
+                    // Delete the product
+                    $this->deleteProduct($productIdToDelete);
 
                     // Prepare JSON response
                     $response = [
                         'success' => true,
-                        'message' => 'User deleted successfully',
-                        'userId' => $userIdToDelete // Return the ID of the deleted user
+                        'message' => 'Product deleted successfully',
+                        'productId' => $productIdToDelete  // Return the ID of the deleted product
                     ];
 
-                    // Return the success flag and deleted user ID in JSON format
+                    // Return the success flag and deleted product ID in JSON format
                     echo json_encode($response);
                     exit(); // No need to redirect or output anything else
                 } catch (Exception $e) {
@@ -50,10 +50,10 @@ class UserDeleter
                     exit();
                 }
             } else {
-                // If the user ID is not provided, return an error response
+                // If the product ID is not provided, return an error response
                 $response = [
                     'success' => false,
-                    'error' => 'User ID not provided'
+                    'error' => 'Product ID not provided'
                 ];
                 echo json_encode($response);
                 exit();
@@ -70,6 +70,6 @@ class UserDeleter
     }
 }
 
-// Instantiate the UserDeleter class and process the request
-$userDeleter = new UserDeleter();
-$userDeleter->processRequest();
+// Instantiate the ProductDeleter class and process the request
+$productDeleter = new ProductDeleter();
+$productDeleter->processRequest();
