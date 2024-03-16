@@ -1,17 +1,12 @@
 <?php
 require_once "templates/userNav.php";
-require_once "../controllers/order.php";
-
+require_once "../controllers/orderController.php";
 
 $getStartDate = isset($_GET['startDate']) ? $_GET['startDate'] : '';
 $getEndDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
 
-
-
 $OrderController = new OrderController();
-
-
-$data = $OrderController->getOrdersByUserId($getStartDate,$getEndDate,$_SESSION['user']['id']);
+$data = $OrderController->getOrdersByUserId($getStartDate, $getEndDate, $_SESSION['user']['id']);
 $totalPrice = 0;
 $orders = [];
 
@@ -43,11 +38,7 @@ foreach ($data as $row) {
   <div class="row">
     <div class="col-md-6" id="errorDateFrom">
       <div class="input-group date " id="datepickerOne">
-
-        <?php
-        echo "<input type='text' class='form-control' id='dateFrom' value='{$getStartDate}' />";
-
-        ?>
+        <?php echo "<input type='text' class='form-control' id='dateFrom' value='{$getStartDate}' />"; ?>
         <span class="input-group-append">
           <span class="input-group-text h-100 bg-light d-block">
             <i class="fa fa-calendar"></i>
@@ -57,10 +48,7 @@ foreach ($data as $row) {
     </div>
     <div class="col-md-6" id="errorDateTo">
       <div class="input-group date" id="datepickerTwo">
-        <?php
-        echo "<input type='text' class='form-control' id='dateTo' value='{$getEndDate}' />";
-
-        ?>
+        <?php echo "<input type='text' class='form-control' id='dateTo' value='{$getEndDate}' />"; ?>
         <span class="input-group-append">
           <span class="input-group-text h-100 bg-light d-block">
             <i class="fa fa-calendar"></i>
@@ -70,10 +58,7 @@ foreach ($data as $row) {
     </div>
   </div>
 
-
-
   <!-- Table -->
-
   <div class="container mt-5 text-center">
     <div class="row text-white" style="background-color: #362517; ">
       <div class="col-3 border border-2 text-center py-2">
@@ -90,20 +75,15 @@ foreach ($data as $row) {
       </div>
     </div>
     <div id="accordionExample">
-
-      <?php
-      foreach ($orders as $order) {
-        ?>
-
+      <?php foreach ($orders as $order) { ?>
         <div class="accordion-item border-0 p-0 m-0">
           <div class="row">
             <div class="col-3 border border-2 pt-3 d-flex justify-content-between">
               <span>
-              <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?>
+                <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?>
               </span>
-              <span id="heading-<?php  echo $order['id'] ?>">
-                <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $order['id'] ?>"
-                  aria-expanded="true" aria-controls="collapse-<?php echo $order['id'] ?>">
+              <span id="heading-<?php echo $order['id'] ?>">
+                <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $order['id'] ?>" aria-expanded="true" aria-controls="collapse-<?php echo $order['id'] ?>">
                 </button>
               </span>
             </div>
@@ -111,31 +91,23 @@ foreach ($data as $row) {
               <?php echo $order['status'] ?>
             </div>
             <div class="col-3 border border-2 pt-3">
-              <?php echo $order['total_price'] ?> EGP
+              <?php echo (int) $order['total_price'] ?> EGP
             </div>
             <div class="col-3 border border-2 py-2 text-center">
               <?php
               if ($order['status'] == 'processing') {
-
-                echo "<a class='btn text-white text-decoration-none' href='../controllers/cancelOrderController.php?id={$order['id']}' style='background-color: #362517;'>CANCEL</a>";
+                echo "<a class='btn text-white text-decoration-none' href='../controllers/orderController.php?id={$order['id']}&action=cancel' style='background-color: #362517;'>CANCEL</a>";
               }
               ?>
             </div>
           </div>
-          <div id="collapse-<?php echo $order['id']?>" class="accordion-collapse collapse row border border-2" aria-labelledby="heading-<?php echo $order['id'] ?>"
-            data-bs-parent="#accordionExample">
+          <div id="collapse-<?php echo $order['id'] ?>" class="accordion-collapse collapse row border border-2" aria-labelledby="heading-<?php echo $order['id'] ?>" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-
               <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 text-capitalize">
-                <?php
-
-                foreach ($order['products'][0] as $product) {
-                  ?>
-
+                <?php foreach ($order['products'][0] as $product) { ?>
                   <div class="col mt-4">
                     <div class="w-75 mx-sm-auto position-relative text-center">
-                      <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle"
-                        style="width: 140px; height: 140px" alt="product" />
+                      <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
                       <div class="product-price">
                         <span class="d-flex justify-content-center align-items-center h-100">
                           <?php echo $product['price'] ?> LE
@@ -151,88 +123,74 @@ foreach ($data as $row) {
                       </div>
                     </div>
                   </div>
-
-
                 <?php } ?>
-
               </div>
-
-
             </div>
           </div>
         </div>
-
       <?php } ?>
-
-
     </div>
   </div>
-
   <!--End Table-->
+</div>
 
 
-
-
-
-
-  <div class="row justify-content-center">
-    <div class="total-price mt-4 fs-2 d-flex px-5">
-      <p style="margin: auto;">Total: <span>
-          <?php echo $totalPrice ?>
-        </span> EGP </p>
-    </div>
+<div class="row justify-content-center">
+  <div class="total-price mt-4 fs-2 d-flex px-5">
+    <p style="margin: auto;">Total: <span>
+        <?php echo $totalPrice ?>
+      </span> EGP </p>
   </div>
-  <!-- End Table -->
+</div>
+<!-- End Table -->
 
 <script>
- $(function () {
-    $('#datepickerOne').datepicker({
-      format: 'yyyy-mm-dd',
-      autoclose: true
+  function initializeDatepicker(datepickerId) {
+    $(function() {
+      $(datepickerId).datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+      });
     });
+  }
 
-  });
-  $(function () {
-    $('#datepickerTwo').datepicker({
-      format: 'yyyy-mm-dd',
-      autoclose: true
-    });
+  initializeDatepicker('#datepickerOne');
+  initializeDatepicker('#datepickerTwo');
 
-  });
-    const startDate = document.getElementById("dateFrom");
+  const startDate = document.getElementById("dateFrom");
   const endDate = document.getElementById("dateTo");
   const divStartDate = document.getElementById("errorDateFrom");
   const divEndDate = document.getElementById("errorDateTo");
   var messageTag = document.createElement("div");
 
-  startDate.onchange = function (e) {
+  startDate.onchange = function(e) {
     if (startDate.value || startDate.value < endDate.value) {
       messageTag.remove();
     }
     if (endDate.value == "") {
-      messageError(divEndDate,"Please enter End Date");
+      messageError(divEndDate, "Please enter End Date");
       return;
     }
-    validate(startDate,endDate);
+    validate(startDate, endDate);
   };
 
-  endDate.onchange = function (e) {
+  endDate.onchange = function(e) {
     if (endDate.value || startDate.value < endDate.value) {
       messageTag.remove();
     }
     if (startDate.value == "") {
-      messageError(divStartDate,"Please enter Start Date");
+      messageError(divStartDate, "Please enter Start Date");
 
       return;
     }
-    validate(startDate,endDate);
+    validate(startDate, endDate);
 
   };
 
 
-function validate(startDate,endDate){
-  if (startDate.value >= endDate.value) {
-      messageError(divEndDate,"Start Date Must Be Smaller Than End Date");
+  function validate(startDate, endDate) {
+    if (startDate.value >= endDate.value) {
+      messageError(divEndDate, "Start Date Must Be Smaller Than End Date");
       return;
     }
     if (startDate.value && endDate.value && startDate.value < endDate.value) {
@@ -240,10 +198,11 @@ function validate(startDate,endDate){
         `${window.location.origin}/Cafateria_Management_System/views/myOrders.php?startDate=${startDate.value}&endDate=${endDate.value}`
       );
     }
-}
-function messageError(place,message){
-  messageTag.textContent = message;
-      messageTag.style.cssText = "color:red";
-      place.appendChild(messageTag);
- } 
-  </script>
+  }
+
+  function messageError(place, message) {
+    messageTag.textContent = message;
+    messageTag.style.cssText = "color:red";
+    place.appendChild(messageTag);
+  }
+</script>
