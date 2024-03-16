@@ -40,9 +40,9 @@ class CategoryManager
         if (empty($categoryName)) {
             throw new Exception('Category name cannot be empty');
         }
-        // Check if the category name contains any numeric characters
-        if (preg_match('/[0-9]/', $categoryName)) {
-            throw new Exception('Category name cannot contain numbers');
+        // Check if the category name contains any numeric characters or special characters
+        if (preg_match('/[^A-Za-z\s]/', $categoryName)) {
+            throw new Exception('Category name can only contain letters and spaces, and cannot contain numbers or special characters');
         }
     }
 
