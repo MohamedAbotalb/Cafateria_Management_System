@@ -12,8 +12,8 @@ unset($_SESSION['fails']);
 unset($_SESSION['done']);
 ?>
 
-<div class="container my-5 col-md-6">
-  <h1 class="mb-1">Add Product</h1>
+<div class="container my-4 col-md-6">
+  <h1>Add Product</h1>
   <?php if (!empty($errorMessages)) : ?>
     <div class="fs-5 alert alert-danger rounded text-center p-2 mb-4" role="alert">
       <?php foreach ($errorMessages as $error) : ?>
@@ -26,7 +26,7 @@ unset($_SESSION['done']);
       <?= htmlspecialchars($successMessage) ?>
     </div>
   <?php endif; ?>
-  <form id="addProductForm" class="my-5 needs-validation row" action="../controllers/addProductController.php" method="POST" enctype="multipart/form-data" novalidate>
+  <form id="addProductForm" class="my-4 needs-validation row" action="../controllers/addProductController.php" method="POST" enctype="multipart/form-data" novalidate>
     <div class="col-md-12">
       <div class="mb-3">
         <label for="productName" class="form-label">Product Name</label>
