@@ -1,0 +1,114 @@
+body {
+  background-color: #fffbf2;
+  font-family: 'Roboto', sans-serif;
+}
+.card-img-top {
+  width: auto;
+  height: 125px;
+}
+.product-price,
+.menu-price {
+  position: absolute;
+  margin: 0;
+  top: -10px;
+  right: -10px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 45px;
+  border: solid black 1px;
+  color: #33211d;
+  width: 60px;
+  height: 60px;
+  top: 0;
+  left: 70%;
+}
+.col-4 {
+  position: relative;
+}
+.menu-price,
+.product-price,
+.button {
+  background-color: #da9f5b;
+}
+
+.product:hover,
+.increment:hover,
+.decrement:hover,
+.close:hover {
+  cursor: pointer;
+}
+
+.editborder,
+.delborder {
+  width: 45px;
+  height: 45px;
+  color: #362517;
+}
+
+.editborder {
+  border: #dfad58 solid 3px;
+}
+
+.editborder:hover {
+  background-color: #dfad58;
+  color: #fff;
+}
+
+.delborder {
+  border: #dc3545 solid 3px;
+}
+
+.delborder:hover {
+  background-color: #dc3545;
+  color: #fff;
+  box-shadow: none;
+}
+
+.use-btn {
+  background-color: #dfad58;
+  color: #362517;
+  opacity: 0.9;
+}
+.btn-check:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.use-btn:hover {
+  opacity: 1;
+}
+.Form {
+  text-align: left;
+}
+.input-group-append {
+  cursor: pointer !important;
+}
+.day {
+  text-align: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.day:hover {
+  background-color: rgb(155, 155, 238);
+}
+.accordion-button:not(.collapsed) {
+  background-color: white !important;
+}
+.accordion-button,
+.collapsed,
+.collapsed:focus,
+.accordion-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  padding-top: 2px !important;
+}
