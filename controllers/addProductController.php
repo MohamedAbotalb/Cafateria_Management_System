@@ -2,7 +2,7 @@
 require_once '../models/db.php';
 session_start();
 
-class ProductHandler {
+class ProductController {
     private $db;
 
     public function __construct() {
@@ -49,13 +49,13 @@ class ProductHandler {
             header("Location: ../views/adminProducts.php");
             exit;
         } catch (Exception $e) {
-            $_SESSION['fails'] = ["general" => "Error adding product: " . $e->getMessage()];
+            $_SESSION['fails'] = ["general" => $e->getMessage()];
             header("Location: ../views/addProduct.php");
             exit;
         }
     }
 }
 
-$productHandler = new ProductHandler();
-$productHandler->addProduct(htmlspecialchars(trim($_POST['productName'])), htmlspecialchars(trim($_POST['productPrice'])), htmlspecialchars(trim($_POST['productCategory'])), $_FILES['productImage']);
+$productController = new ProductController();
+$productController->addProduct(htmlspecialchars(trim($_POST['productName'])), htmlspecialchars(trim($_POST['productPrice'])), htmlspecialchars(trim($_POST['productCategory'])), $_FILES['productImage']);
 ?>
