@@ -1,10 +1,10 @@
 <?php
 require_once "templates/userNav.php";
 require_once "../models/db.php";
-require_once "../models/homePage.php";
+require_once "../models/orderModel.php";
 
 $db = new DB();
-$homePage = new HomePage();
+$orderModel = new OrderModel();
 
 ?>
 
@@ -78,7 +78,7 @@ $homePage = new HomePage();
       <div class="col-7 ">
 
         <?php
-        $query = $homePage->Innerjoin();
+        $query = $orderModel->latestOrder($_SESSION['user']['name']);
         $result = $db->getConnection()->query($query);
         if ($result && $result->rowCount() > 0) {
           echo "<h5 class='text-muted '> latest order</h5>

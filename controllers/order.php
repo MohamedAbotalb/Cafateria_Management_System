@@ -1,8 +1,7 @@
 <?php
 
 require_once "../models/db.php";
-require_once "../models/currentOrders.php";
-require_once "../models/myOrdersModel.php";
+require_once "../models/orderModel.php";
 
 class OrderController
 {
@@ -80,24 +79,25 @@ class OrderController
 
     public function getCurrentOrders()
     {
-        $currentOrders = new CurrentOrders();
-        $query = $currentOrders->queryCurrentOrders();
+        $orderModel = new OrderModel();
+        $query = $orderModel->queryCurrentOrders();
         $statement = $this->db->getConnection()->query($query);
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getOrdersByUserId($getStartDate, $getEndDate, $userId)
     {
-        $myOrderModel = new MyOrdersModel();
-        $query = $myOrderModel->queryOrdersByUserId($getStartDate, $getEndDate, $userId);
+
+        $orderModel = new OrderModel();
+        $query = $orderModel->queryOrdersByUserId($getStartDate, $getEndDate, $userId);
         $statement = $this->db->getConnection()->query($query);
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getProductsByOrderId($orderId)
     {
-        $myOrderModel = new MyOrdersModel();
-        $query = $myOrderModel->queryProductsByOrderId($orderId);
+        $orderModel = new OrderModel();
+        $query = $orderModel->queryProductsByOrderId($orderId);
         $statement = $this->db->getConnection()->query($query);
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
