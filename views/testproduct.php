@@ -5,9 +5,9 @@ require_once "../models/allProducts&usersModel.php";
 
 // Instantiate the DB class
 $db = new DB();
-$db2 = new allup();
+$db2 = new UsersandProducts();
 // Fetch products with pagination
-$allProducts = $db2->select1("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id", []);
+$allProducts = $db2->select("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id", []);
 // Fetch all categories
 $categories = $db->select("category");
 // Pagination 
@@ -19,7 +19,7 @@ $total_rows = count($allProducts);
 // Calculate total number of pages
 $pages = ceil($total_rows / $rows_per_page);
 //selected row in one page with limit
-$products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id LIMIT $start, $rows_per_page");
+$products = $db2->select("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id LIMIT $start, $rows_per_page");
 
 // //Debugging output
 // echo "Total Rows: $total_rows<br>";
@@ -57,13 +57,21 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
                         <tr id="productRow<?= $product['id']; ?>">
                             <td><?= $product['name']; ?></td>
                             <td><?= $product['price']; ?></td>
-                            <?php
-                            // Debug statement: Print out the image URL
-                            $imageUrl = '../public/images/' . $product['image'];
-                            echo "Image URL: $imageUrl";
-                            ?>
+                            <!-- <?php
+                                    // Debug statement: Print out the image URL
+                                    $imageUrl = '../public/images/' . $product['image'];
+                                    echo "Image URL: $imageUrl";
+                                    ?> -->
                             <td><img src='../public/images/<?= $product['image']; ?>' alt='Product Image' style='max-width: 50px; max-height: 50px;'></td>
-                            <td><a class="btn btn-success fs-5"><?= $product['available']; ?></a></td>
+                            <!-- change statuse -->
+
+                            <td id="status<?= $product['id']; ?>">
+                                <?php
+                                $btnClass = ($product['available'] == "available") ? "btn-success" : "btn-danger";
+                                ?>
+                                <a class="btn <?= $btnClass; ?> fs-5" onclick="changeStatus(<?= $product['id']; ?>)"><?= ucfirst($product['available']); ?></a>
+                            </td>
+                            <!-- actions -->
                             <td class='text-center'>
                                 <!-- Button trigger modal***edit*** -->
                                 <a class="btn justify-content-center  d-inline-flex align-items-center rounded-circle fs-5  editborder " data-bs-toggle="modal" data-bs-target="#editModal<?= $product['id']; ?>">
@@ -235,6 +243,52 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
 </script>
 <script>
     <?php foreach ($products as $product) : ?>
+
+        // function changeStatus(id) {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "../controllers/status.php",
+        //         data: {
+        //             id: id
+        //         },
+        //         success: function(data) {
+        //             // Toggle the button text based on the response
+        //             $("#status" + id).html(data.trim());
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error("AJAX Error: " + error);
+        //         }
+        //     });
+        // }
+
+        function updateStatusButton(id, status) {
+            var $statusButton = $("#status" + id);
+            var $button = $statusButton.find("a");
+
+            var btnClass = (status === "available") ? "btn-success" : "btn-danger";
+            $button.removeClass("btn-success btn-danger").addClass(btnClass);
+            $button.text(status);
+        }
+
+        function changeStatus(id) {
+            $.ajax({
+                type: "POST",
+                url: "../controllers/status.php",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    updateStatusButton(id, data.trim());
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error: " + error);
+                }
+            });
+        }
+
+        // Call the function to update the status button when the page loads
+        updateStatusButton(<?= $product['id']; ?>, "<?= $product['available']; ?>");
+
         // AJAX form submission for updating product
         $("#editProductForm<?= $product['id']; ?>").submit(function(event) {
             event.preventDefault(); // Prevent default form submission
@@ -275,32 +329,6 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
                 }
             });
         });
-        // insert new category
-        // $("#newCtegoryForm<?= $category['id']; ?>").submit(function(event) {
-        //     event.preventDefault(); // Prevent default form submission
-
-        //     var formData = new FormData(this);
-
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "../controllers/insertCategory.php",
-        //         data: formData,
-        //         processData: false,
-        //         contentType: false,
-        //         success: function(response) {
-        //             let data = response;
-        //             if (data.success) {
-        //                 // Display success message
-        //                 $('#addNewCategory<?= $category['id']; ?>').modal('hide');
-        //                 //  update the table row with new product data
-        //                 let updatedProduct = data.updateProduct;
-        //                 $("tr#productRow<?= $product['id']; ?> td:eq(0)").text(updatedProduct.name);
-        //                 $("tr#productRow<?= $product['id']; ?> td:eq(1)").text(updatedProduct.price);
-        //                 // $("tr#productRow<?= $product['id']; ?> td:eq(3)").text(updatedProduct.available);
-        //                 // $("tr#productRow<?= $product['id']; ?> td:eq(1)").text(updatedProduct.price);
-
-
-    <?php endforeach; ?>
 </script>
 <script>
     // Function to handle deletion confirmation
@@ -338,6 +366,7 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
             confirmDelete(productId);
         });
     });
+    <?php endforeach; ?>
 </script>
 <script>
     document.getElementById('saveCategory').addEventListener('click', function() {
