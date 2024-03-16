@@ -3,9 +3,16 @@
     require_once "../models/checksValidation.php";
     require_once "../models/myOrdersModel.php";
     require_once "../controllers/myOrdersController.php";
+    require_once "../models/currentOrders.php";
+    require_once "../controllers/currentOrdersController.php";
+    $currentOrders = new CurrentOrdersController();
+
+    // Get all current orders
+    $orders = $currentOrders->getCurrentOrders();
 
     $getStartDate = isset($_GET['startDate']) ? $_GET['startDate'] : '';
     $getEndDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
+    $getUserId = isset($_GET['user_id'])? $_GET['user_id'] : '';
 ?>
 <style>
     body{
@@ -19,6 +26,16 @@
         font-size:75px;
         font-family: "Pacifico", cursive;
         font-weight:bold;
+    }
+    h2,.price{
+      color:#da9f5b;
+      font-family: "Pacifico", cursive;
+    }
+    .product-quantity{
+      border:2px solid black;
+      background-color:#da9f5b;
+      margin:0px 10px;
+
     }
     .data{
         box-shadow:10px 10px 10px #afacac;
@@ -55,7 +72,7 @@
           </div>
 
           <div class="col-md-6 my-3">
-          <select class="form-select mb-3" name="user">
+          <select class="form-select mb-3" name="user" id="selectUser">
               <option selected disabled>Select User</option>
               <?php foreach ($users as $user): ?>
                   <option value="<?php echo $user['id']; ?>"><?php echo $user['name']; ?></option>
@@ -84,17 +101,20 @@
     <?php foreach ($users as $user): ?>
         <tr>
             <th scope="row">
-                <button class="btn btn-dark btn-xs accordion-toggle" data-target="#demo1" data-toggle="collapse">+</button>
+                <button class="btn btn-dark btn-xs accordion-toggle" data-target="#demo-<?php echo $user['id']; ?>" data-toggle="collapse">+</button>
                 <?php echo $user['name']; ?>
             </th>
             <td>
                 <?php echo $user['total_amount']; ?>
             </td>
         </tr>
-    <?php endforeach; ?>
         <tr>
         <td colspan="2">
-            <div id="demo1" class="accordion-body collapse mx-3">
+        <?php //var_dump($orders); ?> 
+        <?php if (isset($_GET['user_id'])) : ?>
+        <?php if (count($orders) > 0) : ?>
+          <?php foreach ($orders as $order) : ?>
+            <div id="demo-<?php echo $user['id']; ?>" class="accordion-body collapse mx-3 user-accordion">
               <table class="table table-striped table-warning text-center m-auto">
                 <thead>
                     <tr>
@@ -103,64 +123,54 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php if (isset($_GET['user_id'])) : ?>
-                  <?php foreach ($orders as $order) : ?>
-                      <tr>
-                          <td>
-                              <button class="btn btn-dark btn-xs accordion-toggle" data-toggle="collapse" data-target="#demo">+</button>
-                              <?php echo $order['order_date']; ?>
-                          </td>
-                          <td><?php echo $order['amount']; ?></td>
-                      </tr>
-                  <?php endforeach; ?>
-                      <tr>
-                        <td colspan="2">
-                          <div id="demo" class="accordion-body collapse mx-3">
-                            <table class="table table-striped table-light m-auto text-center">
-                              <thead>
-                                <tr>
-                                    <th>Products</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td colspan="2">
-                                    <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 text-capitalize">
-                                      <?php foreach ($order['products'] as $product) : ?>
-                                        <div class="col mt-4">
-                                          <div class="w-75 mx-sm-auto position-relative text-center">
-                                            <img src="../public/images/<?php echo $product['image']; ?>" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                                            <div class="product-price">
-                                              <span class="d-flex justify-content-center align-items-center h-100">
-                                                  <?php echo $product['price']; ?> LE
-                                              </span>
-                                            </div>
-                                            <div class="my-4">
-                                              <p class="product-name">
-                                                  <?php echo $product['name']; ?>
-                                              </p>
-                                              <p class="product-quantity">
-                                                  <?php echo $product['quantity']; ?>
-                                              </p>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      <?php endforeach; ?>
+                  <tr>
+                      <td>
+                          <button class="btn btn-dark btn-xs accordion-toggle" data-toggle="collapse" data-target="#demo<?php echo $order['order_id']; ?>">+</button>
+                          <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?> 
+                      </td>
+                      <td><?php echo $order['total_price']; ?></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <div id="demo<?php echo $order['order_id']; ?>" class="accordion-body collapse mx-3">
+                        <h2 class="text-center">Products</h2>
+                          <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 m-auto">
+                              <?php $products = json_decode($order['products'], true); ?>
+                              <?php foreach ($products as $product) : ?>
+                                <div class="col">
+                                  <div class="w-75 mx-sm-auto position-relative text-center">
+                                    <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
+                                    <div class="product-price">
+                                      <span class="d-flex justify-content-center align-items-center h-100"><?php echo $product['price'] ?> LE</span>
                                     </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </td>
-                      </tr>
-                <?php endif; ?>
+                                    <div class="my-4">
+                                      <p class="product-name"><?php echo $product['name'] ?></p>
+                                      <p class="product-quantity"><?php echo $product['quantity'] ?></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              <?php endforeach; ?>
+                            </div>
+                            <div class="total-price mt-4 fs-2 d-flex flex-row-reverse px-5">
+                              <p class="price">Total: EGP <span><?php echo (int)$order['total_price'] ?></span></p>
+                            </div>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
+          <?php endforeach; ?>
+          <?php else : ?>
+            <div class="text-center fs-2">
+              <p>There is no current orders</p>
+            </div>
+          <?php endif; ?>
+          <?php endif; ?>
         </td>
         </tr>
     </tbody>
+    <?php endforeach; ?>
 </table>
 </div>
 <script>
@@ -170,7 +180,12 @@
                 const targetId = item.getAttribute('data-target');
                 const target = document.querySelector(targetId);
                 if (target.classList.contains('collapse')) {
-                    target.classList.remove('collapse');
+                  document.querySelectorAll('.user-accordion').forEach(accordion => {
+                    if (!accordion.classList.contains('collapse')) {
+                        accordion.classList.add('collapse');
+                    }
+                  });
+                  target.classList.remove('collapse');
                 } else {
                     target.classList.add('collapse');
                 }
@@ -208,7 +223,7 @@
   const divStartDate = document.getElementById("errorDateFrom");
   const divEndDate = document.getElementById("errorDateTo");
   var messageTag = document.createElement("div");
-
+  
   startDate.onchange = function (e) {
     if (startDate.value || startDate.value < endDate.value) {
       messageTag.remove();
@@ -226,11 +241,31 @@
       return;
     }
     if (startDate.value && endDate.value && startDate.value < endDate.value) {
-      window.location.assign(
+      if(selectUser.value !=""){
+        window.location.assign(
+        `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}&user_id=${selectUser.value}`
+      );
+      }else {
+        window.location.assign(
         `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}`
       );
     }
+  }
   };
+  
+  selectUser.onchange = function (e) {
+  if (selectUser.value &&  startDate.value=="" && endDate.value=="") {
+      window.location.assign(
+        `http://localhost:8080/Cafateria_Management_System/views/checks.php?user_id=${selectUser.value}`
+      );
+   
+    }else{
+      window.location.assign(
+        `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}&user_id=${selectUser.value}`
+      );
+  }
+  }
+  
 
   endDate.onchange = function (e) {
     if (endDate.value || startDate.value < endDate.value) {
@@ -249,9 +284,19 @@
       return;
     }
     if (startDate.value && endDate.value && startDate.value < endDate.value) {
-      window.location.assign(
+      if(selectUser.value !=""){
+        window.location.assign(
+        `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}&user_id=${selectUser.value}`
+      );
+      console.log("true")
+      }else {
+        window.location.assign(
         `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}`
       );
+      console.log("false")
+
+      }
+   
     }
   };
 </script>
