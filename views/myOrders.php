@@ -5,8 +5,8 @@ require_once "../controllers/orderController.php";
 $getStartDate = isset($_GET['startDate']) ? $_GET['startDate'] : '';
 $getEndDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
 
-$OrderController = new OrderController();
-$data = $OrderController->getOrdersByUserId($getStartDate, $getEndDate, $_SESSION['user']['id']);
+$orderController = new OrderController();
+$data = $orderController->getOrdersByUserId($getStartDate, $getEndDate, $_SESSION['user']['id']);
 $totalPrice = 0;
 $orders = [];
 
@@ -26,7 +26,7 @@ foreach ($data as $row) {
     ];
   }
 
-  $data = $OrderController->getProductsByOrderId($orderId);
+  $data = $orderController->getProductsByOrderId($orderId);
   array_push($orders[$orderId]['products'], $data);
 }
 
