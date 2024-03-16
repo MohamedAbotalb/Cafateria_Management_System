@@ -21,8 +21,8 @@ if (!isset($_SESSION['logged_in'])) {
     </button>
     <div class="collapse navbar-collapse text-capitalize justify-content-between" id="navbarCollapse">
       <div class="navbar-nav px-5">
-        <a href="/views/userHome.php" class="nav-item nav-link mx-3">home</a>
-        <a href="/views/myOrders.php" class="nav-item nav-link mx-3">my orders</a>
+        <a href="./userHome.php" class="nav-item nav-link mx-3">home</a>
+        <a href="./myOrders.php" class="nav-item nav-link mx-3">my orders</a>
       </div>
       <ul class="navbar-nav mx-4 d-flex align-items-center">
         <li class="nav-item">
