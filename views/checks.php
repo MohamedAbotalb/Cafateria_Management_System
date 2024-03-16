@@ -1,14 +1,10 @@
 <?php
     require_once "templates/adminNav.php";
     require_once "../models/checksValidation.php";
-    require_once "../models/myOrdersModel.php";
-    require_once "../controllers/myOrdersController.php";
-    require_once "../models/currentOrders.php";
-    require_once "../controllers/currentOrdersController.php";
-    $currentOrders = new CurrentOrdersController();
+    // $checks = new CurrentOrdersController();
 
-    // Get all current orders
-    $orders = $currentOrders->getCurrentOrders();
+    // Get all 
+    // $orders = $checks->getChecksOrders();
 
     $getStartDate = isset($_GET['startDate']) ? $_GET['startDate'] : '';
     $getEndDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
@@ -89,7 +85,7 @@
           </div>
       </div>
     </form>
-    
+    <?php if (!empty($users)): ?> 
     <table class="table text-center table-dark table-striped mt-5">
     <thead>
         <tr>
@@ -108,11 +104,11 @@
                 <?php echo $user['total_amount']; ?>
             </td>
         </tr>
+    
         <tr>
         <td colspan="2">
         <?php //var_dump($orders); ?> 
-        <?php if (isset($_GET['user_id'])) : ?>
-        <?php if (count($orders) > 0) : ?>
+        <?php if (isset($_GET['user_id']) && count($orders) > 0) : ?>
           <?php foreach ($orders as $order) : ?>
             <div id="demo-<?php echo $user['id']; ?>" class="accordion-body collapse mx-3 user-accordion">
               <table class="table table-striped table-warning text-center m-auto">
@@ -166,12 +162,16 @@
               <p>There is no current orders</p>
             </div>
           <?php endif; ?>
-          <?php endif; ?>
         </td>
         </tr>
     </tbody>
     <?php endforeach; ?>
 </table>
+<?php else: ?>
+    <div class="text-center fs-2">
+        <p>No users found</p>
+    </div>
+    <?php endif; ?>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -224,6 +224,19 @@
   const divEndDate = document.getElementById("errorDateTo");
   var messageTag = document.createElement("div");
   
+  selectUser.onchange = function (e) {
+    if (selectUser.value &&  startDate.value=="" && endDate.value=="") {
+        window.location.assign(
+          `http://localhost:8080/Cafateria_Management_System/views/checks.php?user_id=${selectUser.value}`
+        );
+    
+      }else{
+        window.location.assign(
+          `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}&user_id=${selectUser.value}`
+        );
+    }
+  };
+
   startDate.onchange = function (e) {
     if (startDate.value || startDate.value < endDate.value) {
       messageTag.remove();
@@ -249,23 +262,9 @@
         window.location.assign(
         `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}`
       );
+      }
     }
-  }
   };
-  
-  selectUser.onchange = function (e) {
-  if (selectUser.value &&  startDate.value=="" && endDate.value=="") {
-      window.location.assign(
-        `http://localhost:8080/Cafateria_Management_System/views/checks.php?user_id=${selectUser.value}`
-      );
-   
-    }else{
-      window.location.assign(
-        `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}&user_id=${selectUser.value}`
-      );
-  }
-  }
-  
 
   endDate.onchange = function (e) {
     if (endDate.value || startDate.value < endDate.value) {
