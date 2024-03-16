@@ -9,13 +9,11 @@ $db = new DB();
 <div class="container mt-3">
   <div class="row">
     <div class="col-9"></div>
-
     <div class="col-3">
       <div class="input-group mb-1">
         <div class="input-group mb-3 border rounded">
           <span class="input-group-text bg-transparent border-0"><i class="fas fa-search"></i></span>
-          <input id="searchInput" type="text" name="product" class="form-control border-0"
-            placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
+          <input id="searchInput" type="text" name="product" class="form-control border-0" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
         </div>
       </div>
     </div>
@@ -35,11 +33,10 @@ $db = new DB();
             <!-- start of product order -->
             <div class="list"></div>
             <!-- end of product order -->
-            <form action="../controllers/order.php" method="post" class="order-details">
+            <form action="../controllers/orderController.php" method="post" class="order-details">
               <input type="hidden" name="sourcePage" value="admin">
               <div class="form-floating my-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                  name="note"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="note"></textarea>
                 <label for="floatingTextarea">Notes</label>
               </div>
               <select class="form-select " aria-label="Default select example" name='room'>
@@ -49,7 +46,6 @@ $db = new DB();
                 foreach ($rooms as $room) {
                   if ($room['id'] != 0) {
                     echo "<option value='{$room['id']}' >{$room['id']}</option>";
-
                   }
                 }
                 ?>
@@ -60,7 +56,7 @@ $db = new DB();
               <hr class="my-4" />
               <p class="fs-4">EGP <span class="invoice-price">0</span></p>
               <?php
-              if (isset ($_SESSION['order_added']) && $_SESSION['order_added']) {
+              if (isset($_SESSION['order_added']) && $_SESSION['order_added']) {
                 echo '<div class="alert alert-success successAlert">Order Added Successfully</div>';
                 $_SESSION['order_added'] = false;
               }
@@ -86,7 +82,6 @@ $db = new DB();
           </select>
         </div>
         <hr class="my-5" />
-
         <div class="section-title">
           <p class="display-5">Menu</p>
         </div>
@@ -117,28 +112,22 @@ $db = new DB();
     const searchInput = document.getElementById("searchInput");
     const card = document.getElementById("product-card")
 
-    searchInput.addEventListener('keyup', function (e) {
-      e.preventDefault()
+    searchInput.addEventListener('keyup', function(e) {
+      e.preventDefault();
 
       const productName = e.target.value.trim();
-
       var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function () {
+      xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           showProduct(this.responseText);
-
         }
       };
       xmlhttp.open("GET", "../controllers/searchProductController.php?p=" + productName, true);
       xmlhttp.send();
-
-
-    })
+    });
 
     function showProduct(products) {
-
       const productsArray = JSON.parse(products);
-
       card.innerHTML = "";
       if (Array.isArray(productsArray) && productsArray.length > 0) {
         productsArray.forEach(product => {
@@ -158,6 +147,4 @@ $db = new DB();
         card.innerHTML = "<p>No products found.</p>";
       }
     }
-
-
   </script>
