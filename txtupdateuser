@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Instantiate the DB class
         $db = new DB();
-        $db2 = new allup();
+        $db2 = new UsersandProducts();
 
         // Check if the room exists in the database
         $roomExists = $db2->exists("room", ["id" => $roomNum]);

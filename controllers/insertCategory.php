@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db = new DB();
 
     // Check if the category already exists
-    $existingCategory = $db->select1("SELECT id FROM category WHERE name = ?", [$newCategoryName]);
+    $existingCategory = $db->select("category ", ["name"], [$newCategoryName]);
 
     // If the category already exists, return an error message
     if ($existingCategory) {
@@ -21,13 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert the new category into the database
-    $categoryId = $db->insert1("category", ["name" => $newCategoryName]);
-
+    $db->insert("category", ["name" => $newCategoryName]);
+    $insertedCategory = $db->select("category ", ["name"], [$newCategoryName]);
     // Prepare the response
     $response = [
         'success' => true,
         'message' => 'Category added successfully',
-        'categoryId' => $categoryId
+        'insertedCategory' => $insertedCategory
     ];
 
     // Return the response in JSON format

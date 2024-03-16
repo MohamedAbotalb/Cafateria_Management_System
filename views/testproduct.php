@@ -5,9 +5,9 @@ require_once "../models/allProducts&usersModel.php";
 
 // Instantiate the DB class
 $db = new DB();
-$db2 = new allup();
+$db2 = new UsersandProducts();
 // Fetch products with pagination
-$allProducts = $db2->select1("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id", []);
+$allProducts = $db2->select("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id", []);
 // Fetch all categories
 $categories = $db->select("category");
 // Pagination 
@@ -19,7 +19,7 @@ $total_rows = count($allProducts);
 // Calculate total number of pages
 $pages = ceil($total_rows / $rows_per_page);
 //selected row in one page with limit
-$products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id LIMIT $start, $rows_per_page");
+$products = $db2->select("SELECT p.*, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id LIMIT $start, $rows_per_page");
 
 // //Debugging output
 // echo "Total Rows: $total_rows<br>";
@@ -57,13 +57,21 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
                         <tr id="productRow<?= $product['id']; ?>">
                             <td><?= $product['name']; ?></td>
                             <td><?= $product['price']; ?></td>
-                            <?php
-                            // Debug statement: Print out the image URL
-                            $imageUrl = '../public/images/' . $product['image'];
-                            echo "Image URL: $imageUrl";
-                            ?>
+                            <!-- <?php
+                                    // Debug statement: Print out the image URL
+                                    $imageUrl = '../public/images/' . $product['image'];
+                                    echo "Image URL: $imageUrl";
+                                    ?> -->
                             <td><img src='../public/images/<?= $product['image']; ?>' alt='Product Image' style='max-width: 50px; max-height: 50px;'></td>
-                            <td><a class="btn btn-success fs-5"><?= $product['available']; ?></a></td>
+                            <!-- change statuse -->
+
+                            <td id="status<?= $product['id']; ?>">
+                                <?php
+                                $btnClass = ($product['available'] == "available") ? "btn-success" : "btn-danger";
+                                ?>
+                                <a class="btn <?= $btnClass; ?> fs-5" onclick="changeStatus(<?= $product['id']; ?>)"><?= ucfirst($product['available']); ?></a>
+                            </td>
+                            <!-- actions -->
                             <td class='text-center'>
                                 <!-- Button trigger modal***edit*** -->
                                 <a class="btn justify-content-center  d-inline-flex align-items-center rounded-circle fs-5  editborder " data-bs-toggle="modal" data-bs-target="#editModal<?= $product['id']; ?>">
@@ -146,7 +154,7 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
                                                             Enter a valid category name.
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="submit" class="btn use-btn" id="saveCategory">Save</button>
+                                                            <button type="submit" data-bs-target="#editModal<?= $product['id']; ?>" class="btn use-btn" id="saveCategory">Save</button>
                                                             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal<?= $product['id']; ?>">Cancel</button>
                                                         </div>
                                                     </form>
@@ -235,34 +243,65 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
 </script>
 <script>
     <?php foreach ($products as $product) : ?>
+
+        function updateStatusButton(id, status) {
+            var $statusButton = $("#status" + id);
+            var $button = $statusButton.find("a");
+
+            var btnClass = (status === "available") ? "btn-success" : "btn-danger";
+            $button.removeClass("btn-success btn-danger").addClass(btnClass);
+            $button.text(status);
+        }
+
+        function changeStatus(id) {
+            $.ajax({
+                type: "POST",
+                url: "../controllers/status.php",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    updateStatusButton(id, data.trim());
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error: " + error);
+                }
+            });
+        }
+
+        // Call the function to update the status button when the page loads
+        updateStatusButton(<?= $product['id']; ?>, "<?= $product['available']; ?>");
+
         // AJAX form submission for updating product
         $("#editProductForm<?= $product['id']; ?>").submit(function(event) {
             event.preventDefault(); // Prevent default form submission
 
-            var formData = new FormData(this);
+            let formData = new FormData(this);
 
             $.ajax({
                 type: "POST",
-                url: "../controllers/updateProductController.php",
+                url: "../controllers/updateProduct.php",
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    let data = response;
-                    // console.log(response);
+                    console.log(response);
 
+                    let data = response;
+                    console.log(response);
                     if (data.success) {
+                        // console.log(response);
+
                         // Display success message
                         $('#editModal<?= $product['id']; ?>').modal('hide');
                         //  update the table row with new product data
                         let updatedProduct = data.updateProduct[0];
-                        console.log(data.updateProduct[0]);
+                        // console.log(data.updateProduct[0]);
                         // let productId = updatedProduct.id;
                         $("tr#productRow<?= $product['id']; ?> td:eq(0)").text(updatedProduct.name);
                         $("tr#productRow<?= $product['id']; ?> td:eq(1)").text(updatedProduct.price);
                         $("tr#productRow<?= $product['id']; ?> td:eq(2) img").attr("src", "../public/images/" + updatedProduct.image);
-
-                        console.log($("tr#productRow<?= $product['id']; ?> td:eq(2) img").attr("src", "../public/images/" + updatedProduct.image));
+                        // console.log($("tr#productRow<?= $product['id']; ?> td:eq(2) img").attr("src", "../public/images/" + updatedProduct.image));
                     } else {
                         // Display error message
                         alert("Error: " + message);
@@ -275,79 +314,95 @@ $products = $db2->select1("SELECT p.*, c.name AS category_name FROM product p IN
                 }
             });
         });
-        // insert new category
-        // $("#newCtegoryForm<?= $category['id']; ?>").submit(function(event) {
-        //     event.preventDefault(); // Prevent default form submission
 
-        //     var formData = new FormData(this);
+        // Function to handle deletion confirmation
+        function confirmDelete(productId) {
+            // Prevent the default behavior of the anchor element
+            event.preventDefault();
 
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "../controllers/insertCategory.php",
-        //         data: formData,
-        //         processData: false,
-        //         contentType: false,
-        //         success: function(response) {
-        //             let data = response;
-        //             if (data.success) {
-        //                 // Display success message
-        //                 $('#addNewCategory<?= $category['id']; ?>').modal('hide');
-        //                 //  update the table row with new product data
-        //                 let updatedProduct = data.updateProduct;
-        //                 $("tr#productRow<?= $product['id']; ?> td:eq(0)").text(updatedProduct.name);
-        //                 $("tr#productRow<?= $product['id']; ?> td:eq(1)").text(updatedProduct.price);
-        //                 // $("tr#productRow<?= $product['id']; ?> td:eq(3)").text(updatedProduct.available);
-        //                 // $("tr#productRow<?= $product['id']; ?> td:eq(1)").text(updatedProduct.price);
-
-
-    <?php endforeach; ?>
-</script>
-<script>
-    // Function to handle deletion confirmation
-    function confirmDelete(productId) {
-        // Prevent the default behavior of the anchor element
-        event.preventDefault();
-
-        // Send an AJAX request to delete.php with the provided user ID
-        fetch("../controllers/deleteProduct.php?id=" + productId, {
-                method: 'GET',
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Check if deletion was successful
-                if (data.success) {
-                    // If successful, hide the modal
-                    $('#deleteModal' + productId).modal('hide');
-                    // Optionally, you can remove the deleted user from the page immediately
-                    $('#productRow' + productId).remove();
-                } else {
-                    // If deletion failed, display an error message
-                    alert(data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
+            // Send an AJAX request to delete.php with the provided user ID
+            fetch("../controllers/deleteProduct.php?id=" + productId, {
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Check if deletion was successful
+                    if (data.success) {
+                        // If successful, hide the modal
+                        $('#deleteModal' + productId).modal('hide');
+                        // Optionally, you can remove the deleted user from the page immediately
+                        $('#productRow' + productId).remove();
+                    } else {
+                        // If deletion failed, display an error message
+                        alert(data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+        $(document).ready(function() {
+            $(".delete ").click(function(event) {
+                // Extract user ID from the data attribute
+                let productId = $(this).data("product-id");
+                console.log(productId);
+                // Call confirmDelete function
+                confirmDelete(productId);
             });
-    }
-    $(document).ready(function() {
-        $(".delete ").click(function(event) {
-            // Extract user ID from the data attribute
-            var productId = $(this).data("product-id");
-            console.log(productId);
-            // Call confirmDelete function
-            confirmDelete(productId);
         });
-    });
-</script>
-<script>
+    <?php endforeach; ?>
+    // check sve category input
     document.getElementById('saveCategory').addEventListener('click', function() {
         const categoryNameInput = document.getElementById('newCategoryName');
         const categoryName = categoryNameInput.value.trim();
 
         if (!/^[A-Za-z][A-Za-z\s]*$/.test(categoryName)) {
             categoryNameInput.classList.add('is-invalid');
+            return;
         } else {
             categoryNameInput.classList.remove('is-invalid');
         }
+    });
+    // Function to handle insert new category
+    $("#newCtegoryForm<?= $category['id']; ?>").submit(function(event) {
+        event.preventDefault(); // Prevent default form submission
+        event.stopPropagation();
+        let formData = new FormData(this);
+
+        $.ajax({
+            type: "POST",
+            url: "../controllers/insertCategory.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                let data = JSON.parse(response);
+                // console.log(data);
+                if (data.success) {
+                    // Display success message
+                    $('#addNewCategory<?= $category['id']; ?>').modal('hide');
+                    $('#editModal<?= $product['id']; ?>').modal('show');
+                    //  update the table row with new product data
+                    let insrtedCategory = data.insertedCategory[0];
+                    console.log(insrtedCategory.id);
+                    // Create a new option element
+                    let newOption = $('<option></option>').attr('value', insrtedCategory.id).text(insrtedCategory.name);
+                    // Append the new option to the select dropdown
+                    $('#productCategory').append(newOption);
+                    console.log(newOption);
+                    // select the newly added option
+                    // newOption.prop('selected', true);
+
+                } else {
+                    // Display error message
+                    alert("Error: " + data.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle AJAX errors
+                console.error(xhr.responseText);
+                alert("AJAX Error: " + error);
+            }
+        });
     });
 </script>

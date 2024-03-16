@@ -8,7 +8,7 @@ $db = new DB();
 $db2 = new UsersandProducts();
 $adminId = 1;
 // Fetch all users with room information from the 'user' and 'room' tables using a join
-$allUsers = $db2->select("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.room_id = r.id WHERE u.id != $adminId");
+$allUsers = $db2->select("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.room_id = r.id WHERE u.id != $adminId", []);
 
 // Pagination
 $rows_per_page = 3;
