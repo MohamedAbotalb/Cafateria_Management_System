@@ -2,7 +2,7 @@
 require_once "../models/db.php";
 session_start();
 
-class UserHandler {
+class UserController {
     private $db;
 
     public function __construct() {
@@ -66,12 +66,12 @@ class UserHandler {
             $_SESSION['success'] = "User added successfully!";
             header("Location: ../views/adminUsers.php");
         } catch (Exception $e) {
-            $_SESSION['errors'] = ["general" => "Error adding user: " . $e->getMessage()];
+            $_SESSION['errors'] = ["general" => $e->getMessage()];
             header("Location: ../views/addUser.php");
         }
     }
 }
 
-$userHandler = new UserHandler();
-$userHandler->addUser($_POST['name'], $_POST['email'], $_POST['password'], $_POST['roomNum'], $_POST['ext'], $_FILES['profilePicture']);
+$userController = new UserController();
+$userController->addUser($_POST['name'], $_POST['email'], $_POST['password'], $_POST['roomNum'], $_POST['ext'], $_FILES['profilePicture']);
 ?>
