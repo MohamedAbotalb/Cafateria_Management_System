@@ -27,8 +27,15 @@ $products = $db2->select("SELECT* from product LIMIT $start, $rows_per_page");
 // echo "Pages: $pages<br>";
 // echo "Start: $start<br>";
 // var_dump($products);
+$successMessage = isset($_SESSION['success']) ? $_SESSION['success'] : '';
+unset($_SESSION['success']);
 
 ?>
+<?php if ($successMessage) : ?>
+  <div class="fs-5 alert alert-success rounded text-center p-2 mb-4" role="alert">
+    <?= htmlspecialchars($successMessage) ?>
+  </div>
+<?php endif; ?>
 
 <div class="container">
   <div class="row">
@@ -295,7 +302,7 @@ $products = $db2->select("SELECT* from product LIMIT $start, $rows_per_page");
         processData: false,
         contentType: false,
         success: function(response) {
-          // console.log(response);
+          console.log(response);
           let data = response;
           // console.log(response);
           if (data.success) {
@@ -312,7 +319,7 @@ $products = $db2->select("SELECT* from product LIMIT $start, $rows_per_page");
             // console.log($("tr#productRow<?= $product['id']; ?> td:eq(2) img").attr("src", "../public/images/" + updatedProduct.image));
           } else {
             // Display error message
-            alert("Error: " + message);
+            alert("Error: " + data.message);
           }
         },
         error: function(xhr, status, error) {
@@ -376,8 +383,9 @@ $products = $db2->select("SELECT* from product LIMIT $start, $rows_per_page");
       processData: false,
       contentType: false,
       success: function(response) {
-        let data = JSON.parse(response);
-        // console.log(data);
+        console.log(response);
+
+        let data = response;
         if (data.success) {
           // Display success message
           $('#addNewCategory<?= $category['id']; ?>').modal('hide');

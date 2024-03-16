@@ -1,52 +1,77 @@
+
 <?php
 
-// Include the database connection file
 require_once "../models/db.php";
 
-// Check if the form is submitted via POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //delete this check*****
-    // Get the form data
-    $newCategoryName = trim($_POST["newCategoryName"]);
+class CategoryManager
+{
+    private $db;
 
-    // Validate the new category name
-    if (empty($newCategoryName)) {
-        // If the category name is empty, return an error message
-        echo json_encode(['success' => false, 'message' => 'Category name cannot be empty']);
-        exit();
-    }
-    // Check if the category name contains any numeric characters
-    if (preg_match('/[0-9]/', $newCategoryName)) {
-        // If the category name contains numeric characters, return an error message
-        echo json_encode(['success' => false, 'message' => 'Category name cannot contain numbers']);
-        exit();
-    }
-    $db = new DB();
-
-    // Check if the category already exists
-    $existingCategory = $db->select("category ", ["name"], [$newCategoryName]);
-
-    // If the category already exists, return an error message
-    if ($existingCategory) {
-        echo json_encode(['success' => false, 'message' => 'Category already exists']);
-        exit();
+    public function __construct()
+    {
+        $this->db = new DB();
     }
 
-    // Insert the new category into the database
-    $db->insert("category", ["name" => $newCategoryName]);
-    $insertedCategory = $db->select("category ", ["name"], [$newCategoryName]);
-    // Prepare the response
-    $response = [
-        'success' => true,
-        'message' => 'Category added successfully',
-        'insertedCategory' => $insertedCategory
-    ];
+    public function addCategory($categoryName)
+    {
+        // Validate the category name
+        $this->validateCategoryName($categoryName);
 
-    // Return the response in JSON format
-    echo json_encode($response);
-    exit();
+        // Check if the category already exists
+        if ($this->categoryExists($categoryName)) {
+            return ['success' => false, 'message' => 'Category already exists'];
+        }
+
+        // Insert the new category into the database
+        $this->db->insert("category", ["name" => $categoryName]);
+        $insertedCategory = $this->db->select("category", ["name"], [$categoryName]);
+
+        return [
+            'success' => true,
+            'message' => 'Category added successfully',
+            'insertedCategory' => $insertedCategory
+        ];
+    }
+
+    private function validateCategoryName($categoryName)
+    {
+        // Validate the new category name
+        $categoryName = trim($categoryName);
+        if (empty($categoryName)) {
+            throw new Exception('Category name cannot be empty');
+        }
+        // Check if the category name contains any numeric characters
+        if (preg_match('/[0-9]/', $categoryName)) {
+            throw new Exception('Category name cannot contain numbers');
+        }
+    }
+
+    private function categoryExists($categoryName)
+    {
+        $existingCategory = $this->db->select("category", ["name"], [$categoryName]);
+        return $existingCategory ? true : false;
+    }
+
+    public function processRequest()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            try {
+                $newCategoryName = $_POST["newCategoryName"];
+
+                $response = $this->addCategory($newCategoryName);
+            } catch (Exception $e) {
+                $response = ['success' => false, 'message' => $e->getMessage()];
+            }
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            exit();
+        }
+
+        echo json_encode(['success' => false, 'message' => 'Invalid request']);
+        exit();
+    }
 }
 
-//  it's not a POST request or there was an error during processing
-echo json_encode(['success' => false, 'message' => 'Invalid request']);
-exit();
+$categoryManager = new CategoryManager();
+$categoryManager->processRequest();

@@ -2,6 +2,8 @@
 
 require_once "../models/db.php";
 require_once "../models/allProducts&usersModel.php";
+// session_start();
+
 function validateImage($file)
 {
     $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];

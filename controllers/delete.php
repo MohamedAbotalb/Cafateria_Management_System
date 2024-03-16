@@ -1,54 +1,75 @@
 <?php
-// Include your DB class
+
 require_once "../models/db.php";
-// Check if the request method is POST
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Check if the product ID is provided
-    if (isset($_GET["id"])) {
-        // Get the product ID to be deleted
-        $userIdToDelete = $_GET["id"];
 
-        // Instantiate the DB class
-        $db = new DB();
+class UserDeleter
+{
+    private $db;
 
-        try {
-            // Delete the product from the database
-            $db->delete("user", ["id"], [$userIdToDelete]);
+    public function __construct()
+    {
+        $this->db = new DB();
+    }
 
-            // Prepare JSON response
-            $response = [
-                'success' => true,
-                'message' => 'Product deleted successfully',
-                'userId' => $userIdToDelete // Return the ID of the deleted product
-            ];
+    public function deleteUser($userId)
+    {
+        // Delete the user from the database
+        $this->db->delete("user", ["id"], [$userId]);
+    }
 
-            // Return the success flag and deleted product ID in JSON format
-            echo json_encode($response);
-            exit(); // No need to redirect or output anything else
-        } catch (Exception $e) {
-            // Handle any exceptions
+    public function processRequest()
+    {
+        // Check if the request method is GET
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            // Check if the user ID is provided
+            if (isset($_GET["id"])) {
+                // Get the user ID to be deleted
+                $userIdToDelete = $_GET["id"];
+
+                try {
+                    // Delete the user
+                    $this->deleteUser($userIdToDelete);
+
+                    // Prepare JSON response
+                    $response = [
+                        'success' => true,
+                        'message' => 'User deleted successfully',
+                        'userId' => $userIdToDelete // Return the ID of the deleted user
+                    ];
+
+                    // Return the success flag and deleted user ID in JSON format
+                    echo json_encode($response);
+                    exit(); // No need to redirect or output anything else
+                } catch (Exception $e) {
+                    // Handle any exceptions
+                    $response = [
+                        'success' => false,
+                        'error' => $e->getMessage()
+                    ];
+                    echo json_encode($response);
+                    exit();
+                }
+            } else {
+                // If the user ID is not provided, return an error response
+                $response = [
+                    'success' => false,
+                    'error' => 'User ID not provided'
+                ];
+                echo json_encode($response);
+                exit();
+            }
+        } else {
+            // If the request method is not GET, return an error response
             $response = [
                 'success' => false,
-                'error' => $e->getMessage()
+                'error' => 'Invalid request method'
             ];
             echo json_encode($response);
             exit();
         }
-    } else {
-        // If the product ID is not provided, return an error response
-        $response = [
-            'success' => false,
-            'error' => 'User ID not provided'
-        ];
-        echo json_encode($response);
-        exit();
     }
-} else {
-    // If the request method is not POST, return an error response
-    $response = [
-        'success' => false,
-        'error' => 'Invalid request method'
-    ];
-    echo json_encode($response);
-    exit();
 }
+
+// Instantiate the UserDeleter class and process the request
+$userDeleter = new UserDeleter();
+$userDeleter->processRequest();
