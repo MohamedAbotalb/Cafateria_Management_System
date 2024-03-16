@@ -181,6 +181,8 @@ $users = $db2->select("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.room
       </div>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <!--  handle deletion and update page -->
   <script>
     // Function to handle deletion confirmation

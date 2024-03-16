@@ -5,10 +5,22 @@ require_once "../models/db.php";
 
 // Check if the form is submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //delete this check*****
     // Get the form data
-    $newCategoryName = $_POST["newCategoryName"];
+    $newCategoryName = trim($_POST["newCategoryName"]);
 
-    // Instantiate the DB class
+    // Validate the new category name
+    if (empty($newCategoryName)) {
+        // If the category name is empty, return an error message
+        echo json_encode(['success' => false, 'message' => 'Category name cannot be empty']);
+        exit();
+    }
+    // Check if the category name contains any numeric characters
+    if (preg_match('/[0-9]/', $newCategoryName)) {
+        // If the category name contains numeric characters, return an error message
+        echo json_encode(['success' => false, 'message' => 'Category name cannot contain numbers']);
+        exit();
+    }
     $db = new DB();
 
     // Check if the category already exists
@@ -32,9 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Return the response in JSON format
     echo json_encode($response);
-    exit(); // Terminate the script after sending the response
+    exit();
 }
 
-// If the script reaches this point, it means it's not a POST request or there was an error during processing
+//  it's not a POST request or there was an error during processing
 echo json_encode(['success' => false, 'message' => 'Invalid request']);
 exit();
