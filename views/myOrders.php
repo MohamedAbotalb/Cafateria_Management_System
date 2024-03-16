@@ -185,20 +185,10 @@ foreach ($data as $row) {
   <!-- End Table -->
 
 <script>
- $(function () {
-    $('#datepickerOne').datepicker({
-      format: 'yyyy-mm-dd',
-      autoclose: true
-    });
 
-  });
-  $(function () {
-    $('#datepickerTwo').datepicker({
-      format: 'yyyy-mm-dd',
-      autoclose: true
-    });
+initializeDatepicker('#datepickerOne');
+initializeDatepicker('#datepickerTwo');
 
-  });
     const startDate = document.getElementById("dateFrom");
   const endDate = document.getElementById("dateTo");
   const divStartDate = document.getElementById("errorDateFrom");
@@ -246,4 +236,12 @@ function messageError(place,message){
       messageTag.style.cssText = "color:red";
       place.appendChild(messageTag);
  } 
+ function initializeDatepicker(datepickerId) {
+  $(function () {
+    $(datepickerId).datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    });
+  });
+}
   </script>
