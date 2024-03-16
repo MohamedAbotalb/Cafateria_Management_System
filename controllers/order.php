@@ -54,7 +54,7 @@ class OrderController
         return isset ($_POST['userID']) ? $_POST['userID'] : $_SESSION['user']['id'];
     }
 
-    public function deleteOrder($orderId)
+    public function cancelOrder($orderId)
     {
         $this->db->delete('orders', ['id'], [$orderId]);
         header("Location:../views/myOrders.php");
@@ -118,5 +118,8 @@ if (isset ($_POST["sourcePage"])) {
     header('Location:../views/manualOrders.php');
 
 }
+
+
+
 
 ?>
