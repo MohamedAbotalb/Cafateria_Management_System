@@ -1,11 +1,11 @@
 <?php
 require_once "templates/adminNav.php";
-require_once "../controllers/currentOrdersController.php";
+require_once "../controllers/orderController.php";
 
-$currentOrders = new CurrentOrdersController();
+$orderController = new OrderController();
 
 // Get all current orders
-$orders = $currentOrders->getCurrentOrders();
+$orders = $orderController->getCurrentOrders();
 
 ?>
 
@@ -27,12 +27,12 @@ $orders = $currentOrders->getCurrentOrders();
           </thead>
           <tbody>
             <tr>
-              <td class="align-middle"> <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?> </td>
-              <td class="align-middle"> <?php echo $order['username'] ?> </td>
-              <td class="align-middle"> <?php echo $order['room_num'] ?> </td>
-              <td class="align-middle"> <?php echo $order['ext'] ?> </td>
-              <td >
-                <button type="button" class="btn button fs-5 mx-auto" data-bs-toggle="modal" data-bs-target="#confirmModal_<?php echo $order['order_id'] ?>">Deliver</button>
+              <td class="align-middle"> <?= date("Y/m/d g:i A", strtotime($order['order_date']))  ?> </td>
+              <td class="align-middle"> <?= $order['username'] ?> </td>
+              <td class="align-middle"> <?= $order['room_num'] ?> </td>
+              <td class="align-middle"> <?= $order['ext'] ?> </td>
+              <td>
+                <button type="button" class="btn button fs-5 mx-auto" data-bs-toggle="modal" data-bs-target="#confirmModal_<?= $order['order_id'] ?>">Deliver</button>
               </td>
             </tr>
             <tr>
@@ -42,20 +42,20 @@ $orders = $currentOrders->getCurrentOrders();
                   <?php foreach ($products as $product) : ?>
                     <div class="col mt-4">
                       <div class="w-75 mx-sm-auto position-relative text-center">
-                        <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
+                        <img src="../public/images/<?= $product['image'] ?>" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
                         <div class="product-price">
-                          <span class="d-flex justify-content-center align-items-center h-100"><?php echo $product['price'] ?>LE</span>
+                          <span class="d-flex justify-content-center align-items-center h-100"><?= $product['price'] ?>LE</span>
                         </div>
                         <div class="my-4">
-                          <p class="product-name"><?php echo $product['name'] ?></p>
-                          <p class="product-quantity"><?php echo $product['quantity'] ?></p>
+                          <p class="product-name"><?= $product['name'] ?></p>
+                          <p class="product-quantity"><?= $product['quantity'] ?></p>
                         </div>
                       </div>
                     </div>
                   <?php endforeach; ?>
                 </div>
                 <div class="total-price mt-4 fs-2 d-flex flex-row-reverse px-5">
-                  <p>Total: EGP <span><?php echo (int)$order['total_price'] ?></span></p>
+                  <p>Total: EGP <span><?= (int)$order['total_price'] ?></span></p>
                 </div>
               </td>
             </tr>
@@ -63,7 +63,7 @@ $orders = $currentOrders->getCurrentOrders();
         </table>
 
         <!-- Modal for each order -->
-        <div class="modal fade text-capitalize" id="confirmModal_<?php echo $order['order_id'] ?>" data-bs-backdrop="static" aria-hidden="true">
+        <div class="modal fade text-capitalize" id="confirmModal_<?= $order['order_id'] ?>" data-bs-backdrop="static" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -74,7 +74,7 @@ $orders = $currentOrders->getCurrentOrders();
                 <p class="fs-5">Confirm order delivery</p>
               </div>
               <div class="modal-footer">
-                <a class="btn button text-decoration-none" href="../controllers/deliverOrder.php?id=<?php echo $order['order_id'] ?>">yes</a>
+                <a class="btn button text-decoration-none" href="../controllers/orderController.php?id=<?= $order['order_id'] ?>&action=deliver">yes</a>
                 <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal">No</button>
               </div>
             </div>

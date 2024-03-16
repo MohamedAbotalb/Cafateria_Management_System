@@ -52,6 +52,31 @@ function addError(&$errors, $key, $message)
 {
     $errors[$key] = $message;
 }
+// Function to handle file upload
+function handleFileUpload($file)
+{
+    if ($file['error'] === UPLOAD_ERR_OK) {
+        // Validate the uploaded image
+        if (!validateImage($file)) {
+            // Handle image validation error
+            throw new Exception('Only PNG, JPEG, and JPG files with size less than 2 MB are allowed.');
+        }
+        $tempFile = $file['tmp_name'];
+        $targetPath = '../public/images/';
+        $newFileName = uniqid() . '_' . $file['name'];
+        // Generate unique file name to avoid conflicts 
+        $targetFile = $targetPath . $newFileName;
+        if (move_uploaded_file($tempFile, $targetFile)) {
+            // File uploaded successfully, return the new file name
+            return $newFileName;
+        } else { // File upload failed, handle error accordingly 
+            throw new Exception('File upload failed');
+        }
+    } else {
+        // No file uploaded or upload error occurred
+        return null;
+    }
+}
 
 // Check if the form is submitted via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -81,10 +106,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Check if the room assigned to the user already has the given extension
-        $roomWithExtExists = $db2->exists("room", ["id" => $roomNum, "ext" => $ext]);
-        if (!$roomWithExtExists) {
-            addError($errors, 'room&ex', 'The room assigned to the user doesn\'t have the provided extension.');
-        }
+        // $roomWithExtExists = $db2->exists("room", ["id" => $roomNum, "ext" => $ext]);
+        // if (!$roomWithExtExists) {
+        //     addError($errors, 'room&ex', 'The room assigned to the user doesn\'t have the provided extension.');
+        // }
 
         // Check if the email already exists in the database
         $currentUserEmail = $db2->select(
@@ -104,22 +129,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-
-
-        // Check if a file is uploaded
-        if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] === UPLOAD_ERR_OK) {
-
-            // File upload is successful and within the allowed size and format
-            if (!validateImage($_FILES['profilePicture'])) {
-                addError($errors, 'imgType', 'Only PNG, JPEG, and JPG file formats are allowed.');
-            }
-
-            // Check file size (in bytes)
-            $fileSize = $_FILES['profilePicture']['size'];
-            if ($fileSize > 6 * 1024 * 1024) { // 6 MB (6 * 1024 * 1024 bytes)
-                addError($errors, 'imgSize', 'The uploaded file exceeds the maximum file size limit of 6 MB.');
-            }
-        }
+        // Handle file upload 
+        $uploadedFileName = handleFileUpload($_FILES['profilePicture']);
 
         // If there are errors, throw an exception with the errors array
         if (!empty($errors)) {
@@ -134,6 +145,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateData["name"] = $name;
         $updateData["email"] = $email;
         $updateData["room_id"] = $roomNum;
+        // If file uploaded successfully, update the database record with the new image file name
+        if ($uploadedFileName !== null) {
+            $updateData['image'] = $uploadedFileName;
+        }
         $db->update("user", ["id" => $userId], $updateData);
 
         // Update the extension in the room table

@@ -1,14 +1,10 @@
 <?php
     require_once "templates/adminNav.php";
     require_once "../models/checksValidation.php";
-    require_once "../models/myOrdersModel.php";
-    require_once "../controllers/myOrdersController.php";
-    require_once "../models/currentOrders.php";
-    require_once "../controllers/currentOrdersController.php";
-    $currentOrders = new CurrentOrdersController();
+    // $checks = new CurrentOrdersController();
 
-    // Get all current orders
-    $orders = $currentOrders->getCurrentOrders();
+    // Get all 
+    // $orders = $checks->getChecksOrders();
 
     $getStartDate = isset($_GET['startDate']) ? $_GET['startDate'] : '';
     $getEndDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
@@ -36,6 +32,9 @@
       background-color:#da9f5b;
       margin:0px 10px;
 
+    }
+    a{
+      text-decoration:none;
     }
     .data{
         box-shadow:10px 10px 10px #afacac;
@@ -89,89 +88,139 @@
           </div>
       </div>
     </form>
-    
+    <!-- Display list of users and their total amounts -->
+<h2 class="text-center">List of Users and Total Amounts</h2>
+<div class="container">
+    <table class="table text-center">
+        <thead>
+            <th>Name</th>
+            <th>Total Amount</th>
+        </thead>
+        <tbody>
+        <?php foreach ($users as $user) : ?>
+            <tr>
+                <td><a href="?user_id=<?php echo $user['id']; ?>&startDate=<?php echo $getStartDate; ?>&endDate=<?php echo $getEndDate; ?>">
+                    <span>+ </span><?php echo $user['name']; ?>
+                </a></td>
+                <td><?php echo $user['total_amount']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+
+<?php if (isset($_GET['user_id'])) : ?>
+    <!-- Display order details for the selected user -->
+    <h2 class="text-center">Order Details</h2>
+    <div class="container mx-4">
+        <table class="table text-center">
+            <thead>
+                <th>Order Date</th>
+                <th>Amount</th>
+            </thead>
+            <tbody>
+            <?php foreach ($orders as $order) : ?>
+                <tr>
+                    <td><a href="?user_id=<?php echo $user['id']; ?>&startDate=<?php echo $getStartDate; ?>&endDate=<?php echo $getEndDate; ?>">
+                        <span>+ </span><?php echo $order['order_date']; ?>
+                    </a></td>
+                    <td><?php echo $order['total_price']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php endif; ?>
+    <?php if (!empty($users)): ?> 
     <table class="table text-center table-dark table-striped mt-5">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Total Amount</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($users as $user): ?>
-        <tr>
-            <th scope="row">
-                <button class="btn btn-dark btn-xs accordion-toggle" data-target="#demo-<?php echo $user['id']; ?>" data-toggle="collapse">+</button>
-                <?php echo $user['name']; ?>
-            </th>
-            <td>
-                <?php echo $user['total_amount']; ?>
-            </td>
-        </tr>
-        <tr>
-        <td colspan="2">
-        <?php //var_dump($orders); ?> 
-        <?php if (isset($_GET['user_id'])) : ?>
-        <?php if (count($orders) > 0) : ?>
-          <?php foreach ($orders as $order) : ?>
-            <div id="demo-<?php echo $user['id']; ?>" class="accordion-body collapse mx-3 user-accordion">
-              <table class="table table-striped table-warning text-center m-auto">
-                <thead>
+      <thead>
+          <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Total Amount</th>
+          </tr>
+      </thead>
+      <tbody>
+      <?php foreach ($users as $user): ?>
+          <tr>
+              <th scope="row">
+                  <button class="btn btn-dark btn-xs accordion-toggle" data-target="#demo-<?php echo $user['id']; ?>" data-toggle="collapse">+</button>
+                  <a href="?user_id=<?php echo $user['id']; ?>&startDate=<?php echo $getStartDate; ?>&endDate=<?php echo $getEndDate; ?>">
+                    <?php echo $user['name']; ?>
+                  </a>
+              </th>
+              <td>
+                  <?php echo $user['total_amount']; ?>
+              </td>
+          </tr>
+
+          <tr>
+          <td colspan="2">
+          <?php //var_dump($orders); ?> 
+          <?php if (isset($_GET['user_id']) && count($orders) > 0) : ?>
+            <?php foreach ($orders as $order) : ?>
+              <div id="demo-<?php echo $user['id']; ?>" class="accordion-body collapse mx-3 user-accordion">
+                <table class="table table-striped table-warning text-center m-auto">
+                  <thead>
+                      <tr>
+                          <th>Order Date</th>
+                          <th>Amount</th>
+                      </tr>
+                  </thead>
+                  <tbody>
                     <tr>
-                        <th>Order Date</th>
-                        <th>Amount</th>
+                        <td>
+                            <button class="btn btn-dark btn-xs accordion-toggle" data-toggle="collapse" data-target="#demo<?php echo $order['order_id']; ?>">+</button>
+                            <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?> 
+                        </td>
+                        <td><?php echo $order['total_price']; ?></td>
                     </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                      <td>
-                          <button class="btn btn-dark btn-xs accordion-toggle" data-toggle="collapse" data-target="#demo<?php echo $order['order_id']; ?>">+</button>
-                          <?php echo date("Y/m/d g:i A", strtotime($order['order_date']))  ?> 
-                      </td>
-                      <td><?php echo $order['total_price']; ?></td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      <div id="demo<?php echo $order['order_id']; ?>" class="accordion-body collapse mx-3">
-                        <h2 class="text-center">Products</h2>
-                          <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 m-auto">
-                              <?php $products = json_decode($order['products'], true); ?>
-                              <?php foreach ($products as $product) : ?>
-                                <div class="col">
-                                  <div class="w-75 mx-sm-auto position-relative text-center">
-                                    <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
-                                    <div class="product-price">
-                                      <span class="d-flex justify-content-center align-items-center h-100"><?php echo $product['price'] ?> LE</span>
-                                    </div>
-                                    <div class="my-4">
-                                      <p class="product-name"><?php echo $product['name'] ?></p>
-                                      <p class="product-quantity"><?php echo $product['quantity'] ?></p>
+                    <tr>
+                      <td colspan="2">
+                        <div id="demo<?php echo $order['order_id']; ?>" class="accordion-body collapse mx-3">
+                          <h2 class="text-center">Products</h2>
+                            <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 m-auto">
+                                <?php $products = json_decode($order['products'], true); ?>
+                                <?php foreach ($products as $product) : ?>
+                                  <div class="col">
+                                    <div class="w-75 mx-sm-auto position-relative text-center">
+                                      <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
+                                      <div class="product-price">
+                                        <span class="d-flex justify-content-center align-items-center h-100"><?php echo $product['price'] ?> LE</span>
+                                      </div>
+                                      <div class="my-4">
+                                        <p class="product-name"><?php echo $product['name'] ?></p>
+                                        <p class="product-quantity"><?php echo $product['quantity'] ?></p>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              <?php endforeach; ?>
-                            </div>
-                            <div class="total-price mt-4 fs-2 d-flex flex-row-reverse px-5">
-                              <p class="price">Total: EGP <span><?php echo (int)$order['total_price'] ?></span></p>
-                            </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          <?php endforeach; ?>
-          <?php else : ?>
-            <div class="text-center fs-2">
-              <p>There is no current orders</p>
-            </div>
-          <?php endif; ?>
-          <?php endif; ?>
-        </td>
-        </tr>
-    </tbody>
-    <?php endforeach; ?>
-</table>
+                                <?php endforeach; ?>
+                              </div>
+                              <div class="total-price mt-4 fs-2 d-flex flex-row-reverse px-5">
+                                <p class="price">Total: EGP <span><?php echo (int)$order['total_price'] ?></span></p>
+                              </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            <?php endforeach; ?>
+            <?php else : ?>
+              <div class="text-center fs-2">
+                <p>There is no checks orders</p>
+              </div>
+            <?php endif; ?>
+          </td>
+          </tr>
+      </tbody>
+      <?php endforeach; ?>
+    </table>
+    <?php else: ?>
+        <div class="text-center fs-2">
+            <p>No users found</p>
+        </div>
+    <?php endif; ?>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -224,6 +273,19 @@
   const divEndDate = document.getElementById("errorDateTo");
   var messageTag = document.createElement("div");
   
+  selectUser.onchange = function (e) {
+    if (selectUser.value &&  startDate.value=="" && endDate.value=="") {
+        window.location.assign(
+          `http://localhost:8080/Cafateria_Management_System/views/checks.php?user_id=${selectUser.value}`
+        );
+    
+      }else{
+        window.location.assign(
+          `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}&user_id=${selectUser.value}`
+        );
+    }
+  };
+
   startDate.onchange = function (e) {
     if (startDate.value || startDate.value < endDate.value) {
       messageTag.remove();
@@ -249,23 +311,9 @@
         window.location.assign(
         `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}`
       );
+      }
     }
-  }
   };
-  
-  selectUser.onchange = function (e) {
-  if (selectUser.value &&  startDate.value=="" && endDate.value=="") {
-      window.location.assign(
-        `http://localhost:8080/Cafateria_Management_System/views/checks.php?user_id=${selectUser.value}`
-      );
-   
-    }else{
-      window.location.assign(
-        `http://localhost:8080/Cafateria_Management_System/views/checks.php?startDate=${startDate.value}&endDate=${endDate.value}&user_id=${selectUser.value}`
-      );
-  }
-  }
-  
 
   endDate.onchange = function (e) {
     if (endDate.value || startDate.value < endDate.value) {
