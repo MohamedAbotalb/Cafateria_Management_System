@@ -1,14 +1,17 @@
 <?php
 require_once "templates/userNav.php";
-require_once "../controllers/myOrdersController.php";
+require_once "../controllers/order.php";
+
 
 $getStartDate = isset($_GET['startDate']) ? $_GET['startDate'] : '';
 $getEndDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
 
 
-$myOrdersController = new MyOrdersController();
 
-$data = $myOrdersController->getOrdersByUserId($getStartDate,$getEndDate,$_SESSION['user']['id']);
+$OrderController = new OrderController();
+
+
+$data = $OrderController->getOrdersByUserId($getStartDate,$getEndDate,$_SESSION['user']['id']);
 $totalPrice = 0;
 $orders = [];
 
@@ -28,7 +31,7 @@ foreach ($data as $row) {
     ];
   }
 
-  $data = $myOrdersController->getProductsByOrderId($orderId);
+  $data = $OrderController->getProductsByOrderId($orderId);
   array_push($orders[$orderId]['products'], $data);
 }
 
@@ -182,20 +185,10 @@ foreach ($data as $row) {
   <!-- End Table -->
 
 <script>
-    $(function () {
-      $('#datepickerOne').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-      });
 
-    });
-    $(function () {
-      $('#datepickerTwo').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-      });
+initializeDatepicker('#datepickerOne');
+initializeDatepicker('#datepickerTwo');
 
-    });
     const startDate = document.getElementById("dateFrom");
   const endDate = document.getElementById("dateTo");
   const divStartDate = document.getElementById("errorDateFrom");
@@ -207,9 +200,7 @@ foreach ($data as $row) {
       messageTag.remove();
     }
     if (endDate.value == "") {
-      messageTag.textContent = "Please enter End Date";
-      messageTag.style.cssText = "color:red";
-      divEndDate.appendChild(messageTag);
+      messageError(divEndDate,"Please enter End Date");
       return;
     }
     validate(startDate,endDate);
@@ -220,20 +211,18 @@ foreach ($data as $row) {
       messageTag.remove();
     }
     if (startDate.value == "") {
-      messageTag.textContent = "Please enter Start Date";
-      messageTag.style.cssText = "color:red";
-      divStartDate.appendChild(messageTag);
+      messageError(divStartDate,"Please enter Start Date");
+
       return;
     }
     validate(startDate,endDate);
 
   };
 
+
 function validate(startDate,endDate){
   if (startDate.value >= endDate.value) {
-      messageTag.textContent = "Start Date Must Be Smaller Than End Date";
-      messageTag.style.cssText = "color:red";
-      divEndDate.appendChild(messageTag);
+      messageError(divEndDate,"Start Date Must Be Smaller Than End Date");
       return;
     }
     if (startDate.value && endDate.value && startDate.value < endDate.value) {
@@ -242,5 +231,17 @@ function validate(startDate,endDate){
       );
     }
 }
-
+function messageError(place,message){
+  messageTag.textContent = message;
+      messageTag.style.cssText = "color:red";
+      place.appendChild(messageTag);
+ } 
+ function initializeDatepicker(datepickerId) {
+  $(function () {
+    $(datepickerId).datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    });
+  });
+}
   </script>

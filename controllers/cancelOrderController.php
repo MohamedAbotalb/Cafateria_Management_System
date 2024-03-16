@@ -1,11 +1,12 @@
 <?php 
 require_once "../models/db.php";
+require_once "order.php";
+
+$OrderController = new OrderController();
 
 $id=$_GET['id'];
 
-$DB = new DB();
-$DB->delete('orders',['id'] , [$id]);
-header("Location:../views/myOrders.php");
+$OrderController->cancelOrder($id);
 
 
 ?>
