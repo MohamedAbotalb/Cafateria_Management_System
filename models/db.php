@@ -10,15 +10,15 @@ class DB
 
   public function __construct()
   {
-    self::$connection = new PDO("mysql:host=$this->host;dbname=$this->dbname;", $this->user, $this->password);
+    if (!self::$connection) {
+      self::$connection = new PDO("mysql:host=$this->host;dbname=$this->dbname;", $this->user, $this->password);
+    }
+
   }
 
   public function getConnection()
   {
-    if (!self::$connection) {
-       return new self;
-    }
-
+   
     return self::$connection;
   }
 
