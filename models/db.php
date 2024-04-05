@@ -6,16 +6,20 @@ class DB
   private $dbname = 'freedb_cafeteria';
   private $user = 'freedb_cafeteria_admin';
   private $password = 'ke4$FA*d4xgqhG3';
-  private $connection;
+  private static $connection;
 
   public function __construct()
   {
-    $this->connection = new PDO("mysql:host=$this->host;dbname=$this->dbname;", $this->user, $this->password);
+    self::$connection = new PDO("mysql:host=$this->host;dbname=$this->dbname;", $this->user, $this->password);
   }
 
   public function getConnection()
   {
-    return $this->connection;
+    if (!self::$connection) {
+       return new self;
+    }
+
+    return self::$connection;
   }
 
   public function select($tableName, array $conditions = [], array $values = [], $fetchOne = false)
