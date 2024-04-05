@@ -20,10 +20,8 @@ body {
   border-radius: 45px;
   border: solid black 1px;
   color: #33211d;
-  width: 60px;
-  height: 60px;
   top: 0;
-  left: 70%;
+  left: 80%;
 }
 .col-4 {
   position: relative;
