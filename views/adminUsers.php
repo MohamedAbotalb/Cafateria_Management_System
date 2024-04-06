@@ -11,7 +11,7 @@ $adminId = 1;
 $allUsers = $db2->select("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.room_id = r.id WHERE u.id != $adminId", []);
 
 // Pagination
-$rows_per_page = 3;
+$rows_per_page = 6;
 $page = isset($_GET["page-nr"]) ? $_GET["page-nr"] : 1;
 $start = ($page - 1) * $rows_per_page;
 // Fetch total number of rows
