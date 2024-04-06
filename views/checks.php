@@ -87,7 +87,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
       <div class="col-md-6 my-3">
         <select class="form-select mb-3" name="user" id="selectUser">
           <option selected disabled>Select User</option>
-          <?php foreach ($users as $user): ?>
+          <?php foreach ($users as $user) : ?>
             <option value="<?php echo $user['id']; ?>">
               <?php echo $user['name']; ?>
             </option>
@@ -100,7 +100,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
             <?php echo $error; ?>
           </div>
         <?php } ?>
-        <?php if (!empty($message)): ?>
+        <?php if (!empty($message)) : ?>
           <div class="alert alert-danger">
             <?php echo $message; ?>
           </div>
@@ -127,8 +127,8 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
       <?php
       $query = $checks->getUsersWithTotalAmount();
       $result = $db->getConnection()->query($query);
-      $users = $result->fetchAll(PDO::FETCH_ASSOC);
-      foreach ($users as $user) { ?>
+      $users = $result->fetchAll(PDO::FETCH_ASSOC); ?>
+      <?php foreach ($users as $user) : ?>
 
         <div class="accordion-item border-0 p-0 m-0">
           <div class="row">
@@ -137,10 +137,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
                 <?php echo $user['name']; ?>
               </span>
               <span id="heading-<?php echo $user['id'] ?>">
-                <button class="accordion-button collapsed" data-bs-toggle="collapse"
-                  data-bs-target="#collapse-<?php echo $user['id'] ?>" aria-expanded="true"
-                  aria-controls="collapse-<?php echo $user['id'] ?>">
-                </button>
+                <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $user['id'] ?>" aria-expanded="true" aria-controls="collapse-<?php echo $user['id'] ?>"></button>
               </span>
             </div>
 
@@ -151,24 +148,29 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
           </div>
 
         </div>
-        <div id="collapse-<?php echo $user['id'] ?>" class="accordion-collapse collapse row border border-2"
-          aria-labelledby="heading-<?php echo $user['id'] ?>" data-bs-parent="#accordionExample2">
+        <div id="collapse-<?php echo $user['id'] ?>" class="accordion-collapse collapse row border border-2" aria-labelledby="heading-<?php echo $user['id'] ?>" data-bs-parent="#accordionExample2">
 
           <?php
           $query = $checks->getOrdersByUserId($user['id']);
           $result = $db->getConnection()->query($query);
-          $orders = $result->fetchAll(PDO::FETCH_ASSOC);
-          foreach ($orders as $order) { ?>
-            <div class="col mt-4">
+          $orders = $result->fetchAll(PDO::FETCH_ASSOC); ?>
+          <?php foreach ($orders as $order) : ?>
+            <div class="row text-white" style="background-color: #362517; ">
+              <div class="col-6 border border-2 text-center py-2">
+                <h4>Order Date</h4>
+              </div>
+              <div class="col-6 border border-2 text-center py-2">
+                <h4>Amount</h4>
+              </div>
+            </div>
+            <div class="col">
               <div class="row">
                 <div class="col-6 border border-2 pt-3 d-flex justify-content-between">
                   <span>
                     <?php echo $order['order_date']; ?>
                   </span>
                   <span id="heading-<?php echo $order['id'] ?>">
-                    <button class="accordion-button collapsed" data-bs-toggle="collapse"
-                      data-bs-target="#collapse-<?php echo $order['id'] ?>" aria-expanded="true"
-                      aria-controls="collapse-<?php echo $order['id'] ?>">
+                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $order['id'] ?>" aria-expanded="true" aria-controls="collapse-<?php echo $order['id'] ?>">
                     </button>
                   </span>
                 </div>
@@ -176,8 +178,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
                   <?php echo $order['total_price']; ?> EGP
                   <br>
                 </div>
-                <div id="collapse-<?php echo $order['id'] ?>" class="accordion-collapse collapse row border "
-                  aria-labelledby="heading-<?php echo $order['id'] ?>" data-bs-parent="#accordionExample2">
+                <div id="collapse-<?php echo $order['id'] ?>" class="accordion-collapse collapse row border " aria-labelledby="heading-<?php echo $order['id'] ?>" data-bs-parent="#accordionExample2">
                   <div class="row row-cols-sm-2 row-cols-md-5 g-3 fs-5 px-3 text-capitalize">
 
                     <?php
@@ -192,8 +193,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
 
                       <div class="col mt-4">
                         <div class="w-75 mx-sm-auto position-relative text-center">
-                          <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle"
-                            style="width: 140px; height: 140px" alt="product" />
+                          <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
                           <div class="product-price">
                             <span class="d-flex justify-content-center align-items-center h-100">
                               <?php echo $product['price'] ?> LE
@@ -214,9 +214,9 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
                 </div>
               </div>
             </div>
-          <?php } ?>
+          <?php endforeach ?>
         </div>
-      <?php } ?>
+      <?php endforeach ?>
     </div>
 
   </div>
@@ -227,7 +227,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.accordion-toggle').forEach(item => {
       item.addEventListener('click', event => {
         const targetId = item.getAttribute('data-target');
@@ -245,7 +245,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
       });
     });
 
-    document.querySelector('form').addEventListener('submit', function (event) {
+    document.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
 
       var startDate = document.querySelector('#dateFrom').value;
@@ -257,14 +257,14 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
     });
   });
 
-  $(function () {
+  $(function() {
     $('#datepickerOne').datepicker({
       format: 'yyyy-mm-dd',
       autoclose: true
     });
 
   });
-  $(function () {
+  $(function() {
     $('#datepickerTwo').datepicker({
       format: 'yyyy-mm-dd',
       autoclose: true
@@ -277,7 +277,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
   const divEndDate = document.getElementById("errorDateTo");
   var messageTag = document.createElement("div");
 
-  selectUser.onchange = function (e) {
+  selectUser.onchange = function(e) {
     if (selectUser.value && startDate.value == "" && endDate.value == "") {
       window.location.assign(
         `http://localhost:8080/Cafateria_Management_System/views/checks.php?user_id=${selectUser.value}`
@@ -290,7 +290,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
     }
   };
 
-  startDate.onchange = function (e) {
+  startDate.onchange = function(e) {
     if (startDate.value || startDate.value < endDate.value) {
       messageTag.remove();
     }
@@ -319,7 +319,7 @@ $getUserId = isset($_GET['user_id']) ? $_GET['user_id'] : '';
     }
   };
 
-  endDate.onchange = function (e) {
+  endDate.onchange = function(e) {
     if (endDate.value || startDate.value < endDate.value) {
       messageTag.remove();
     }
