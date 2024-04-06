@@ -2,7 +2,7 @@
 require_once "templates/adminNav.php";
 require_once "../models/db.php";
 
-$db = new DB();
+$db = DB::getInstance();
 ?>
 
 <!-- start of search -->

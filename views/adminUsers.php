@@ -4,7 +4,7 @@ require_once "../models/db.php";
 require_once "../models/allProducts&usersModel.php";
 
 // Instantiate the DB class
-$db = new DB();
+$db = DB::getInstance();
 $db2 = new UsersandProducts();
 $adminId = 1;
 // Fetch all users with room information from the 'user' and 'room' tables using a join

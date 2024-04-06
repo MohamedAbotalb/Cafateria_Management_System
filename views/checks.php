@@ -2,8 +2,8 @@
 require_once "templates/adminNav.php";
 require_once "../models/checksValidation.php";
 require_once "../models/db.php";
-$db = new DB();
 
+$db = DB::getInstance();
 
 // $checks = new CurrentOrdersController();
 $checks = new Checks();

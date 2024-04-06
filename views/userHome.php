@@ -3,7 +3,7 @@ require_once "templates/userNav.php";
 require_once "../models/db.php";
 require_once "../models/orderModel.php";
 
-$db = new DB();
+$db = DB::getInstance();
 $orderModel = new OrderModel();
 
 ?>
