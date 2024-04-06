@@ -8,8 +8,8 @@ Cafeteria is an online application created with HTML, CSS, JavaScript, Bootstrap
 
   1. #### Login Page
 
-     - Users have the option to access their accounts by entering their username and password.
-     - In case users forget their password, they can utilize the available functionality to be redirected to a page where they can reset it.
+     - Users have the option to access their accounts by entering their email and password.
+     - In case users forget their password, they have the option to use the provided feature to be directed to a page prompting them to enter their email address. Once entered and it was registered in the database, a 6-digit key will be sent to their email for them to input and reset their password.
 
   2. #### Home Page
 
