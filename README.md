@@ -52,7 +52,7 @@ Cafeteria is an online application created with HTML, CSS, JavaScript, Bootstrap
 
   6. #### Orders
 
-  - Admins have the ability to review their existing orders that are awaiting processing.
+     - Admins have the ability to review their existing orders that are awaiting processing.
 
 ## Installation
 
