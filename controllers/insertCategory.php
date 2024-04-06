@@ -9,7 +9,7 @@ class CategoryManager
 
     public function __construct()
     {
-        $this->db = new DB();
+        $this->db = DB::getInstance();
     }
 
     public function addCategory($categoryName)
