@@ -30,7 +30,7 @@ unset($_SESSION['errors']);
           <label for="inputPassword" class="col-form-label">Password</label>
           <div class="input-group">
             <input type="password" name="password" id="inputPassword" class="form-control p-2" pattern="\S{6,}" aria-describedby="passwordHelpInline" required>
-            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+            <button class="btn btn-outline-light" type="button" id="togglePassword">
               <i class="fa fa-eye-slash"></i>
             </button>
             <div class="invalid-feedback">Please enter a valid password</div>
@@ -42,7 +42,7 @@ unset($_SESSION['errors']);
       <?php endif; ?>
       <div class="row m-auto text-center">
         <button type="submit" name="login" class="btn btn-primary mb-4 w-25 m-auto">Log In</button>
-        <a href="forgetPassword.php" class="link-primary">Forgot Password?</a>
+        <a href="forgetPassword.php" class="link-primary mb-4">Forgot Password?</a>
       </div>
     </form>
   </div>

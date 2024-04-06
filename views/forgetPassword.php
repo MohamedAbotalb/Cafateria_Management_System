@@ -29,7 +29,7 @@ unset($_SESSION['errors']);
       <?php endif; ?>
       <div class="row m-auto text-center">
         <button type="submit" name="forget" class="btn btn-primary mb-4 w-25 m-auto">Send</button>
-        <a href="login.php" class="link-primary">Return to login</a>
+        <a href="login.php" class="link-primary mb-4">Return to login</a>
       </div>
     </form>
   </div>

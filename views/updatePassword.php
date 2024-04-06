@@ -22,7 +22,7 @@ require_once "templates/head.php";
         <label for="confirmPassword" class="col-form-label">Confirm New Password</label>
         <div class="input-group">
           <input type="password" id="confirmPassword" class="form-control p-2" aria-describedby="passwordHelpInline" required>
-          <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+          <button class="btn btn-outline-light" type="button" id="toggleConfirmPassword">
             <i class="fa fa-eye-slash"></i>
           </button>
           <div class="invalid-feedback">Passwords do not match.</div>
