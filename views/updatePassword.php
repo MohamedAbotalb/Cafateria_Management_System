@@ -11,7 +11,7 @@ require_once "templates/head.php";
           <label for="inputPassword" class="col-form-label">Enter New Password</label>
           <div class="input-group">
             <input type="password" name="updatePassword" id="inputPassword" class="form-control p-2" pattern="\S{6,}" aria-describedby="passwordHelpInline" pattern=".{6,}" title="Password must contain at least 3 characters" required>
-            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+            <button class="btn btn-outline-light" type="button" id="togglePassword">
               <i class="fa fa-eye-slash"></i>
             </button>
             <div class="invalid-feedback">Please enter a valid password with at least 6 characters.</div>
