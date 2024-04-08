@@ -2,23 +2,28 @@
 require_once "../models/db.php";
 session_start();
 
-class UserController {
+class UserController
+{
     private $db;
 
-    public function __construct() {
-        $this->db = new DB();
+    public function __construct()
+    {
+        $this->db = DB::getInstance();
     }
 
-    public function validateEmail($email) {
+    public function validateEmail($email)
+    {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
-    public function isEmailUnique($email) {
+    public function isEmailUnique($email)
+    {
         $result = $this->db->select('user', ['email'], [$email], true);
         return !$result;
     }
 
-    public function validateImage($file) {
+    public function validateImage($file)
+    {
         $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         if (!in_array($file['type'], $allowedTypes) || $file['size'] > 2 * 1024 * 1024) {
             return false;
@@ -26,7 +31,8 @@ class UserController {
         return true;
     }
 
-    public function addUser($name, $email, $password, $roomNum, $ext, $profilePicture) {
+    public function addUser($name, $email, $password, $roomNum, $ext, $profilePicture)
+    {
         try {
             if (!$this->validateEmail($email)) {
                 throw new Exception("Invalid email format.");
@@ -37,16 +43,16 @@ class UserController {
             }
 
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            
+
             $this->db->insert('room', ['id' => $roomNum, 'ext' => $ext]);
 
             $fileName = $defaultImagePath = "../public/images/user1.png";
-            
+
             if ($profilePicture['error'] !== UPLOAD_ERR_NO_FILE) {
                 if (!$this->validateImage($profilePicture)) {
                     throw new Exception("Invalid image file.");
                 }
-                
+
                 $targetDir = "../public/images/";
                 $fileName = uniqid() . '_' . basename($profilePicture['name']);
                 $targetPath = $targetDir . $fileName;
@@ -74,4 +80,3 @@ class UserController {
 
 $userController = new UserController();
 $userController->addUser($_POST['name'], $_POST['email'], $_POST['password'], $_POST['roomNum'], $_POST['ext'], $_FILES['profilePicture']);
-?>

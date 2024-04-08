@@ -1,14 +1,17 @@
 <?php
 require_once "../models/db.php";
 
-class CategoryController {
+class CategoryController
+{
     private $db;
 
-    public function __construct() {
-        $this->db = new DB();
+    public function __construct()
+    {
+        $this->db = DB::getInstance();
     }
 
-    public function addCategory($categoryName) {
+    public function addCategory($categoryName)
+    {
         $categoryName = trim($categoryName);
         $existingCategory = $this->db->select("category", ["name"], [$categoryName], true);
         if ($existingCategory) {
@@ -22,4 +25,3 @@ class CategoryController {
 
 $categoryController = new CategoryController();
 echo $categoryController->addCategory($_POST["categoryName"]);
-?>

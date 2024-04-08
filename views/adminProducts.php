@@ -4,7 +4,7 @@ require_once "../models/db.php";
 require_once "../models/allProducts&usersModel.php";
 
 // Instantiate the DB class
-$db = new DB();
+$db = DB::getInstance();
 $db2 = new UsersandProducts();
 // Fetch all products ()
 $allProducts = $db2->select("SELECT* from product");

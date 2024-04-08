@@ -43,8 +43,8 @@ $orders = $orderController->getCurrentOrders();
                     <div class="col mt-4">
                       <div class="w-75 mx-sm-auto position-relative text-center">
                         <img src="../public/images/<?= $product['image'] ?>" class="product-image rounded-circle " style="width: 140px; height: 140px;" alt="product">
-                        <div class="product-price">
-                          <span class="d-flex justify-content-center align-items-center h-100"><?= $product['price'] ?>LE</span>
+                        <div class="product-price" style='width: 50px; height: 50px; left: 70%'>
+                          <span class="d-flex justify-content-center align-items-center h-100 fw-bold" style='font-size: 1rem;'><?= $product['price'] ?>LE</span>
                         </div>
                         <div class="my-4">
                           <p class="product-name"><?= $product['name'] ?></p>

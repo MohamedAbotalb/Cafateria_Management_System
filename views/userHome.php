@@ -3,7 +3,7 @@ require_once "templates/userNav.php";
 require_once "../models/db.php";
 require_once "../models/orderModel.php";
 
-$db = new DB();
+$db = DB::getInstance();
 $orderModel = new OrderModel();
 
 ?>
@@ -105,7 +105,7 @@ $orderModel = new OrderModel();
           foreach ($products as $product) {
             echo "<div class='card m-3 product' style='width: 9rem'>
                 <img src='../public/images/{$product['image']}' class='card-img-top' alt='...' />
-                <h5 class='menu-price'><span class='productPrice'>{$product['price']}</span>LE</h5>
+                <h6 class='menu-price' style='width: 50px; height: 50px; left: 80%'><span class='productPrice '>{$product['price']}</span>LE</h6>
                 <div class='card-body'>
                     <p class='card-text'>
                     {$product['name']}
@@ -148,7 +148,7 @@ $orderModel = new OrderModel();
           card.innerHTML += `
         <div class='card m-3 product' style='width: 9rem'>
           <img src='../public/images/${product.image}' class='card-img-top' alt='...' />
-          <h5 class='menu-price'>$<span class='productPrice'>${product.price}</span></h5>
+          <h6 class='menu-price' style='width: 50px; height: 50px; left: 80%'><span class='productPrice '>${product.price}</span>LE</h6>
           <div class='card-body'>
             <p class='card-text'>
               ${product.name}

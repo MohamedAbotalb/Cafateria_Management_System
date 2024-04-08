@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $categoryId = validateData($_POST["productCategory"]);
 
         // Instantiate the DB class 
-        $db = new DB();
+        $db = DB::getInstance();
         $db2 = new UsersandProducts();
         // Handle file upload 
         $uploadedFileName = handleFileUpload($_FILES['productImage']);

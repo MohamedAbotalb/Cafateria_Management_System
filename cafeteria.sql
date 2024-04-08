@@ -32,6 +32,15 @@ CREATE TABLE `category` (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`) VALUES
+(1, 'Cold'),
+(2, 'Fruit Juice'),
+(3, 'Hot');
+
 -- --------------------------------------------------------
 
 --
@@ -76,6 +85,25 @@ CREATE TABLE `product` (
   `available` enum('available','unavailable') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'available'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `price`, `category_id`, `image`, `available`) VALUES
+(1, 'Cola', 20.00, 1, 'item2.jpg', 'available'),
+(2, 'Black Coffee', 15.00, 3, 'item4.jpg', 'available'),
+(3, 'Espresso', 35.00, 3, 'item5.jpg', 'available'),
+(4, 'Mocha Coffee', 40.00, 1, 'item3.jpg', 'available'),
+(5, 'Green Tea', 15.00, 3, 'greentea.jpg', 'available'),
+(6, 'Nescafe', 25.00, 3, 'item7.jpg', 'available'),
+(7, 'mango juice', 60.00, 2, 'mango-frooti.jpg', 'available'),
+(8, 'hot chocolate', 45.00, 3, 'Hot-Chocolate.jpg', 'available'),
+(9, 'chai latte', 50.00, 3, 'Chai_Latte.jpg', 'available'),
+(10, 'strawberry juice', 30.00, 2, 'strawberry-juice.jpg', 'available'),
+(11, 'iced mocha', 45.00, 1, 'item1.jpg', 'available'),
+(12, 'iced tea', 25.00, 1, 'iced-tea.jpg', 'available');
+
+
 -- --------------------------------------------------------
 
 --
@@ -92,6 +120,7 @@ CREATE TABLE `room` (
 --
 
 INSERT INTO `room` (`id`, `ext`) VALUES
+(0, 0),
 (1, 1);
 
 -- --------------------------------------------------------
@@ -115,7 +144,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `role`, `image`, `room_id`) VALUES
-(1, 'admin', 'admin@admin.com', '7488e331b8b64e5794da3fa4eb10ad5d', 'admin', '', 1);
+(1, 'admin', 'admin@admin.com', '$2y$10$KJ4.KLF/AqqMKGs9j0/xZOmjqlc2ViZAX9jQp7DJF5xtExg/ecDRG', 'admin', '../public/images/user1.png', 0),
+(2, 'anonymous user', 'user@user.com', '$2y$10$Ql07ntUOIYhYf/QFgCbAY.zoBfI1zT/rCf27J04qTyrtgCL7e6W2S', 'user', '../public/images/user1.png', 1);
 
 --
 -- Indexes for dumped tables
@@ -173,7 +203,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -185,13 +215,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

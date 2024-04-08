@@ -4,14 +4,14 @@ require_once "../models/db.php";
 require_once "../models/allProducts&usersModel.php";
 
 // Instantiate the DB class
-$db = new DB();
+$db = DB::getInstance();
 $db2 = new UsersandProducts();
 $adminId = 1;
 // Fetch all users with room information from the 'user' and 'room' tables using a join
 $allUsers = $db2->select("SELECT u.*, r.ext FROM user u INNER JOIN room r ON u.room_id = r.id WHERE u.id != $adminId", []);
 
 // Pagination
-$rows_per_page = 3;
+$rows_per_page = 6;
 $page = isset($_GET["page-nr"]) ? $_GET["page-nr"] : 1;
 $start = ($page - 1) * $rows_per_page;
 // Fetch total number of rows

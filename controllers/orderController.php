@@ -11,7 +11,7 @@ class OrderController
 
   public function __construct()
   {
-    $this->db = new DB();
+    $this->db = DB::getInstance();
     $this->connection = $this->db->getConnection();
     $this->orderModel = new OrderModel();
   }
