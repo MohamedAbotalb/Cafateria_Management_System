@@ -2,7 +2,7 @@
 require_once "templates/adminNav.php";
 require_once "../models/db.php";
 
-$db = new DB();
+$db = DB::getInstance();
 $categories = $db->select("category", [], [], false);
 
 $errorMessages = isset($_SESSION['fails']) ? $_SESSION['fails'] : [];

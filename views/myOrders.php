@@ -96,10 +96,29 @@ foreach ($data as $row) {
             <div class="col-3 border border-2 py-2 text-center">
               <?php
               if ($order['status'] == 'processing') {
-                echo "<a class='btn text-white text-decoration-none' href='../controllers/orderController.php?id={$order['id']}&action=cancel' style='background-color: #362517;'>CANCEL</a>";
+                echo "<button type='button' class='btn text-white text-decoration-none' data-bs-toggle='modal' data-bs-target='#confirmModal_{$order['id']}' style='background-color: #362517;'>CANCEL</button>";
               }
               ?>
             </div>
+            <!-- Modal for each order -->
+            <div class="modal fade text-capitalize" id="confirmModal_<?= $order['id'] ?>" data-bs-backdrop="static" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cancellation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <lla class="fs-5">Confirm order cancellation</lla>
+                  </div>
+                  <div class="modal-footer">
+                    <a class="btn button text-decoration-none" href="../controllers/orderController.php?id=<?= $order['id'] ?>&action=cancel">yes</a>
+                    <button type="button" class="btn btn-secondary" id="close-modal" data-bs-dismiss="modal">No</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal end -->
           </div>
           <div id="collapse-<?php echo $order['id'] ?>" class="accordion-collapse collapse row border border-2" aria-labelledby="heading-<?php echo $order['id'] ?>" data-bs-parent="#accordionExample">
             <div class="accordion-body">
@@ -108,8 +127,8 @@ foreach ($data as $row) {
                   <div class="col mt-4">
                     <div class="w-75 mx-sm-auto position-relative text-center">
                       <img src="../public/images/<?php echo $product['image'] ?>" class="product-image rounded-circle" style="width: 140px; height: 140px" alt="product" />
-                      <div class="product-price">
-                        <span class="d-flex justify-content-center align-items-center h-100">
+                      <div class="product-price" style='width: 50px; height: 50px; left: 70%'>
+                        <span class="d-flex justify-content-center align-items-center h-100 fw-bold" style='font-size: 1rem;'>
                           <?php echo $product['price'] ?> LE
                         </span>
                       </div>

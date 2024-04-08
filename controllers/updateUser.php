@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userId = validateData($_POST["userId"]);
 
         // Instantiate the DB class
-        $db = new DB();
+        $db = DB::getInstance();
         $db2 = new UsersandProducts();
 
         // Check if the room exists

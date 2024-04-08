@@ -6,11 +6,21 @@ class DB
   private $dbname = 'freedb_cafeteria';
   private $user = 'freedb_cafeteria_admin';
   private $password = 'ke4$FA*d4xgqhG3';
+  private static $instance;
   private $connection;
 
-  public function __construct()
+  private function __construct()
   {
     $this->connection = new PDO("mysql:host=$this->host;dbname=$this->dbname;", $this->user, $this->password);
+  }
+
+  public static function getInstance()
+  {
+    if (!self::$instance) {
+      self::$instance = new DB();
+    }
+
+    return self::$instance;
   }
 
   public function getConnection()
