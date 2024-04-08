@@ -88,6 +88,18 @@ Follow the instructions below to install and execute the project on your persona
 
 After the project has been established and is operational, you will be able to reach it through your web browser by visiting http://localhost/Cafeteria_Management_System/views/login.php.
 
+## Login Details
+
+### Admin
+
+email : <admin@admin.com>
+password : admin@admin
+
+### User
+
+email : <user@user.com>
+password : 123456
+
 ## Supervision
 
 This project is under the supervision of [Hend Samir](https://www.linkedin.com/in/hendsamiropensourcedeveloper/), a Teaching Assistant from the Open Source Department at the Information Technology Institute (ITI), Ministry of Communications and Information Technology.
