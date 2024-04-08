@@ -1,6 +1,6 @@
 # Cafeteria Management System
 
-Cafeteria is an online application created with HTML, CSS, JavaScript, Bootstrap 5, PHP and MySQL, specifically designed for the purpose of efficiently handling cafeteria orders. This project is divided into two primary sections: the Admin View and the User View.
+Cafeteria is an online application created with HTML, CSS, JavaScript, Bootstrap 5, AJAX, PHP and MySQL, specifically designed for the purpose of efficiently handling cafeteria orders. This project is divided into two primary sections: the Admin View and the User View.
 
 ## Features
 
